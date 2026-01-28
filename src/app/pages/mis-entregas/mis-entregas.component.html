@@ -1,0 +1,48 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+    <div class="saludo">
+            <h2>Mis Entregas</h2>
+        </div>
+        <div class="clear"></div>
+
+        <div class="tab-content-set">
+        <ul class="nav">
+            <li >
+                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+                    (click)="optionSelected(1)">
+                    <h3> {{'Pendientes'}}</h3>
+                </a>
+            </li>
+            <li *ngIf="user.role ==='CHOFER'">
+                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+                    (click)="optionSelected(2)">
+                    <h3>{{'Entregadas'}}</h3>
+                </a>
+            </li>
+            <li *ngIf="user.role ==='USER'">
+                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
+                    (click)="optionSelected(3)">
+                    <h3>{{'Recibidas'}}</h3>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div *ngIf="option_selectedd == 1">
+        <div class="list_products">
+            <app-order-list [identity]="identity" [identityId]="identityId"></app-order-list>
+        </div>
+    </div>
+    <div *ngIf="option_selectedd == 2">
+        <div class="list_products">
+            <app-order-list [statusD]="statusD" [identity]="identity" [identityId]="identityId"></app-order-list>
+        </div>
+    </div>
+    <div *ngIf="option_selectedd == 3">
+        <div class="list_products">
+            <app-order-list [statusC]="statusC" [identity]="identity" [identityId]="identityId"></app-order-list>
+        </div>
+    </div>
+        
+</div>
+<app-menufooter></app-menufooter>

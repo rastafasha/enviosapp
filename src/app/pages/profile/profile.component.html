@@ -1,0 +1,75 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<!-- <app-back [pageTitle]="pageTitle"></app-back> -->
+<div class="container" *ngIf="!isLoading">
+    <div class="saludo" >
+        <h2>Hola!, {{identity.first_name}}</h2>
+    </div>
+
+    <div class="product_list" >
+        <div class="div1">
+            <img [src]="(identity.img ?? '') | imagenPipe: 'usuarios'" [alt]="identity.first_name">
+        </div>
+        <div class="div2">
+            <h3>{{identity.first_name}} {{identity.last_name}} </h3>
+            <p>{{identity.numdoc}}</p>
+            <p>{{identity.role}}</p>
+            <h4>Activo</h4>
+        </div>
+        <div class="div3">
+            <a [routerLink]="['/myprofile/', identity.uid]">
+                <button class="boton_azul_borde">Editar</button>
+            </a>
+        </div>
+    </div>
+
+     <app-direcciones [identity]="identity" *ngIf="identity && identity.role ==='USER'"></app-direcciones>
+
+     <app-aviso *ngIf="!driver && identity.role ==='CHOFER'" [aviso]="'Agrega Información de tu vehiculo'"></app-aviso>
+    <div class="product_list" *ngIf="driver">
+        <div class="div1">
+            <img [src]="(driver.img ?? '') | imagenPipe: 'drivers'" [alt]="driver.modelo">
+        </div>
+        <div class="div2">
+            <h3>{{driver.modelo}}</h3>
+            <h3>{{driver.marca}}</h3>
+            <h4>{{driver.color}}</h4>
+            <p>{{driver.year}}</p>
+            <span *ngIf="driver.tipo_vehiculo === 'Carro'">
+               <i class="fa fa-car" aria-hidden="true"></i>
+            </span>
+            <span *ngIf="driver.tipo_vehiculo === 'Moto'">
+               <i class="fas fa-motorcycle"></i>
+            </span>
+            <span *ngIf="driver.tipo_vehiculo === 'Camion'">
+               <i class="fas fa-truck"></i>
+            </span>
+            <span *ngIf="driver.tipo_vehiculo === 'Camioneta'">
+               <i class="fas fa-truck-pickup"></i>
+            </span>
+            <span *ngIf="driver.tipo_vehiculo === 'Pickup'">
+               <i class="fas fa-truck-pickup"></i>
+            </span>
+            <span *ngIf="driver.tipo_vehiculo === 'Van'">
+               <i class="fas fa-truck-loading"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="num_tracking" *ngIf="driver">
+        <i class="fa fa-list"></i>
+        <h3>Numero de licencia</h3>
+        <p>{{driver.licencianum}}</p>
+    </div>
+
+    <app-aviso *ngIf="driver" [aviso]="'Tienes nuevas entregas por atender'"></app-aviso>
+
+   
+    <!-- <div class="barra_progreso ">
+
+        <div class="circulo_inicio"></div>
+        <div class="circulo_progreso"></div>
+        <div class="circulo_llegada"></div>
+        <div class="barra_progreso__barra"></div>
+    </div> -->
+</div>
+<app-menufooter></app-menufooter>

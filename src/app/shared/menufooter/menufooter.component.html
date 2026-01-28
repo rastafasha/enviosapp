@@ -1,0 +1,37 @@
+<div class="menu_footer" *ngIf="identity?.role === 'CHOFER'">
+        <a routerLink="/home">
+            <i class="fa fa-home"></i>
+        </a>
+        <a routerLink="/mis-entregas">
+            <i class="fa fa-list"></i>
+        </a>
+        <!-- <a routerLink="/delivery-status">
+            <i class="fa fa-map"></i>
+        </a> -->
+        <!-- <a routerLink="/mapa-page">
+            <i class="fa fa-map-pin"></i>
+        </a> -->
+        
+        <a routerLink="/myprofile">
+            <i class="fa fa-user"></i>
+        </a>
+    </div>
+
+<div class="menu_footer" *ngIf="identity?.role === 'USER'">
+        <a routerLink="/home-customer">
+            <i class="fa fa-home"></i>
+        </a>
+        <a routerLink="/mis-entregas">
+            <i class="fa fa-list"></i>
+        </a>
+        <!-- <a routerLink="/delivery-status">
+            <i class="fa fa-map"></i>
+        </a> -->
+        <!-- <a routerLink="/mapa-page">
+            <i class="fa fa-map-pin"></i>
+        </a> -->
+        
+        <a routerLink="/myprofile">
+            <i class="fa fa-user"></i>
+        </a>
+    </div>

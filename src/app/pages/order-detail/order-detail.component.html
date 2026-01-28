@@ -1,0 +1,132 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="container" *ngIf="!isLoading">
+    <div class="saludo">
+        <h2>Detalle de la Entrega</h2>
+    </div>
+
+    <!-- <app-aviso  [aviso]="'Tienes nuevas entregas por atender'"></app-aviso> -->
+    <!-- detales iniciales -->
+    <div class="product_list">
+        <div class="div1">
+            <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+        </div>
+        <div class="div2">
+            <h5># {{asignacion._id | slice:0:10}}</h5>
+            <h5>{{asignacion.status}}</h5>
+            <p>{{venta.tipo_envio}}</p>
+        </div>
+        <div class="div3 botonera">
+            <button class="boton_azul_borde" *ngIf="identity.role ==='CHOFER' && asignacion.status ==='Asignado'"
+                (click)="activarDelivery()">Aplicar</button>
+            <!-- <a routerLink="/delivery-status" *ngIf="identity.role ==='USER'">
+                <button class="boton_azul_borde">Status</button>
+            </a> -->
+            <a [routerLink]="['/mapa-page/',asignacion._id]">
+                <button class="boton_azul_borde">Mapa</button>
+            </a>
+        </div>
+    </div>
+    <!-- detales iniciales -->
+    <!-- Info Destino -->
+    <h4 *ngIf="identity.role ==='CHOFER'">Info Destino</h4>
+    <div class="product_list" *ngIf="identity.role ==='CHOFER'">
+        <div class="div1">
+            <img src="../assets/img/user.png" alt="">
+        </div>
+        <div class="div2">
+            <p>{{venta.direccion}}</p>
+            <h4>{{venta.precio_envio | currency}}</h4>
+            <h5>{{venta.estado}}</h5>
+
+        </div>
+        <div class="div3">
+            <!-- <p> Llamar </p> -->
+            <a href="delivery-status.html">
+                <button class="boton_azul_borde">LLamar</button>
+            </a>
+        </div>
+    </div>
+    <!-- Info Chofer -->
+    <h4 *ngIf="identity.role ==='USER'">Info Chofer</h4>
+    <div class="product_list" *ngIf="identity.role ==='USER'">
+        <div class="div1">
+            <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
+        </div>
+        <div class="div2">
+            <h4>{{userDriver.first_name}} {{userDriver.last_name}}</h4>
+            <p>{{driver.modelo}} </p>
+            <p>{{driver.placa}}</p>
+            <p>{{driver.tipo_vehiculo}}</p>
+            <div class="">
+                <span *ngIf="driver.tipo_vehiculo === 'Carro'">
+                    <i class="fa fa-car" aria-hidden="true"></i>
+                </span>
+                <span *ngIf="driver.tipo_vehiculo === 'Moto'">
+                    <i class="fas fa-motorcycle"></i>
+                </span>
+                <span *ngIf="driver.tipo_vehiculo === 'Camion'">
+                    <i class="fas fa-truck"></i>
+                </span>
+                <span *ngIf="driver.tipo_vehiculo === 'Camioneta'">
+                    <i class="fas fa-truck-pickup"></i>
+                </span>
+                <span *ngIf="driver.tipo_vehiculo === 'Pickup'">
+                    <i class="fas fa-truck-pickup"></i>
+                </span>
+                <span *ngIf="driver.tipo_vehiculo === 'Van'">
+                    <i class="fas fa-truck-loading"></i>
+                </span>
+            </div>
+        </div>
+        <div class="div3">
+            <!-- <p> Llamar </p> -->
+
+            <a href="delivery-status.html">
+                <button class="boton_azul_borde">LLamar</button>
+            </a>
+        </div>
+    </div>
+    <!-- Numero de Trackig -->
+    <div class="num_tracking">
+        <i class="fa fa-list"></i>
+        <h3>Numero de Trackig</h3>
+        <p>{{venta.tracking_number}}</p>
+    </div>
+    <!-- Lista entrega-->
+    <div class="status">
+        <h1>Lista entrega</h1>
+        <summary>
+            <details>
+                <div *ngFor="let detalle of detalles">
+                    <app-item-list [detalle]="detalle"></app-item-list>
+                </div>
+            </details>
+        </summary>
+
+
+    </div>
+    <br>
+    <!-- Status Entrega-->
+    <div class="status" style="margin-bottom: 20px;">
+        <!-- <h1>Status Entrega</h1> -->
+        <div class="empacado">
+            <h2>{{venta.estado}}</h2>
+            <p>{{venta.tiempo_estimado}}</p>
+        </div>
+    </div>
+
+    <button class="boton_azul_borde" style="margin-bottom: 80px;" 
+    *ngIf="identity.role ==='USER' && asignacion.status==='Entregado'">
+        Calificar
+    </button>
+    <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;" 
+    *ngIf="identity.role ==='USER' && asignacion.status==='Entregado'">
+        Marcar como Recibido
+    </button>
+    <button class="boton_azul_borde" (click)="marcarEntregado()" style="margin-bottom: 80px;"
+        *ngIf="identity.role ==='CHOFER' && asignacion.status !=='Entregado'">
+        Marcar como Entregado
+    </button>
+
+</div>
+<app-menufooter></app-menufooter>

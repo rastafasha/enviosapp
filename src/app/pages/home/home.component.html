@@ -1,0 +1,38 @@
+<app-header></app-header>
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="container" *ngIf="!isLoading" style="margin-bottom: 60px;">
+    <div class="saludo">
+        <h2>Hola, {{identity.first_name}}!</h2>
+    </div>
+
+    <!-- <app-aviso [aviso]="'Si quieres ser conductor, comunicate con El Administrador'"></app-aviso> -->
+        <!-- <div class="vistas-recientes">
+            <h2>Vistas Recientes</h2>
+            <div class="products_recents">
+                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+            </div>
+
+        </div> -->
+        <div class="pedidos_recientes">
+            <h2>Pedidos Recientes</h2>
+        </div>
+        <!-- <div class="options_tabs">
+            <div class="option">
+                Por Pagar
+            </div>
+            <div class="option">
+                Por Recibir
+            </div>
+            <div class="option">
+                Por Review
+            </div>
+        </div> -->
+
+        <!-- <app-order-list [statusC]="'Asignado'" [statusD]="'Asignado'"  [identityId]="userId"></app-order-list> -->
+
+    </div>
+<app-menufooter></app-menufooter>
