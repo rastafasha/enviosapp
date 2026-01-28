@@ -1,0 +1,45 @@
+<h2>Hacia dónde quieres  
+enviar tus artículos?</h2>
+
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>Desde</label>
+            <div class="formcoord">
+                <i class="fa fa-map-pin" (click)="cargarMapa()"></i>
+                <input class="form-control" type="text"  required placeholder="direccionRecogida"
+                    formControlName="direccionRecogida">
+                <i class="fa fa-plus" (click)="addRouta($event)"></i>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>Hasta</label>
+            <div class="formcoord">
+                <i class="fa fa-map-pin" (click)="cargarMapa()"></i>
+                <input class="form-control" type="text" required placeholder="direccionEntrega"
+                    formControlName="direccionEntrega">
+                <i class="fa fa-plus" (click)="addRoutaDestino($event)"></i>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <h4>Mis Direcciones</h4>
+    <ul class="direcciones-list">
+        <li routerLink="/myprofile/direccion/create">
+            <i class="fa fa-plus"></i>
+            Añadir
+        </li>
+        <li *ngFor="let direccion of direcciones" (click)="selectDireccion(direccion)">
+            <i class="fa fa-map-pin"></i>
+            {{ direccion.nombres_completos }}
+        </li>
+    </ul>
+    <button type="submit" [disabled]="deliveryForm.invalid"
+        class="boton_azul_borde">
+       Siguiente
+    </button>
+</form>

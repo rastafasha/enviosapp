@@ -8,6 +8,7 @@ import { NgIf } from '@angular/common';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { AsignardeliveryService } from '../../services/asignardelivery.service';
 import { Asignacion } from '../../models/asignaciondelivery.model';
+import { StartDeliveryComponent } from "../../components/start-delivery/start-delivery.component";
 @Component({
   selector: 'app-home',
   imports: [
@@ -16,7 +17,8 @@ import { Asignacion } from '../../models/asignaciondelivery.model';
     RouterModule,
     // OrderListComponent,
     LoadingComponent,
-    NgIf
+    NgIf,
+    StartDeliveryComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -25,6 +27,7 @@ export class HomeComponent {
 
   identity!:Usuario;
   userId!:string;
+  identityId!:any;
     isLoading= false;
     asignacion!: Asignacion;
   
@@ -47,7 +50,9 @@ export class HomeComponent {
         let user = JSON.parse(USER);
         this.usuarioService.get_user(user.uid).subscribe((resp:any)=>{
           this.identity = resp.usuario;
+          this.identityId = this.identity.uid;
           this.isLoading= false;
+          console.log(this.identityId)
         })
       }
     }

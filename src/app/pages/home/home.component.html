@@ -5,21 +5,21 @@
         <h2>Hola, {{identity.first_name}}!</h2>
     </div>
 
-    <!-- <app-aviso [aviso]="'Si quieres ser conductor, comunicate con El Administrador'"></app-aviso> -->
-        <!-- <div class="vistas-recientes">
-            <h2>Vistas Recientes</h2>
-            <div class="products_recents">
-                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-                <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-            </div>
-
-        </div> -->
-        <div class="pedidos_recientes">
-            <h2>Pedidos Recientes</h2>
+        <!-- <div class="pedidos_recientes">
+            <h2>Nuestros Servicios</h2>
         </div>
+        <div class="pedidos_recientes">
+            <h2>Envios</h2>
+        </div>
+        <div class="pedidos_recientes">
+            <h2>Delivery</h2>
+        </div>
+        <div class="pedidos_recientes">
+            <h2>Publicidad</h2>
+        </div>
+        <div class="pedidos_recientes">
+            <h2>Promociones</h2>
+        </div> -->
         <!-- <div class="options_tabs">
             <div class="option">
                 Por Pagar
@@ -33,6 +33,8 @@
         </div> -->
 
         <!-- <app-order-list [statusC]="'Asignado'" [statusD]="'Asignado'"  [identityId]="userId"></app-order-list> -->
+
+        <app-start-delivery [identityId]="identityId" [identity]="identity"></app-start-delivery>
 
     </div>
 <app-menufooter></app-menufooter>

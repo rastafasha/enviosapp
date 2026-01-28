@@ -9,7 +9,6 @@ import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
   imports: [
     CommonModule,
     RouterModule,
-    ImagenPipe
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.css'

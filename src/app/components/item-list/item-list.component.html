@@ -1,18 +1,13 @@
 <div class="product_list">
     <div class="div1" routerLink="/order-detail">
-        <img [src]="detalle.producto.img | imagenPipe: 'productos'" alt="">
+        <!-- <img [src]="detalle.producto.img | imagenPipe: 'productos'" alt=""> -->
     </div>
     <div class="div2">
-        <!-- <h3>Order # {{detalle._id | slice:0:8}}</h3> -->
-        <!-- <p>Standard Delivery</p> -->
-        <h4>{{detalle.producto.titulo}}</h4>
+        <h3>Order # {{detalle._id | slice:0:8}}</h3>
+        <p>Standard Delivery</p>
+        <!-- <h4>{{detalle.producto.titulo}}</h4> -->
     </div>
     <div class="div3">
         <h4> {{detalle.cantidad}} item</h4>
-        <!-- <a [routerLink]="['/order-detail', detalle._id]">
-            <button class="boton_azul_borde">
-                <i class="fa fa-eye"></i>
-            </button>
-        </a> -->
     </div>
 </div>
