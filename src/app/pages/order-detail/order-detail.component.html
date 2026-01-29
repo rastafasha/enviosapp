@@ -1,7 +1,8 @@
 <app-loading *ngIf="isLoading"></app-loading>
-<div class="container" *ngIf="!isLoading">
+<div class="container" *ngIf="!isLoading" style="padding-bottom: 40px;">
     <div class="saludo">
-        <h2>Detalle de la Entrega</h2>
+        <app-back></app-back>
+        <h2>Detalle</h2>
     </div>
 
     <!-- <app-aviso  [aviso]="'Tienes nuevas entregas por atender'"></app-aviso> -->
@@ -11,17 +12,17 @@
             <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
         </div>
         <div class="div2">
-            <h5># {{asignacion._id | slice:0:10}}</h5>
-            <h5>{{asignacion.status}}</h5>
-            <p>{{venta.tipo_envio}}</p>
+            <h5># {{delivery._id | slice:0:10}}</h5>
+            <p>{{delivery.titulo}}</p>
+            <h5>{{delivery.status}}</h5>
         </div>
         <div class="div3 botonera">
-            <button class="boton_azul_borde" *ngIf="identity.role ==='CHOFER' && asignacion.status ==='Asignado'"
+            <button class="boton_azul_borde" *ngIf="identity.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
                 (click)="activarDelivery()">Aplicar</button>
             <!-- <a routerLink="/delivery-status" *ngIf="identity.role ==='USER'">
                 <button class="boton_azul_borde">Status</button>
             </a> -->
-            <a [routerLink]="['/mapa-page/',asignacion._id]">
+            <a [routerLink]="['/mapa-page/',delivery._id]" *ngIf="delivery.status !== 'Confirmado'">
                 <button class="boton_azul_borde">Mapa</button>
             </a>
         </div>
@@ -34,18 +35,29 @@
             <img src="../assets/img/user.png" alt="">
         </div>
         <div class="div2">
-            <p>{{venta.direccion}}</p>
-            <h4>{{venta.precio_envio | currency}}</h4>
-            <h5>{{venta.estado}}</h5>
-
+            <p>Usuario: {{userDriver.first_name}}</p>
+            <p>email: {{userDriver.email}}</p>
+            <!-- <p>telefono: {{userDriver.telefono}}</p> -->
         </div>
-        <div class="div3">
+        <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
             <!-- <p> Llamar </p> -->
-            <a href="delivery-status.html">
-                <button class="boton_azul_borde">LLamar</button>
-            </a>
+            <button class="boton_azul_borde" (click)="sendWhatsAppOrder()">
+                <i class="fa fa-whatsapp"></i>
+                Enviar WhatsApp
+            </button>
         </div>
     </div>
+    
+    <!-- Coordenadas -->
+    <div class="num_tracking">
+        <i class="fa fa-map-pin"></i>
+        <h3>Coordenadas</h3>
+        <p>Desde: {{delivery.direccionRecogida}}</p>
+        <p>Hasta: {{delivery.direccionEntrega}}</p>
+        <p>fecha: {{delivery.fechaEnvio}}</p>
+        <p>hora: {{delivery.horaEnvio}}</p>
+    </div>
+
     <!-- Info Chofer -->
     <h4 *ngIf="identity.role ==='USER'">Info Chofer</h4>
     <div class="product_list" *ngIf="identity.role ==='USER'">
@@ -87,19 +99,25 @@
         </div>
     </div>
     <!-- Numero de Trackig -->
-    <div class="num_tracking">
+    <!-- <div class="num_tracking">
         <i class="fa fa-list"></i>
         <h3>Numero de Trackig</h3>
         <p>{{venta.tracking_number}}</p>
+    </div> -->
+    <!-- Observaciones -->
+    <div class="itemdeliveryDesc" *ngIf="delivery.descripcion">
+        <h3>Observaciones / Instrucciones: </h3>
+        <p>{{delivery.descripcion}}</p>
     </div>
     <!-- Lista entrega-->
     <div class="status">
-        <h1>Lista entrega</h1>
+        <h1>Detalles</h1>
         <summary>
             <details>
-                <div *ngFor="let detalle of detalles">
+                <!-- <div *ngFor="let detalle of detalles">
                     <app-item-list [detalle]="detalle"></app-item-list>
-                </div>
+                </div> -->
+                <app-itemcard [delivery]="delivery" [display]="display"></app-itemcard>
             </details>
         </summary>
 
@@ -107,24 +125,17 @@
     </div>
     <br>
     <!-- Status Entrega-->
-    <div class="status" style="margin-bottom: 20px;">
-        <!-- <h1>Status Entrega</h1> -->
-        <div class="empacado">
-            <h2>{{venta.estado}}</h2>
-            <p>{{venta.tiempo_estimado}}</p>
-        </div>
-    </div>
 
-    <button class="boton_azul_borde" style="margin-bottom: 80px;" 
-    *ngIf="identity.role ==='USER' && asignacion.status==='Entregado'">
+    <button class="boton_azul_borde" style="margin-bottom: 80px;"
+        *ngIf="identity.role ==='USER' && delivery.status==='Entregado'">
         Calificar
     </button>
-    <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;" 
-    *ngIf="identity.role ==='USER' && asignacion.status==='Entregado'">
+    <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;"
+        *ngIf="identity.role ==='USER' && delivery.status==='Entregado'">
         Marcar como Recibido
     </button>
     <button class="boton_azul_borde" (click)="marcarEntregado()" style="margin-bottom: 80px;"
-        *ngIf="identity.role ==='CHOFER' && asignacion.status !=='Entregado'">
+        *ngIf="identity.role ==='CHOFER' && delivery.status !=='Entregado' && delivery.status !=='Confirmado' ">
         Marcar como Entregado
     </button>
 

@@ -9,7 +9,7 @@ const base_url = environment.baseUrl
 export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: 'usuarios'|'congenerals'
-  |'promocions'|'blogs' |'drivers'|'deliverys'
+  |'promocions'|'blogs' |'drivers'|'deliverys'|'tipos'
 ): string {
 
     if(!img){

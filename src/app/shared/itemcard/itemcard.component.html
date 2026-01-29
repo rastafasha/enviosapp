@@ -1,11 +1,11 @@
-<div class="product_list" >
-        <div class="div1">
+<div class="itemdelivery" >
+        <div class="div1" *ngIf="display">
             <!-- <img [src]="(delivery.img ?? '') | imagenPipe: 'deliverys'" [alt]="delivery.titulo"> -->
         </div>
-        <div class="div2">
+        <div class="div2" *ngIf="display">
             <p *ngIf="delivery.titulo">{{delivery.titulo}}</p>
-            <p>Desde: {{delivery.direccionEntrega}}  </p>
-            <p>Hasta: {{delivery.direccionRecogida}}</p>
+            <p>Desde: {{delivery.direccionRecogida}}</p>
+            <p>Hasta: {{delivery.direccionEntrega}}  </p>
             <p *ngIf="delivery.fechaEnvio">{{delivery.fechaEnvio |date }}</p>
             <p *ngIf="delivery.horaEnvio">{{delivery.horaEnvio }}</p>
             <p *ngIf="delivery.status">{{delivery.status}}</p>
@@ -17,4 +17,9 @@
             <p *ngIf="delivery.largo">Largo: {{delivery.largo}}</p>
             <p *ngIf="delivery.peso">Peso: {{delivery.peso}}</p>
         </div>
+        
     </div>
+    <div class="itemdeliveryDesc">
+            <h3>Observaciones / Instrucciones: </h3>
+            <p>{{delivery.descripcion}}</p>
+        </div>

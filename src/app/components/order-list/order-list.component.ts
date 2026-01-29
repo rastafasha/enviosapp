@@ -21,12 +21,10 @@ import { Delivery } from '../../models/delivery.model';
 export class OrderListComponent {
 
   @Input() identity!:string;
-  @Input() identityD!:string;
   @Input() identityId!:string;
   @Input() driverId!:string;
   @Input() asignacion!: any;
-  @Input() statusC!: any;
-  @Input() statusD!: any;
+  @Input() status!: any;
   asignacions!: Asignacion [];
   deliveries!: Delivery [];
 
@@ -42,6 +40,7 @@ export class OrderListComponent {
 
   ngOnInit(){
     this.identityId;
+
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER || '{}');
 
@@ -53,14 +52,7 @@ export class OrderListComponent {
         this.loadAsignacionesByUser();
       }
       
-      if(this.statusD ){
-        this.statusreqest = this.statusD;
-        this.iduserstatus = this.identityId
-        this.loadAsignacionesByStatus();
-      }
-      if(this.statusC){
-        this.statusreqest = this.statusC;
-        this.iduserstatus = this.userId 
+      if(this.status ){
         this.loadAsignacionesByStatus();
       }
     
@@ -87,10 +79,9 @@ export class OrderListComponent {
   
   loadAsignacionesByStatus(){
     this.isLoading = true;
-    this.asignacionDService.getByStatus(this.iduserstatus, this.statusreqest).subscribe((resp:any)=>{
-      this.asignacions = resp;
+    this.deliveryService.getDeliveryByStatus(this.status).subscribe((resp:any)=>{
+      this.deliveries = resp;
        this.isLoading = false;
-       console.log(resp)
     });
   }
   

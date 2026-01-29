@@ -58,6 +58,14 @@ export class DeliveryService {
           map((resp:{ok: boolean, delivery: Delivery}) => resp.delivery)
           );
     }
+    
+    getDeliveryByStatus(status:string){
+      const url = `${base_url}/delivery/status/${status}`;
+      return this._http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, deliveries: Delivery[]}) => resp.deliveries)
+          );
+    }
   
     update(delivery:Delivery){
       const url = `${base_url}/delivery/update/${delivery._id}`;
@@ -68,5 +76,24 @@ export class DeliveryService {
       const url = `${base_url}/delivery/remove/${id}`;
       return this._http.delete(url, this.headers);
     }
+
+    activar(_id: any): Observable<any> {
+        const url = `${base_url}/delivery/activar/${_id}`;
+        return this._http.get(url, this.headers);
+      }
+      entregado(_id: any): Observable<any> {
+        const url = `${base_url}/delivery/entregado/${_id}`;
+        return this._http.get(url, this.headers);
+      }
+      recibido(_id: any): Observable<any> {
+        const url = `${base_url}/delivery/recibido/${_id}`;
+        return this._http.get(url, this.headers);
+      }
+
+        actualizarCoords(asignacion: any) {
+    const url = `${base_url}/delivery/update/coord/${asignacion._id}`;
+    return this._http.put(url, asignacion, this.headers);
+  }
+
   
 }

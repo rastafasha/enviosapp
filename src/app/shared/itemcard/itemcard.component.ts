@@ -15,6 +15,7 @@ import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 export class ItemcardComponent {
 
   @Input() delivery!:Delivery;
+  @Input() display:boolean = true ;
   
 
 }

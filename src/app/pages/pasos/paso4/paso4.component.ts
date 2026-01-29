@@ -9,6 +9,7 @@ import { TipovehiculoService } from '../../../services/tipovehiculo.service';
 import { TipoVehiculo } from '../../../models/tipovehiculo.model';
 import { ItemcardComponent } from "../../../shared/itemcard/itemcard.component";
 import { LoadingComponent } from "../../../shared/loading/loading.component";
+import { ImagenPipe } from '../../../pipes/imagen-pipe.pipe';
 
 @Component({
   selector: 'app-paso4',
@@ -19,7 +20,8 @@ import { LoadingComponent } from "../../../shared/loading/loading.component";
     FormsModule,
     BackComponent,
     ItemcardComponent,
-    LoadingComponent
+    LoadingComponent,
+    ImagenPipe
   ],
   templateUrl: './paso4.component.html',
   styleUrl: './paso4.component.scss'
@@ -40,7 +42,7 @@ export class Paso4Component {
 
 
   ngOnInit() {
-    this.iniciarFormulario();
+    
     this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
     const id = this.deliveryId
   }
@@ -48,6 +50,7 @@ export class Paso4Component {
     this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
       this.getTiposVehiculo();
+      this.iniciarFormulario();
     })
   }
 
@@ -60,7 +63,7 @@ export class Paso4Component {
 
   iniciarFormulario() {
     this.deliveryCarForm = this.fb.group({
-      tipovehiculo: ['', Validators.required]
+      tipovehiculo: [this.delivery.tipovehiculo, Validators.required]
     })
   }
 

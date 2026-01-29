@@ -40,32 +40,26 @@ export class ConfirmarComponent {
   
   
     ngOnInit() {
-      this.iniciarFormulario();
+     
       this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
       const id = this.deliveryId
     }
     getDelivery(id: string) {
       this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
         this.delivery = resp;
-        this.getTiposVehiculo();
+         this.iniciarFormulario();
       })
     }
   
-    getTiposVehiculo() {
-      this.tiposvService.getTiposVehics().subscribe((resp: any) => {
-        this.tipos = resp
-        // console.log(this.tipos)
-      })
-    }
   
     iniciarFormulario() {
       this.deliveryCarForm = this.fb.group({
-        tipovehiculo: ['']
+        descripcion: [this.delivery.descripcion]
       })
     }
   
     onSubmit() {
-      const { tipovehiculo, } = this.deliveryCarForm.value;
+      const { descripcion, } = this.deliveryCarForm.value;
   
       // Incluir coordenadas si están disponibles
       const data: any = {

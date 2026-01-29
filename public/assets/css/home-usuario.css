@@ -73,7 +73,28 @@
 .list_products {
     display: flex;
     flex-direction: column;
+    
 }
+
+.itemdelivery {
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.itemdeliveryDesc {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
 
 .product_list {
     display: grid;

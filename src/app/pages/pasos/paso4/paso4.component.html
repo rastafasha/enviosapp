@@ -7,8 +7,9 @@
 
 <form class=" p-t-20 col-xs-12" [formGroup]="deliveryCarForm" >
     <div class="grillaopciones" >
-        <div *ngFor="let tipo of tipos; let i = index;" >
-            <div class="opcion" [class.selected]="tipo.nombre === deliveryCarForm.get('tipovehiculo')?.value" (click)="selectCar(tipo)" style="background-image: url('./assets/delivery/car.jpg');">
+        <div *ngFor="let tipo of tipos" >
+            <div class="opcion" [class.selected]="tipo.nombre === deliveryCarForm.get('tipovehiculo')?.value" 
+            (click)="selectCar(tipo)" [style.background-image]="'url(' + tipo.img + ')' | imagenPipe: 'tipos'">
                 <h4>{{tipo.nombre}}</h4>
                 <p>opcion</p>
             </div>

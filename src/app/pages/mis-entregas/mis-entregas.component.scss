@@ -13,11 +13,14 @@
         align-items: center;
         padding    : 6px;
         gap: 15px;
+        & h3{
+           font-size: 1.2em; 
+        }
 
         & li {
             display: flex;
             padding  : 5px;
-            font-size: 16px;
+            font-size: 14px;
             color    : #333;
             gap: 15px;
 

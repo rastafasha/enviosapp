@@ -9,13 +9,16 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { Driver } from '../../models/driverp.model';
 import { AsignardeliveryService } from '../../services/asignardelivery.service';
+import { DeliveryService } from '../../services/delivery.service';
+import { BackComponent } from "../../shared/back/back.component";
 
 @Component({
   selector: 'app-mapa',
   imports: [
     MenufooterComponent,
-    RouterModule, NgIf
-  ],
+    RouterModule, NgIf,
+    BackComponent
+],
   providers: [WaGeolocationService],
   templateUrl: './mapa.component.html',
   styleUrls: ['mapa.component.css']
@@ -29,7 +32,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
   private deliveryMarker: L.Marker | null = null;
   private routeLine: L.Polyline | null = null;
   private locationSubscription: Subscription | null = null;
-  private asignacionSubscription: Subscription | null = null;
+  private deliverySubscription: Subscription | null = null;
   private refreshInterval: any = null;
 
   // Estado para mostrar coordenadas
@@ -39,13 +42,13 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
   errorMessage = '';
 
   identity!: Usuario;
-  asignacion!: any;
-  asignacionId!: any;
+  delivery!: any;
+  deliveryId!: any;
   user!: any;
   driver!: any;
 
   private usuarioService = inject(UsuarioService);
-  private asignacionService = inject(AsignardeliveryService);
+  private deliveryService = inject(DeliveryService);
   private activatedRoute = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
 
@@ -75,9 +78,9 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.activatedRoute.params.subscribe(params => {
       let orderId = params['id'];
-      this.asignacionId = orderId;
+      this.deliveryId = orderId;
       // Load asignacion data after getting ID
-      this.loadAsignacion();
+      this.loadDelivery();
     });
 
     // Suscripción continua a la ubicación
@@ -153,8 +156,8 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.locationSubscription) {
       this.locationSubscription.unsubscribe();
     }
-    if (this.asignacionSubscription) {
-      this.asignacionSubscription.unsubscribe();
+    if (this.deliverySubscription) {
+      this.deliverySubscription.unsubscribe();
     }
     if (this.refreshInterval) {
       clearInterval(this.refreshInterval);
@@ -183,21 +186,21 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Load asignacion data and set positions based on user role
+   * Load delivery data and set positions based on user role
    */
-  private loadAsignacion(): void {
-    if (!this.asignacionId) return;
+  private loadDelivery(): void {
+    if (!this.deliveryId) return;
 
-    this.asignacionSubscription = this.asignacionService.getById(this.asignacionId).subscribe({
+    this.deliverySubscription = this.deliveryService.getDeliveryId(this.deliveryId).subscribe({
       next: (resp: any) => {
-        if (resp.ok && resp.asignacion) {
+        if (resp.ok && resp.delivery) {
           // Use setTimeout to defer the update and avoid expression changed error
           setTimeout(() => {
-            this.asignacion = resp.asignacion;
-            console.log(this.asignacion);
+            this.delivery = resp.delivery;
+            console.log(this.delivery);
 
-            const parsedDriverPos = this.parsePosition(this.asignacion.driverPosition);
-            const parsedDeliveryPos = this.parsePosition(this.asignacion.deliveryPosition);
+            const parsedDriverPos = this.parsePosition(this.delivery.driverPosition);
+            const parsedDeliveryPos = this.parsePosition(this.delivery.deliveryPosition);
 
             if (this.user.role == 'CHOFER') {
               // CHOFER: deliveryPosition from asignacion, driverPosition from GPS
@@ -252,8 +255,8 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
   private startRefreshAsignacion(): void {
     // Refresh every 10 seconds
     this.refreshInterval = setInterval(() => {
-      if (this.user.role == 'USER' && this.asignacionId) {
-        this.asignacionService.getById(this.asignacionId).subscribe({
+      if (this.user.role == 'USER' && this.deliveryId) {
+        this.deliveryService.getDeliveryId(this.deliveryId).subscribe({
           next: (resp: any) => {
             if (resp.ok && resp.asignacion) {
               const parsedDriverPos = this.parsePosition(resp.asignacion.driverPosition);
@@ -283,7 +286,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
    * Update asignacion with current driver position
    */
   private updateAsignacionWithPosition(): void {
-    if (!this.asignacionId || !this.driverPosition ) return;
+    if (!this.deliveryId || !this.driverPosition ) return;
 
     
     // Update silently without showing alert
@@ -295,7 +298,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.driverPosition) {
       // Posición por defecto mientras carga (Venezuela)
       // this.driverPosition = { lat: 10.4806, lng: -66.9036 }; // Caracas, Venezuela
-      const parsed = this.asignacion?.driverPosition ? this.parsePosition(this.asignacion.driverPosition) : null;
+      const parsed = this.delivery?.driverPosition ? this.parsePosition(this.delivery.driverPosition) : null;
       this.driverPosition = parsed ?? { lat: 10.4806, lng: -66.9036 };
     }
 
@@ -483,12 +486,12 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
     // CHOFER: Only update driverPosition (own GPS location)
     if(this.user.role == 'CHOFER' && this.driverPosition){
       const data = {
-        _id: this.asignacionId,
+        _id: this.deliveryId,
         driverPosition: `${this.driverPosition.lat},${this.driverPosition.lng}`,
       };
-      this.asignacionService.actualizarCoords(data).subscribe((resp: any) => {
+      this.deliveryService.actualizarCoords(data).subscribe((resp: any) => {
         console.log('Asignación actualizada driverPosition:', this.driverPosition);
-        this.asignacion = resp.asignacionActualizada;
+        this.delivery = resp.asignacionActualizada;
       });
     }
     

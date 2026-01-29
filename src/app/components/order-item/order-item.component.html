@@ -25,8 +25,21 @@
         <p>{{delivery.titulo}}</p>
         <h4>{{delivery.status}}</h4>
     </div>
-    <div class="div3">
-        <p> 1 item</p>
+    <div class="div3" *ngIf="identity?.role ==='CHOFER'">
+        <!-- <p> 1 item</p> -->
+        <a *ngIf="delivery.status !== 'Confirmado'"[routerLink]="['/order-detail/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-eye"></i>
+            </button>
+        </a>
+        <a *ngIf="delivery.status === 'Confirmado'" [routerLink]="['/order-detail/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-eye"></i>
+            </button>
+        </a>
+    </div>
+    <div class="div3" *ngIf="identity?.role ==='USER'">
+        <!-- <p> 1 item</p> -->
         <a *ngIf="delivery.status === 'EDITANDO'" [routerLink]="['/delivery/paso1/', delivery._id]">
             <button class="boton_azul_borde">
                 <i class="fa fa-pen"></i>
@@ -35,6 +48,11 @@
         <a *ngIf="delivery.status === 'ESPERANDO'" [routerLink]="['/delivery/confirmar/', delivery._id]">
             <button class="boton_azul_borde">
                 <i class="fa fa-eye"></i>
+            </button>
+        </a>
+        <a *ngIf="delivery.status === 'Entregado'" [routerLink]="['/order-detail/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-pen"></i>
             </button>
         </a>
     </div>

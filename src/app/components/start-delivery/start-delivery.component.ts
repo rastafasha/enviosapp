@@ -153,6 +153,7 @@ export class StartDeliveryComponent {
               this.router.navigate([`/delivery/paso2/`, resp.delivery._id]);
             } else {
               console.error('Error: Respuesta de actualización no contiene _id', resp);
+              this.router.navigate([`/delivery/paso2/`, this.delivery._id]);
             }
           });
       } else {

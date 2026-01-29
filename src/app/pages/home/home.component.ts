@@ -9,13 +9,13 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
 import { AsignardeliveryService } from '../../services/asignardelivery.service';
 import { Asignacion } from '../../models/asignaciondelivery.model';
 import { StartDeliveryComponent } from "../../components/start-delivery/start-delivery.component";
+import { OrderListComponent } from '../../components/order-list/order-list.component';
 @Component({
   selector: 'app-home',
   imports: [
     HeaderComponent,
     MenufooterComponent,
     RouterModule,
-    // OrderListComponent,
     LoadingComponent,
     NgIf,
     StartDeliveryComponent

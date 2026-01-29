@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Asignacion } from '../../models/asignaciondelivery.model';
 import { Delivery } from '../../models/delivery.model';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-order-item',
@@ -17,5 +18,8 @@ export class OrderItemComponent {
   @Input() statustText!:string;
   @Input() asignacion!:Asignacion;
   @Input() delivery!:Delivery;
+  @Input() identity!:any;
+
+
   
 }

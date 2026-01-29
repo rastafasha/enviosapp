@@ -56,11 +56,11 @@ export class Paso2Component {
 
   iniciarFormulario() {
     this.deliverySizeForm = this.fb.group({
-      titulo: ['', Validators.required],
-      largo: ['', Validators.required],
-      ancho: ['', Validators.required],
-      alto: ['', Validators.required],
-      peso: ['', Validators.required],
+      titulo: [this.delivery.titulo, Validators.required],
+      largo: [this.delivery.largo, Validators.required],
+      ancho: [this.delivery.ancho, Validators.required],
+      alto: [this.delivery.alto, Validators.required],
+      peso: [this.delivery.peso, Validators.required],
     })
   }
 

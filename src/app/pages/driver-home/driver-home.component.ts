@@ -17,7 +17,7 @@ import { DriverpService } from '../../services/driverp.service';
     HeaderComponent,
     MenufooterComponent,
     RouterModule,
-    // OrderListComponent,
+    OrderListComponent,
     AvisoComponent,
     LoadingComponent,
     NgIf

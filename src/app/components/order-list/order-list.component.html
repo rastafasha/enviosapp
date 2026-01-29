@@ -1,14 +1,12 @@
-
 <app-loading *ngIf="isLoading"></app-loading>
-<div *ngIf="!isLoading && asignacions">
+<!-- <div *ngIf="!isLoading && asignacions">
     <div class="list_products" *ngFor=" let asignacion of asignacions">
         <app-order-item [asignacion]="asignacion" [statustText]="'Empacado'"></app-order-item>
     </div>
-    
-</div>
+</div> -->
 <div *ngIf="!isLoading && deliveries">
     <div class="list_products" *ngFor=" let delivery of deliveries">
-        <app-order-item [delivery]="delivery" [statustText]="'Empacado'"></app-order-item>
+        <app-order-item [identity]="user" [delivery]="delivery" [statustText]="'Empacado'"></app-order-item>
     </div>
-    
+
 </div>
