@@ -1,7 +1,7 @@
 {
   "dir": "ltr",
-  "name": "deliveryapp",
-  "short_name": "deliveryapp",
+  "name": "Envialo App",
+  "short_name": "Envialo App",
   "display": "standalone",
   "theme_color": "#3a2314",
   "background_color": "#fafafa",
