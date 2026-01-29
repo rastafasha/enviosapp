@@ -95,7 +95,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
           if (this.user.role == 'CHOFER') {
             this.driverPosition = { lat, lng };
             this.updateDriverPosition(lat, lng);
-            console.log('Posición driverPosition (CHOFER):', this.driverPosition);
+            // console.log('Posición driverPosition (CHOFER):', this.driverPosition);
             
             // Also update the delivery with new driver position
             this.updateDriverCoords();
@@ -170,7 +170,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
           // Use setTimeout to defer the update and avoid expression changed error
           setTimeout(() => {
             this.delivery = delivery;
-            console.log(this.delivery);
+            // console.log(this.delivery);
             this.getDireccionName();
 
             this.loading = false;
@@ -200,11 +200,11 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
       direccionId = direccionId._id;
     }
 
-    console.log('Obteniendo dirección con ID:', direccionId);
+    // console.log('Obteniendo dirección con ID:', direccionId);
     
     this.direccionService.get_direccionNombre(this.delivery.user, direccionId).subscribe({
       next: (resp: any) => {
-        console.log('Dirección respuesta completa:', resp);
+        // console.log('Dirección respuesta completa:', resp);
         
         // Actualizar deliveryPosition con las coordenadas obtenidas
         // Primero intentar con latitud/longitud del objeto respuesta
@@ -216,7 +216,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
             lat: Number(lat), 
             lng: Number(lng) 
           };
-          console.log('Posición entrega actualizada:', this.deliveryPosition);
+          // console.log('Posición entrega actualizada:', this.deliveryPosition);
           // Actualizar el mapa para mostrar el marcador de entrega
           this.updateMap();
         } else {
@@ -342,7 +342,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
       try {
         await navigator.share(shareData);
-        console.log('Coordenadas compartidas exitosamente');
+        // console.log('Coordenadas compartidas exitosamente');
         //verificamos el rol del usuario para mostrar mensaje adecuado
         if (this.user.role == 'CHOFER') {
           alert('✅ Coordenadas del repartidor compartidas exitosamente');
@@ -438,7 +438,7 @@ export class MapaComponent implements OnInit, AfterViewInit, OnDestroy {
       driverPosition: `${this.driverPosition.lat},${this.driverPosition.lng}`,
     };
     this.deliveryService.actualizarCoords(data).subscribe((resp: any) => {
-      console.log('Delivery actualizada driverPosition:', this.driverPosition);
+      // console.log('Delivery actualizada driverPosition:', this.driverPosition);
       this.delivery = resp.delivery;
     });
   }
