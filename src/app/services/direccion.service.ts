@@ -60,6 +60,13 @@ export class DireccionService {
         map((resp:{ok: boolean, direccion: Direccion}) => resp.direccion)
         );
   }
+  get_direccionNombre(id:any, nombre:any){
+    const url = `${base_url}/direccions/nombre/${id}/${nombre}`;
+    return this._http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, direccion: Direccion[]}) => resp.direccion[0])
+        );
+  }
 
   update(direccion:Direccion){
     const url = `${base_url}/direccions/direccion/update/${direccion._id}`;
