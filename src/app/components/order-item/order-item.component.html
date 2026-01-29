@@ -21,15 +21,20 @@
         <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
     </div>
     <div class="div2">
-        <h3>Order # {{delivery._id | slice:0:8}}</h3>
-        <p>Standard Delivery</p>
+        <h5>Order # {{delivery._id | slice:0:8}}</h5>
+        <p>{{delivery.titulo}}</p>
         <h4>{{delivery.status}}</h4>
     </div>
     <div class="div3">
         <p> 1 item</p>
-        <a [routerLink]="['/delivery/paso2/', delivery._id]">
+        <a *ngIf="delivery.status === 'EDITANDO'" [routerLink]="['/delivery/paso1/', delivery._id]">
             <button class="boton_azul_borde">
                 <i class="fa fa-pen"></i>
+            </button>
+        </a>
+        <a *ngIf="delivery.status === 'ESPERANDO'" [routerLink]="['/delivery/confirmar/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-eye"></i>
             </button>
         </a>
     </div>

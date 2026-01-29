@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FileUploadService } from '../../../services/file-upload.service';
 import Swal from 'sweetalert2';
 import { BackComponent } from "../../../shared/back/back.component";
+import { ItemcardComponent } from "../../../shared/itemcard/itemcard.component";
+import { LoadingComponent } from "../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-paso2',
@@ -15,7 +17,9 @@ import { BackComponent } from "../../../shared/back/back.component";
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    BackComponent
+    BackComponent,
+    ItemcardComponent,
+    LoadingComponent
 ],
   templateUrl: './paso2.component.html',
   styleUrl: './paso2.component.css'
@@ -52,11 +56,11 @@ export class Paso2Component {
 
   iniciarFormulario() {
     this.deliverySizeForm = this.fb.group({
-      titulo: [this.delivery.titulo, Validators.required],
-      largo: [this.delivery.largo, Validators.required],
-      ancho: [this.delivery.ancho, Validators.required],
-      alto: [this.delivery.alto, Validators.required],
-      peso: [this.delivery.peso, Validators.required],
+      titulo: ['', Validators.required],
+      largo: ['', Validators.required],
+      ancho: ['', Validators.required],
+      alto: ['', Validators.required],
+      peso: ['', Validators.required],
     })
   }
 
@@ -101,6 +105,7 @@ export class Paso2Component {
     const data: any = {
       _id:this.delivery._id,
       ...this.deliverySizeForm.value,
+      status: 'EDITANDO'
     };
 
     if (this.delivery && this.delivery._id) {

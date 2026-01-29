@@ -6,6 +6,8 @@ import { DeliveryService } from '../../../services/delivery.service';
 import { FileUploadService } from '../../../services/file-upload.service';
 import { CommonModule } from '@angular/common';
 import { BackComponent } from '../../../shared/back/back.component';
+import { ItemcardComponent } from "../../../shared/itemcard/itemcard.component";
+import { LoadingComponent } from "../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-paso3',
@@ -14,7 +16,9 @@ import { BackComponent } from '../../../shared/back/back.component';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    BackComponent
+    BackComponent,
+    ItemcardComponent,
+    LoadingComponent
 ],
   templateUrl: './paso3.component.html',
   styleUrl: './paso3.component.css'
@@ -58,6 +62,7 @@ export class Paso3Component {
     // Incluir coordenadas si están disponibles
     const data: any = {
       ...this.deliveryForm.value,
+       status: 'EDITANDO'
     };
 
     if (this.delivery && this.delivery._id) {

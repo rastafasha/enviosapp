@@ -1,7 +1,11 @@
-<h2>Hacia dónde quieres  
+<div class="container mt-3">
+    <app-loading *ngIf="isLoading"></app-loading>
+    <app-back *ngIf="!isLoading && delivery"></app-back>
+    <app-itemcard *ngIf="!isLoading && delivery" [delivery]="delivery"></app-itemcard>
+    <h2>Hacia dónde quieres  
 enviar tus artículos?</h2>
 
-<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" >
     <div class="col-sm-6">
         <div class="form-group ">
             <label>Desde</label>
@@ -39,7 +43,9 @@ enviar tus artículos?</h2>
         </li>
     </ul>
     <button type="submit" [disabled]="deliveryForm.invalid"
-        class="boton_azul_borde">
+        class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
        Siguiente
     </button>
 </form>
+
+</div>

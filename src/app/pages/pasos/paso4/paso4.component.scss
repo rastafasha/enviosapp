@@ -1,0 +1,28 @@
+.grillaopciones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:15px;
+    flex-wrap: wrap;
+
+    & .opcion{
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        width: 150px;
+        height: 150px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        flex-direction: column;
+        padding: 15px;
+        & h4{
+            margin: 0;
+            padding: 0;
+        }
+        & p{
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

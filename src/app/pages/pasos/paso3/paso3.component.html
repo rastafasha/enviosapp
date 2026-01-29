@@ -1,23 +1,25 @@
 <div class="container">
     <app-back></app-back>
+    <app-loading *ngIf="isLoading"></app-loading>
+    <app-itemcard *ngIf="!isLoading" [delivery]="delivery"></app-itemcard>
     <h2>Cuando te gustaría enviarlo?</h2>
 
-<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" >
     <div class="col-sm-6">
         <div class="form-group ">
             <label>fecha</label>
-            <input class="form-control" type="date" required placeholder="fechaEnvio" formControlName="fecha">
+            <input class="form-control" type="date" required placeholder="fechaEnvio" formControlName="fechaEnvio">
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group ">
             <label>hora</label>
-            <input class="form-control" type="time" required placeholder="horaEnvio" formControlName="hora">
+            <input class="form-control" type="time" required placeholder="horaEnvio" formControlName="horaEnvio">
         </div>
     </div>
 
     <br>
-    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde">
+    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
         Siguiente
     </button>
 </form>

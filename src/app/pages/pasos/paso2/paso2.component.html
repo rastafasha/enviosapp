@@ -1,6 +1,9 @@
 <div class="container">
     <app-back></app-back>
+    <app-loading *ngIf="isLoading"></app-loading>
+    <app-itemcard *ngIf="!isLoading" [delivery]="delivery"></app-itemcard>
     <h2>Qué te gustaría enviar?</h2>
+
 
 <form class=" p-t-20 col-xs-12" [formGroup]="deliverySizeForm" >
     <div class="col-sm-6">
@@ -56,7 +59,7 @@
         </div>
     </div> -->
     <br>
-    <button type="button"  class="boton_azul_borde" (click)="onSubmit()">
+    <button type="button"  class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
         Siguiente
     </button>
 </form>

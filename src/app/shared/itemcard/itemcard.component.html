@@ -1,0 +1,20 @@
+<div class="product_list" >
+        <div class="div1">
+            <!-- <img [src]="(delivery.img ?? '') | imagenPipe: 'deliverys'" [alt]="delivery.titulo"> -->
+        </div>
+        <div class="div2">
+            <p *ngIf="delivery.titulo">{{delivery.titulo}}</p>
+            <p>Desde: {{delivery.direccionEntrega}}  </p>
+            <p>Hasta: {{delivery.direccionRecogida}}</p>
+            <p *ngIf="delivery.fechaEnvio">{{delivery.fechaEnvio |date }}</p>
+            <p *ngIf="delivery.horaEnvio">{{delivery.horaEnvio }}</p>
+            <p *ngIf="delivery.status">{{delivery.status}}</p>
+            <p *ngIf="delivery.tipovehiculo">{{delivery.tipovehiculo}}</p>
+        </div>
+        <div class="div3">
+            <p *ngIf="delivery.alto">Alto: {{delivery.alto}}</p>
+            <p *ngIf="delivery.ancho">Ancho: {{delivery.ancho}}</p>
+            <p *ngIf="delivery.largo">Largo: {{delivery.largo}}</p>
+            <p *ngIf="delivery.peso">Peso: {{delivery.peso}}</p>
+        </div>
+    </div>

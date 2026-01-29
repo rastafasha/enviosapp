@@ -1,23 +1,23 @@
 <div class="container">
     <app-back></app-back>
+    <app-loading *ngIf="isLoading"></app-loading>
+    <app-itemcard *ngIf="!isLoading" [delivery]="delivery"></app-itemcard>
     <h2>Seleccione Vehículo</h2>
+    <p>Asegurese de elegir uno que sea cómodo y práctico para su envio.</p>
 
-<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
-    <div class="col-sm-6">
-        <div class="form-group ">
-            <label>fecha</label>
-            <input class="form-control" type="date" required placeholder="fechaEnvio" formControlName="fecha">
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryCarForm" >
+    <div class="grillaopciones" >
+        <div *ngFor="let tipo of tipos; let i = index;" >
+            <div class="opcion" [class.selected]="tipo.nombre === deliveryCarForm.get('tipovehiculo')?.value" (click)="selectCar(tipo)" style="background-image: url('./assets/delivery/car.jpg');">
+                <h4>{{tipo.nombre}}</h4>
+                <p>opcion</p>
+            </div>
         </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group ">
-            <label>hora</label>
-            <input class="form-control" type="time" required placeholder="horaEnvio" formControlName="hora">
-        </div>
+        
     </div>
 
     <br>
-    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde">
+    <button type="submit"   class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
         Siguiente
     </button>
 </form>

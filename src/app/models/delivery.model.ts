@@ -1,5 +1,6 @@
 import { Usuario } from "./usuario.model";
 import { environment } from "../../environments/environment";
+import { TipoVehiculo } from "./tipovehiculo.model";
 
 const base_url = environment.mediaUrlRemoto;
 export class Delivery {
@@ -12,6 +13,7 @@ export class Delivery {
         public direccionRecogida: string,
         public direccionEntrega: string,
         public largo: string,
+        public tipovehiculo: TipoVehiculo,
         public ancho: string,
         public alto: string,
         public peso: string,
