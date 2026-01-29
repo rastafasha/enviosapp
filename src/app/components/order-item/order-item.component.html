@@ -1,4 +1,4 @@
-<div class="product_list">
+<div class="product_list" *ngIf="asignacion">
     <div class="div1" routerLink="/order-detail">
         <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
     </div>
@@ -12,6 +12,24 @@
         <a [routerLink]="['/order-detail', asignacion._id]">
             <button class="boton_azul_borde">
                 <i class="fa fa-eye"></i>
+            </button>
+        </a>
+    </div>
+</div>
+<div class="product_list" *ngIf="delivery">
+    <div class="div1" routerLink="/order-detail">
+        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+    </div>
+    <div class="div2">
+        <h3>Order # {{delivery._id | slice:0:8}}</h3>
+        <p>Standard Delivery</p>
+        <h4>{{delivery.status}}</h4>
+    </div>
+    <div class="div3">
+        <p> 1 item</p>
+        <a [routerLink]="['/delivery/paso2/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-pen"></i>
             </button>
         </a>
     </div>

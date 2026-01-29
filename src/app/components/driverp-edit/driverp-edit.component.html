@@ -156,7 +156,7 @@
                                 }
                             </div>
                             <!-- Tipo Vehículo -->
-                            <div class="col-md-4 ">
+                            <!-- <div class="col-md-4 ">
                                 <div class="form-group labelgoogle">
                                     <label for="exampleInputPais">Tipo Vehículo</label>
                                     <select formControlName="tipo_vehiculo" class="form-control">
@@ -180,7 +180,30 @@
                                     }
                                 </div>
                                 }
-                            </div>
+                            </div> -->
+
+                            <!-- Tipo Vehículo -->
+                                <div class="col-md-4 ">
+                                    <div class="input-group form-label labelgoogle">
+                                        <select class="form-control" formControlName="tipo_vehiculo">
+                                            <option [value]=" ">Seleccione </option>
+                                            <option *ngFor="let data of tipos" [value]="data.nombre">
+                                                {{data.nombre}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    @if(driverForm.controls['tipo_vehiculo'].touched){
+
+                                    <div class="text-danger">
+                                        @if(driverForm.controls['tipo_vehiculo'].errors?.['required']){
+                                        <span>{{'Field Required'}}</span>
+                                        }
+                                        @if(driverForm.controls['tipo_vehiculo'].errors?.['minlength']){
+                                        <span>{{'3 Charecters Minimal'}}</span>
+                                        }
+                                    </div>
+                                    }
+                                </div>
 
                             <!-- placa -->
                             <div class="col-md-4 ">

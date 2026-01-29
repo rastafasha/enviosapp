@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { DriverpService } from '../../services/driverp.service';
+import { DeliveryService } from '../../services/delivery.service';
 
 @Component({
   selector: 'app-mis-entregas',
@@ -30,6 +31,7 @@ export class MisEntregasComponent {
   statusC = 'Confirmado';
 
   private driverService = inject(DriverpService);
+  
   private router = inject(Router);
 
 

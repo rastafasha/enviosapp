@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { TipoVehiculo } from '../../models/tipovehiculo.model';
+import { TipovehiculoService } from '../../services/tipovehiculo.service';
 declare var jQuery: any;
 declare var $: any;
 
@@ -66,6 +68,8 @@ export class DriverpEditComponent implements OnInit {
   option_selectedd: number = 1;
   solicitud_selectedd: any = null;
 
+  tipos!: TipoVehiculo[] | null;
+
 
   //DATA
   public new_password = '';
@@ -74,6 +78,7 @@ export class DriverpEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
+    private tiposvhService: TipovehiculoService,
     private driverService: DriverpService,
     private fileUploadService: FileUploadService
   ) {
@@ -91,6 +96,7 @@ export class DriverpEditComponent implements OnInit {
     this.user_id = this.identity.uid;
     console.log(this.identity)
     this.getDriver();
+    this.getTipoVehiculo();
     this.iniciarFormulario();
 
   }
@@ -99,8 +105,6 @@ export class DriverpEditComponent implements OnInit {
     this.driverService.getByUserId(this.user_id).subscribe((resp: any) => {
       this.driver = resp;
       this.driver_id = resp._id;
-      console.log(this.driver)
-      console.log(this.driver_id)
 
       if(this.driver){
         this.driverForm.setValue({
@@ -119,6 +123,14 @@ export class DriverpEditComponent implements OnInit {
       
     })
   }
+
+  getTipoVehiculo(){
+    this.tiposvhService.getTiposVehics().subscribe((resp:any)=>{
+      this.tipos = resp;
+    })
+  }
+
+
 
   iniciarFormulario() {
     this.driverForm = this.fb.group({

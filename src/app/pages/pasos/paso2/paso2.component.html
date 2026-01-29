@@ -2,7 +2,7 @@
     <app-back></app-back>
     <h2>Qué te gustaría enviar?</h2>
 
-<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+<form class=" p-t-20 col-xs-12" [formGroup]="deliverySizeForm" >
     <div class="col-sm-6">
         <div class="form-group ">
             <label>Titulo</label>
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Foto -->
-    <div  style="height: auto; margin-bottom: 20px;">
+    <!-- <div  style="height: auto; margin-bottom: 20px;">
         <div class="col-xs-12 col-sm-">
             <div class="form-group">
                 <div class="cz-file-drop-area">
@@ -43,7 +43,7 @@
                         <input type="file" accept="image/*" name="image" id="file"
                             (change)="cambiarImagen($any($event.target).files?.[0])" class="hide-input input">
                         <span class="label__name">
-                            {{'Imagen de Vehículo'}}
+                            Imagen de Vehículo
                         </span>
                     </label>
                     <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="boton_azul_borde ">
@@ -54,9 +54,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <br>
-    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde">
+    <button type="button"  class="boton_azul_borde" (click)="onSubmit()">
         Siguiente
     </button>
 </form>

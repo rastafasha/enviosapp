@@ -68,39 +68,6 @@ export class Paso4Component {
               console.error('Error: Respuesta de actualización no contiene _id', resp);
             }
           });
-      } else {
-        // Crear
-        this.deliveryService.registro(data)
-          .subscribe((resp: any) => {
-            // Swal.fire('Creado', `${nombres_completos} creado correctamente`, 'success');
-            console.log('Respuesta completa del servidor:', resp);
-  
-            // Extraer el ID de diferentes posibles estructuras de respuesta
-            let deliveryId: string | undefined;
-  
-            // Intentar acceder como objeto con propiedad delivery
-            const respObj = resp as { delivery?: { _id?: string }, _id?: string };
-            if (respObj.delivery && respObj.delivery._id) {
-              // Estructura: { ok: true, delivery: { _id: '...', ... } }
-              this.delivery = { ...this.delivery, ...respObj.delivery } as Delivery;
-              deliveryId = respObj.delivery._id;
-            } else if (respObj._id) {
-              // Estructura: { _id: '...', ... }
-              this.delivery = resp;
-              deliveryId = respObj._id;
-            } else if (resp.ok && resp.msg) {
-              // Estructura con mensaje, buscar en la respuesta
-              console.warn('Respuesta con mensaje pero sin delivery:', resp);
-            } else {
-              console.warn('Estructura de respuesta no reconocida:', resp);
-            }
-  
-            if (deliveryId) {
-              this.router.navigate([`/delivery/paso4/`, deliveryId]);
-            } else {
-              console.error('No se pudo obtener el ID del delivery de la respuesta');
-            }
-          });
-      }
+      } 
     }
 }

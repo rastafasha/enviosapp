@@ -47,7 +47,7 @@ export class DeliveryService {
   
     listarUsuario(id:string):Observable<any>{
       let headers = new HttpHeaders().set('Content-Type','application/json');
-      return this._http.get(this.url + '/delivery/deliveryusuario/'+id,{headers:headers})
+      return this._http.get(this.url + '/delivery/user/'+id,{headers:headers})
   
     }
   

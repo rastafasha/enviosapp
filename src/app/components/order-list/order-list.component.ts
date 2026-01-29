@@ -6,6 +6,8 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { LoadingComponent } from "../../shared/loading/loading.component";
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
+import { DeliveryService } from '../../services/delivery.service';
+import { Delivery } from '../../models/delivery.model';
 
 @Component({
   selector: 'app-order-list',
@@ -26,6 +28,7 @@ export class OrderListComponent {
   @Input() statusC!: any;
   @Input() statusD!: any;
   asignacions!: Asignacion [];
+  deliveries!: Delivery [];
 
   isLoading: boolean = false;
   user!:Usuario
@@ -35,6 +38,7 @@ export class OrderListComponent {
 
   private asignacionDService = inject(AsignardeliveryService);
   private userService = inject(UsuarioService);
+  private deliveryService = inject(DeliveryService);
 
   ngOnInit(){
     this.identityId;
@@ -44,7 +48,7 @@ export class OrderListComponent {
     this.userId = this.user.uid;
     
     if(this.user.role == 'CHOFER'){
-        this.loadAsignaciones();
+        // this.loadAsignaciones();
       } else {
         this.loadAsignacionesByUser();
       }
@@ -75,8 +79,8 @@ export class OrderListComponent {
 
   loadAsignacionesByUser(){
     this.isLoading = true;
-    this.asignacionDService.getByUserId(this.userId).subscribe((resp:any)=>{
-      this.asignacions = resp;
+    this.deliveryService.listarUsuario(this.userId).subscribe((resp:any)=>{
+      this.deliveries = resp.deliveries;
        this.isLoading = false;
     });
   }
