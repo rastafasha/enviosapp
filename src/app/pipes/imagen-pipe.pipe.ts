@@ -8,8 +8,8 @@ const base_url = environment.baseUrl
 })
 export class ImagenPipe implements PipeTransform {
 
-  transform(img: string, tipo: 'usuarios'|'categorias'|'marcas'|'productos'|'congenerals'
-  |'promocions'|'galerias'|'ingresos'|'blogs' |'pages' |'cursos'|'drivers'|'tiendas'|'locaciones'
+  transform(img: string, tipo: 'usuarios'|'congenerals'
+  |'promocions'|'blogs' |'drivers'|'deliverys'
 ): string {
 
     if(!img){

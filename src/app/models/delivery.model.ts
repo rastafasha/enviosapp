@@ -1,8 +1,7 @@
 import { Usuario } from "./usuario.model";
-// import { Tienda } from "./tienda.model";
-// import { Venta } from "./ventas.model";
+import { environment } from "../../environments/environment";
 
-
+const base_url = environment.mediaUrlRemoto;
 export class Delivery {
      constructor(
         public usuario : Usuario,
@@ -22,4 +21,18 @@ export class Delivery {
     
       ){
       }
+
+      get imagenUrl(){
+
+    if(!this.img){
+      return `${base_url}/uploads/deliverys/no-image.jpg`;
+    } else if(this.img.includes('https')){
+      return this.img;
+    } else if(this.img){
+      return `${base_url}/uploads/deliverys/${this.img}`;
+    }else {
+      return `${base_url}/uploads/deliverys/no-image.jpg`;
+    }
+
+  }
 }

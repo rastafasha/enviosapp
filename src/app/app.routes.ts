@@ -11,6 +11,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RecoveryComponent } from './auth/recovery/recovery.component';
 import { PerfilComponent } from './pages/profile/perfil/perfil.component';
 import { DireccionEditComponent } from './pages/profile/direcciones/direccion-edit/direccion-edit.component';
+import { Paso2Component } from './pages/pasos/paso2/paso2.component';
+import { Paso3Component } from './pages/pasos/paso3/paso3.component';
+import { Paso4Component } from './pages/pasos/paso4/paso4.component';
 
 
 
@@ -42,10 +45,11 @@ export const routes: Routes = [
     {path: 'myprofile/:id', component: PerfilComponent },
     {path: 'myprofile/direccion/create', component: DireccionEditComponent },
     {path: 'myprofile/direccion/edit/:id', component: DireccionEditComponent },
-    // {path: 'my-account', component: MyaccountComponent },
-    // { path: 'my-account/ordenes', component: IndexOrdenesComponent},
-    // { path: 'my-account/ordenes/detalles/:id', component: DetalleOrdenComponent},
-    // {path: 'my-account/cart', component: CartCheckoutComponent },
+
+    {path: 'delivery/paso1/', component: HomeComponent },
+    {path: 'delivery/paso2/:id', component: Paso2Component },
+    {path: 'delivery/paso3/:id', component: Paso3Component },
+    {path: 'delivery/paso4/:id', component: Paso4Component },
     
 
     {path: '**', redirectTo: '', pathMatch: 'full'},

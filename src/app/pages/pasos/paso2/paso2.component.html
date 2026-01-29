@@ -1,0 +1,63 @@
+<div class="container">
+    <app-back></app-back>
+    <h2>Qué te gustaría enviar?</h2>
+
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>Titulo</label>
+            <input class="form-control" type="text" required placeholder="titulo" formControlName="titulo">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>largo</label>
+            <input class="form-control" type="text" required placeholder="largo" formControlName="largo">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>ancho</label>
+            <input class="form-control" type="text" required placeholder="ancho" formControlName="ancho">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>alto</label>
+            <input class="form-control" type="text" required placeholder="alto" formControlName="alto">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>peso</label>
+            <input class="form-control" type="text" required placeholder="peso" formControlName="peso">
+        </div>
+    </div>
+
+    <!-- Foto -->
+    <div  style="height: auto; margin-bottom: 20px;">
+        <div class="col-xs-12 col-sm-">
+            <div class="form-group">
+                <div class="cz-file-drop-area">
+                    <label for="file" class="upload labelgoogle">
+                        <input type="file" accept="image/*" name="image" id="file"
+                            (change)="cambiarImagen($any($event.target).files?.[0])" class="hide-input input">
+                        <span class="label__name">
+                            {{'Imagen de Vehículo'}}
+                        </span>
+                    </label>
+                    <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()" class="boton_azul_borde ">
+                        <i class="fa fa-save"></i> Cambiar imagen
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde">
+        Siguiente
+    </button>
+</form>
+</div>

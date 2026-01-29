@@ -1,0 +1,24 @@
+<div class="container">
+    <app-back></app-back>
+    <h2>Cuando te gustaría enviarlo?</h2>
+
+<form class=" p-t-20 col-xs-12" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>fecha</label>
+            <input class="form-control" type="date" required placeholder="fechaEnvio" formControlName="fecha">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group ">
+            <label>hora</label>
+            <input class="form-control" type="time" required placeholder="horaEnvio" formControlName="hora">
+        </div>
+    </div>
+
+    <br>
+    <button type="submit" [disabled]="deliveryForm.invalid" class="boton_azul_borde">
+        Siguiente
+    </button>
+</form>
+</div>
