@@ -30,6 +30,7 @@ export class DriverHomeComponent {
   driver!:Driver;
   driverId!:string;
   identityId!:string;
+  tipovehiculo!:string;
   isLoading= false;
 
   private usuarioService = inject(UsuarioService);
@@ -72,7 +73,7 @@ export class DriverHomeComponent {
         this.driverId = resp._id;
         // console.log(this.identity)
         this.isLoading = false;
-
+      this.tipovehiculo = this.driver.tipo_vehiculo
         
       })
   }

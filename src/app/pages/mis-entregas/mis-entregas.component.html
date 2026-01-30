@@ -1,5 +1,5 @@
 <!-- <app-header></app-header> -->
-<div class="container">
+<div class="container" style="margin-bottom: 30px;">
     <div class="saludo">
             <h2>Mis Entregas</h2>
         </div>
@@ -56,7 +56,7 @@
     </div>
     <div *ngIf="option_selectedd == 2">
         <div class="list_products">
-            <app-order-list [status]="'ENTREGADO'" [identity]="identity" [identityId]="identityId"></app-order-list>
+            <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
         </div>
     </div>
     <div *ngIf="option_selectedd == 3">
@@ -76,6 +76,9 @@
         </div>
          <div class="list_products">
             <app-order-list [status]="'En Camino'" [identity]="identity" [identityId]="identityId"></app-order-list>
+        </div>
+         <div class="list_products">
+            <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
         </div>
     </div>
     <div *ngIf="option_selectedd == 6">

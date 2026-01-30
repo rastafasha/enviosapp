@@ -33,6 +33,7 @@
             <img [src]="(driver.img ?? '') | imagenPipe: 'drivers'" [alt]="driver.modelo">
         </div>
         <div class="div2">
+            <p>{{driver.tipo_vehiculo}}</p>
             <h3>{{driver.modelo}}</h3>
             <h3>{{driver.marca}}</h3>
             <h4>{{driver.color}}</h4>

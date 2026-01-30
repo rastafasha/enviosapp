@@ -12,9 +12,11 @@
             <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
         </div>
         <div class="div2">
-            <h5># {{delivery._id | slice:0:10}}</h5>
+            <p># {{delivery._id | slice:0:10}}</p>
             <p>{{delivery.titulo}}</p>
             <h5>{{delivery.status}}</h5>
+            <h5>{{delivery.tipovehiculo }}</h5>
+            <h5>{{delivery.precio | currency}}</h5>
         </div>
         <div class="div3 botonera">
             <button class="boton_azul_borde" *ngIf="identity.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
@@ -22,7 +24,7 @@
             <!-- <a routerLink="/delivery-status" *ngIf="identity.role ==='USER'">
                 <button class="boton_azul_borde">Status</button>
             </a> -->
-            <a [routerLink]="['/mapa-page/',delivery._id]" *ngIf="delivery.status !== 'Confirmado'">
+            <a [routerLink]="['/mapa-page/',delivery._id]" *ngIf="delivery.status !== 'Confirmado' && delivery.status !=='ESPERANDO'">
                 <button class="boton_azul_borde">Mapa</button>
             </a>
         </div>

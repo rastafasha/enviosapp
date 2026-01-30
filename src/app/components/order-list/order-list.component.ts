@@ -25,6 +25,8 @@ export class OrderListComponent {
   @Input() driverId!: string;
   @Input() asignacion!: any;
   @Input() status!: any;
+  @Input() tipovehiculo!: any;
+
   asignacions!: Asignacion[];
   deliveries!: Delivery[];
 
@@ -53,8 +55,14 @@ export class OrderListComponent {
     } else {
       // this.loadDeliverysByUser();
     }
-      if (this.status) {
+      if (this.status && this.userId) {
         this.loadDeliverysByStatusUser();
+      }
+      if (this.status) {
+        this.loadDeliverysByStatus();
+      }
+      if (this.status && this.tipovehiculo) {
+        this.loadDeliverysByStatusTipo();
       }
     
     // setTimeout(() => {
@@ -80,6 +88,13 @@ export class OrderListComponent {
   loadDeliverysByStatus() {
     this.isLoading = true;
     this.deliveryService.getDeliveryByStatus(this.status).subscribe((resp: any) => {
+      this.deliveries = resp;
+      this.isLoading = false;
+    });
+  }
+  loadDeliverysByStatusTipo() {
+    this.isLoading = true;
+    this.deliveryService.getDeliveryByStatusTipo(this.status, this.tipovehiculo).subscribe((resp: any) => {
       this.deliveries = resp;
       this.isLoading = false;
     });

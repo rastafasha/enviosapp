@@ -73,6 +73,14 @@ export class DeliveryService {
           map((resp:{ok: boolean, deliveries: Delivery[]}) => resp.deliveries)
           );
     }
+
+     getDeliveryByStatusTipo(status:string, tipo:string){
+      const url = `${base_url}/delivery/status/${status}/${tipo}`;
+      return this._http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, deliveries: Delivery[]}) => resp.deliveries)
+          );
+    }
   
     update(delivery:Delivery){
       const url = `${base_url}/delivery/update/${delivery._id}`;

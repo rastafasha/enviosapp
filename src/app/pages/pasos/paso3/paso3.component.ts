@@ -39,20 +39,25 @@ export class Paso3Component {
   
     ngOnInit() {
       this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
-      const id = this.deliveryId
+      const id = this.deliveryId;
+      this.validarFormulario();
 
     }
     getDelivery(id: string) {
       this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
         this.delivery = resp;
-        this.iniciarFormulario();
+        this.deliveryForm.patchValue({
+            // id: this._id,
+            fechaEnvio: this.delivery.fechaEnvio,
+            horaEnvio: this.delivery.horaEnvio,
+          });
       })
     }
   
-    iniciarFormulario() {
+    validarFormulario() {
       this.deliveryForm = this.fb.group({
-        fechaEnvio: [this.delivery.fechaEnvio, Validators.required],
-        horaEnvio: [this.delivery.horaEnvio, Validators.required],
+        fechaEnvio: ['', Validators.required],
+        horaEnvio: ['', Validators.required],
       })
     }
 
@@ -61,8 +66,11 @@ export class Paso3Component {
 
     // Incluir coordenadas si están disponibles
     const data: any = {
-      ...this.deliveryForm.value,
-       status: 'EDITANDO'
+      // ...this.deliveryForm.value,
+        _id: this.delivery._id,
+       status: 'EDITANDO',
+       fechaEnvio: fechaEnvio,
+       horaEnvio: horaEnvio,
     };
 
     if (this.delivery && this.delivery._id) {
@@ -73,7 +81,7 @@ export class Paso3Component {
           if (resp && resp.delivery && resp.delivery._id) {
             this.router.navigate([`/delivery/paso4/`, this.delivery._id]);
           } else {
-            console.error('Error: Respuesta de actualización no contiene _id', resp);
+            // console.error('Error: Respuesta de actualización no contiene _id', resp);
             this.router.navigate([`/delivery/paso4/`, this.delivery._id]);
           }
         });

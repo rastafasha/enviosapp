@@ -44,83 +44,70 @@ export class Paso2Component {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
-    const id = this.deliveryId
+    const id = this.deliveryId;
+    this.validarFormulario();
   }
+
   getDelivery(id: string) {
     this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
       console.log(this.delivery)
-      this.iniciarFormulario();
+      this.deliverySizeForm.patchValue({
+            // id: this._id,
+            title: this.delivery.title,
+            largo: this.delivery.largo,
+            ancho: this.delivery.ancho,
+            alto: this.delivery.alto,
+            peso: this.delivery.peso,
+          });
     })
   }
 
-  iniciarFormulario() {
+
+  validarFormulario() {
     this.deliverySizeForm = this.fb.group({
-      title: [this.delivery.title, Validators.required],
-      largo: [this.delivery.largo, Validators.required],
-      ancho: [this.delivery.ancho, Validators.required],
-      alto: [this.delivery.alto, Validators.required],
-      peso: [this.delivery.peso, Validators.required],
+      title: ['', Validators.required],
+      largo: ['', Validators.required],
+      ancho: ['', Validators.required],
+      alto: ['', Validators.required],
+      peso: ['', Validators.required],
     })
-  }
-
-  cambiarImagen(file: File) {
-    this.imagenSubir = file;
-
-    // if (!file) {
-    //   return this.imgTemp = null;
-    // }
-
-    const reader = new FileReader();
-    const url64 = reader.readAsDataURL(file);
-
-    reader.onloadend = () => {
-      this.imgTemp = reader.result;
-    }
-  }
-
-  subirImagen() {
-    this.isLoading = true;
-    this.fileUploadService
-      .actualizarFoto(this.imagenSubir, 'deliverys', this.deliveryId)
-      .then(img => {
-        this.delivery.img = img;
-        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
-        this.isLoading = false;
-        this.ngOnInit()
-      }).catch(err => {
-        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-        this.isLoading = false;
-        this.ngOnInit()
-      })
   }
 
 
 
   onSubmit() {
-    const { title, largo, ancho, alto,
-      peso,} = this.deliverySizeForm.value;
+    // if (this.deliverySizeForm.invalid) {
+    //   return;
+    // }
 
-    // Incluir coordenadas si están disponibles
+    const { title, largo, ancho, alto, peso } = this.deliverySizeForm.value;
+
     const data: any = {
-      _id:this.delivery._id,
-      ...this.deliverySizeForm.value,
+      _id: this.delivery._id,
+      title: title,
+      largo: largo,
+      ancho: ancho,
+      alto: alto,
+      peso: peso,
       status: 'EDITANDO'
     };
 
     if (this.delivery && this.delivery._id) {
-      // Actualizar
-      data._id = this.delivery._id;
       this.deliveryService.update(data).subscribe(
         (resp: any) => {
           if (resp && resp.delivery && resp.delivery._id) {
             this.router.navigate([`/delivery/paso3/`, this.delivery._id]);
           } else {
-            console.error('Error: Respuesta de actualización no contiene _id', resp);
-             this.router.navigate([`/delivery/paso3/`, this.delivery._id]);
+            // console.error('Error: Respuesta de actualización no contiene _id', resp);
+            this.router.navigate([`/delivery/paso3/`, this.delivery._id]);
           }
-        });
-    } 
+        },
+        (error) => {
+          console.error('Error updating delivery:', error);
+        }
+      );
+    }
   }
 
 }
