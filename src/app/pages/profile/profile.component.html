@@ -21,6 +21,9 @@
             </a>
         </div>
     </div>
+    <div *ngIf="!identity?.telefono && !identity?.numdoc" style="margin-bottom: 20px;">
+        <app-aviso [aviso]="'Completa tu registro, preferiblemente un numero de Whatsapp '"></app-aviso>
+    </div>
 
      <app-direcciones [identity]="identity" *ngIf="identity && identity.role ==='USER'"></app-direcciones>
 

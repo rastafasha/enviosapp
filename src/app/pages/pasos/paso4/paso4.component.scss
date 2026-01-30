@@ -16,6 +16,7 @@
         background-size: contain;
         flex-direction: column;
         padding: 15px;
+        border: 1px solid transparent;
         & h4{
             margin: 0;
             padding: 0;
@@ -24,5 +25,8 @@
             margin: 0;
             padding: 0;
         }
+    }
+    & .opcion:hover{
+        border: 1px solid var(--azul);
     }
 }

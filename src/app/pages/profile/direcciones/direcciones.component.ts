@@ -11,6 +11,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { Pais } from '../../../models/pais.model';
 import { LoadingComponent } from "../../../shared/loading/loading.component";
 import { BackComponent } from "../../../shared/back/back.component";
+import { AvisoComponent } from "../../../shared/aviso/aviso.component";
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,7 +19,7 @@ declare var $:any;
   selector: 'app-direcciones',
   templateUrl: './direcciones.component.html',
   imports: [LoadingComponent,
-    CommonModule, RouterModule]
+    CommonModule, RouterModule, AvisoComponent]
 })
 export class DireccionesComponent implements OnInit {
 

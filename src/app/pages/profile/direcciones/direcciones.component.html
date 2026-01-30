@@ -3,9 +3,16 @@
 
     <app-loading *ngIf="isLoading"></app-loading>
 
+    <div *ngIf="!isLoading && !direcciones?.length && direcciones.length < 1" style="margin-bottom: 20px;">
+        <app-aviso [aviso]="'Crea 2 direcciones para solicitar el delivery '"></app-aviso>
+        <div class="text-sm-right">
+            <button class="boton_azul_borde" routerLink="/myprofile/direccion/create">Agregar
+                Dirección</button>
+        </div>
+    </div>
 
     <!--cuadromodal-->
-    <div class="container-fluid cuadro-modal animated fadeInUp" *ngIf="!isLoading">
+    <div class="container-fluid cuadro-modal animated fadeInUp" *ngIf="!isLoading && direcciones?.length">
         <div class="row">
             <div class="areablanc areablanc-interna animated fadeInUp">
                 <div class="div-responsive1">
@@ -34,7 +41,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <ng-container *ngIf="direcciones.length < 0">
+                                            <ng-container *ngIf="!direcciones?.length">
                                                 <tr>
                                                     <td colspan="3" class="text-center">No tienes ninguna dirección
                                                         registrada.</td>
@@ -48,7 +55,7 @@
                                                     {{item.direccion}}
                                                 </td>
                                                 <td>
-                                                    &nbsp; 
+                                                    &nbsp;
                                                     <a class="nav-link-style mr-2 text-success btn-sm"
                                                         [routerLink]="['/myprofile/direccion/edit/',item._id]"
                                                         style="cursor:pointer">

@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
         this.usuarioService.getLocalStorage();
          if(localStorage.getItem('user')){
           setTimeout(()=>{
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/myprofile');
           },500);
         }
       },(err) => {
