@@ -15,11 +15,6 @@ export const environment = {
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/enviosapp',
   
   //pluggins
-  rapidapiKey: '****',
-  rapidapiHost: '****',
-  clientIdPaypal: '****',
-  sandboxPaypal: '****',
-  client_idGoogle: '****'
   
 };
 
