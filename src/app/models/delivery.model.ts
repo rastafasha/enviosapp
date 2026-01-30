@@ -8,7 +8,7 @@ export class Delivery {
      constructor(
         public user : Usuario,
         public status: string,
-        public titulo: string,
+        public title: string,
         public img: string,
         public descripcion: string,
         public direccionRecogida: Direccion,
@@ -18,6 +18,7 @@ export class Delivery {
         public ancho: string,
         public alto: string,
         public peso: string,
+        public precio: string,
         public fechaEnvio: string,
         public horaEnvio: string,
         public _id?: string

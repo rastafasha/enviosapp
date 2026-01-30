@@ -56,7 +56,7 @@ export class Paso2Component {
 
   iniciarFormulario() {
     this.deliverySizeForm = this.fb.group({
-      titulo: [this.delivery.titulo, Validators.required],
+      title: [this.delivery.title, Validators.required],
       largo: [this.delivery.largo, Validators.required],
       ancho: [this.delivery.ancho, Validators.required],
       alto: [this.delivery.alto, Validators.required],
@@ -98,7 +98,7 @@ export class Paso2Component {
 
 
   onSubmit() {
-    const { titulo, largo, ancho, alto,
+    const { title, largo, ancho, alto,
       peso,} = this.deliverySizeForm.value;
 
     // Incluir coordenadas si están disponibles

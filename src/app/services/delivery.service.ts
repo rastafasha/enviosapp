@@ -59,6 +59,13 @@ export class DeliveryService {
           );
     }
     
+    getDeliveryByStatusUser(status:string, id:string){
+      const url = `${base_url}/delivery/status/${status}/${id}`;
+      return this._http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, deliveries: Delivery[]}) => resp.deliveries)
+          );
+    }
     getDeliveryByStatus(status:string){
       const url = `${base_url}/delivery/status/${status}`;
       return this._http.get<any>(url, this.headers)
@@ -77,12 +84,12 @@ export class DeliveryService {
       return this._http.delete(url, this.headers);
     }
 
-    activar(_id: any): Observable<any> {
-        const url = `${base_url}/delivery/activar/${_id}`;
+    activar(_id: any, driverId:string): Observable<any> {
+        const url = `${base_url}/delivery/activar/${_id}/${driverId}`;
         return this._http.get(url, this.headers);
       }
-      entregado(_id: any): Observable<any> {
-        const url = `${base_url}/delivery/entregado/${_id}`;
+      entregado(_id: any, driverId:string): Observable<any> {
+        const url = `${base_url}/delivery/entregado/${_id}/${driverId}`;
         return this._http.get(url, this.headers);
       }
       recibido(_id: any): Observable<any> {

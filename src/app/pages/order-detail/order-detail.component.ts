@@ -59,7 +59,7 @@ export class OrderDetailComponent {
       let user = JSON.parse(USER);
       this.usuarioService.get_user(user.uid).subscribe((resp: any) => {
         this.identity = resp.usuario;
-
+        this.driverId = this.identity.uid;
       })
     }
   }
@@ -81,7 +81,7 @@ export class OrderDetailComponent {
   //actualizamos es status de la asignacion a 'EN PROCESO' cuando el chofer aplica para entregar el pedido
   activarDelivery(){
  
-    this.deliveryServices.activar(this.delivery._id).subscribe((resp:any)=>{
+    this.deliveryServices.activar(this.delivery._id, this.driverId).subscribe((resp:any)=>{
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();
@@ -90,7 +90,7 @@ export class OrderDetailComponent {
 
   marcarEntregado(){
  
-    this.deliveryServices.entregado(this.delivery._id).subscribe((resp:any)=>{
+    this.deliveryServices.entregado(this.delivery._id, this.driverId ).subscribe((resp:any)=>{
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();
@@ -98,7 +98,7 @@ export class OrderDetailComponent {
   }
   marcarRecibido(){
  
-    this.deliveryServices.recibido(this.delivery._id).subscribe((resp:any)=>{
+    this.deliveryServices.recibido(this.delivery._id,).subscribe((resp:any)=>{
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();

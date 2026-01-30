@@ -7,6 +7,7 @@ export class TipoVehiculo{
     public nombre : string,
     public icono: string,
     public img: string,
+    public precio: number,
     public status: string,
     public _id?: string
 

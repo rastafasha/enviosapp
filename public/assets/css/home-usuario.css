@@ -78,7 +78,7 @@
 
 .itemdelivery {
     display: flex;
-    gap: 15px;
+    gap: 25px;
     flex-direction: row;
     border: 1px solid #ccc;
     padding: 10px;

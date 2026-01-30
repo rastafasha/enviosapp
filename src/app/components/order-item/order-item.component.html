@@ -22,7 +22,7 @@
     </div>
     <div class="div2">
         <h5>Order # {{delivery._id | slice:0:8}}</h5>
-        <p>{{delivery.titulo}}</p>
+        <p>{{delivery.title}}</p>
         <h4>{{delivery.status}}</h4>
     </div>
     <div class="div3" *ngIf="identity?.role ==='CHOFER'">

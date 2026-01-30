@@ -47,7 +47,7 @@
             </button>
         </div>
     </div>
-    
+
     <!-- Coordenadas -->
     <div class="num_tracking">
         <i class="fa fa-map-pin"></i>
@@ -62,7 +62,8 @@
     <h4 *ngIf="identity.role ==='USER'">Info Chofer</h4>
     <div class="product_list" *ngIf="identity.role ==='USER'">
         <div class="div1">
-            <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
+            <img [src]="(userDriver.img || '') | imagenPipe :'drivers'" alt="">
+
         </div>
         <div class="div2">
             <h4>{{userDriver.first_name}} {{userDriver.last_name}}</h4>

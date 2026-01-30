@@ -63,8 +63,22 @@ export class Paso4Component {
 
   iniciarFormulario() {
     this.deliveryCarForm = this.fb.group({
-      tipovehiculo: [this.delivery.tipovehiculo, Validators.required]
+      tipovehiculo: ['', Validators.required]
     })
+  }
+
+  
+
+  selectCar(tipo: TipoVehiculo) {
+    this.tipo = tipo;
+
+    // Si tipovehiculo está vacía/null, guardar como pickup address
+    if (!this.deliveryCarForm.get('tipovehiculo')?.value) {
+      this.tipo = tipo;
+      this.deliveryCarForm.get('tipovehiculo')?.setValue(tipo.nombre);
+      console.log('Guardada como tipovehiculo');
+    }
+
   }
 
   onSubmit() {
@@ -73,7 +87,8 @@ export class Paso4Component {
     // Incluir coordenadas si están disponibles
     const data: any = {
       ...this.deliveryCarForm.value,
-       status: 'EDITANDO'
+       status: 'EDITANDO',
+       precio: this.tipo.precio
     };
 
     if (this.delivery && this.delivery._id) {
@@ -91,19 +106,6 @@ export class Paso4Component {
     }
   }
 
-
-  selectCar(tipo: TipoVehiculo) {
-    this.tipo = tipo;
-
-    // Si tipovehiculo está vacía/null, guardar como pickup address
-    if (!this.deliveryCarForm.get('tipovehiculo')?.value) {
-      this.tipo = tipo;
-      this.deliveryCarForm.get('tipovehiculo')?.setValue(tipo.nombre);
-      console.log('Guardada como tipovehiculo');
-    }
-    // this.ngOnInit();
-
-  }
 
 
 }

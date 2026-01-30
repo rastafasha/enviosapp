@@ -20,71 +20,71 @@ import { Delivery } from '../../models/delivery.model';
 })
 export class OrderListComponent {
 
-  @Input() identity!:string;
-  @Input() identityId!:string;
-  @Input() driverId!:string;
+  @Input() identity!: string;
+  @Input() identityId!: string;
+  @Input() driverId!: string;
   @Input() asignacion!: any;
   @Input() status!: any;
-  asignacions!: Asignacion [];
-  deliveries!: Delivery [];
+  asignacions!: Asignacion[];
+  deliveries!: Delivery[];
 
   isLoading: boolean = false;
-  user!:Usuario
-  userId!:any;
-  statusreqest!:string;
-  iduserstatus!:string;
+  user!: Usuario
+  userId!: any;
+  statusreqest!: string;
+  iduserstatus!: string;
 
   private asignacionDService = inject(AsignardeliveryService);
   private userService = inject(UsuarioService);
   private deliveryService = inject(DeliveryService);
 
-  ngOnInit(){
+  ngOnInit() {
     this.identityId;
 
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER || '{}');
 
     this.userId = this.user.uid;
+
+    if (this.user.role == 'CHOFER') {
+      // this.loadDeliverys();
     
-    if(this.user.role == 'CHOFER'){
-        // this.loadAsignaciones();
-      } else {
-        this.loadAsignacionesByUser();
-      }
-      
-      if(this.status ){
-        this.loadAsignacionesByStatus();
+
+    } else {
+      // this.loadDeliverysByUser();
+    }
+      if (this.status) {
+        this.loadDeliverysByStatusUser();
       }
     
     // setTimeout(() => {
     // }, 500);
   }
 
-  loadAsignaciones(){
-    this.isLoading = true;
-    this.asignacionDService.getByDriverId(this.identityId).subscribe((resp:any)=>{  
-      this.asignacions = resp;
-       this.isLoading = false;
-    });
 
-  }
-
-  loadAsignacionesByUser(){
+  loadDeliverysByUser() {
     this.isLoading = true;
-    this.deliveryService.listarUsuario(this.userId).subscribe((resp:any)=>{
+    this.deliveryService.listarUsuario(this.userId).subscribe((resp: any) => {
       this.deliveries = resp.deliveries;
-       this.isLoading = false;
+      this.isLoading = false;
     });
   }
-  
-  loadAsignacionesByStatus(){
+
+  loadDeliverysByStatusUser() {
     this.isLoading = true;
-    this.deliveryService.getDeliveryByStatus(this.status).subscribe((resp:any)=>{
+    this.deliveryService.getDeliveryByStatusUser(this.status, this.userId).subscribe((resp: any) => {
       this.deliveries = resp;
-       this.isLoading = false;
+      this.isLoading = false;
     });
   }
-  
+  loadDeliverysByStatus() {
+    this.isLoading = true;
+    this.deliveryService.getDeliveryByStatus(this.status).subscribe((resp: any) => {
+      this.deliveries = resp;
+      this.isLoading = false;
+    });
+  }
+
 
 
 }

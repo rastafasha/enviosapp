@@ -54,7 +54,7 @@ export class ConfirmarComponent {
   
     iniciarFormulario() {
       this.deliveryCarForm = this.fb.group({
-        descripcion: [this.delivery.descripcion]
+        descripcion: ['']
       })
     }
   
