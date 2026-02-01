@@ -54,8 +54,8 @@
     <div class="num_tracking">
         <i class="fa fa-map-pin"></i>
         <h3>Coordenadas</h3>
-        <p>Desde: {{delivery.direccionRecogida}}</p>
-        <p>Hasta: {{delivery.direccionEntrega}}</p>
+        <p>Desde: {{direccionDesde.direccion}}</p>
+        <p>Hasta: {{direccionHasta.direccion}}</p>
         <p>fecha: {{delivery.fechaEnvio}}</p>
         <p>hora: {{delivery.horaEnvio}}</p>
     </div>
@@ -64,31 +64,32 @@
     <h4 *ngIf="identity.role ==='USER'">Info Chofer</h4>
     <div class="product_list" *ngIf="identity.role ==='USER'">
         <div class="div1">
-            <img [src]="(userDriver.img || '') | imagenPipe :'drivers'" alt="">
-
+            <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
+            <img [src]="(driverDelivery.img || '') | imagenPipe :'drivers'" alt="">
         </div>
         <div class="div2">
-            <h4>{{userDriver.first_name}} {{userDriver.last_name}}</h4>
-            <p>{{driver.modelo}} </p>
-            <p>{{driver.placa}}</p>
-            <p>{{driver.tipo_vehiculo}}</p>
+            <h5>{{userDriver.first_name}} {{userDriver.last_name}}</h5>
+            <p>{{driverDelivery.tipo_vehiculo}}</p>
+            <p>{{driverDelivery.modelo}} </p>
+            <p>{{driverDelivery.placa}}</p>
+            <p>{{driverDelivery.color}}</p>
             <div class="">
-                <span *ngIf="driver.tipo_vehiculo === 'Carro'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Carro'">
                     <i class="fa fa-car" aria-hidden="true"></i>
                 </span>
-                <span *ngIf="driver.tipo_vehiculo === 'Moto'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Moto'">
                     <i class="fas fa-motorcycle"></i>
                 </span>
-                <span *ngIf="driver.tipo_vehiculo === 'Camion'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Camion'">
                     <i class="fas fa-truck"></i>
                 </span>
-                <span *ngIf="driver.tipo_vehiculo === 'Camioneta'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Camioneta'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="driver.tipo_vehiculo === 'Pickup'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Pickup'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="driver.tipo_vehiculo === 'Van'">
+                <span *ngIf="driverDelivery.tipo_vehiculo === 'Van'">
                     <i class="fas fa-truck-loading"></i>
                 </span>
             </div>
@@ -96,7 +97,7 @@
         <div class="div3">
             <!-- <p> Llamar </p> -->
 
-            <a href="delivery-status.html">
+            <a href="tel:{{userDriver.telefono}}" target="_blank">
                 <button class="boton_azul_borde">LLamar</button>
             </a>
         </div>

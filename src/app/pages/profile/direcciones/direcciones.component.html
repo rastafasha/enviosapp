@@ -3,7 +3,7 @@
 
     <app-loading *ngIf="isLoading"></app-loading>
 
-    <div *ngIf="!isLoading && !direcciones?.length && direcciones.length < 1" style="margin-bottom: 20px;">
+    <div *ngIf="!isLoading && direcciones && direcciones.length < 1" style="margin-bottom: 20px;">
         <app-aviso [aviso]="'Crea 2 direcciones para solicitar el delivery '"></app-aviso>
         <div class="text-sm-right">
             <button class="boton_azul_borde" routerLink="/myprofile/direccion/create">Agregar

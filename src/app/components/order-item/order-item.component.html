@@ -61,5 +61,10 @@
                 <i class="fa fa-pen"></i>
             </button>
         </a>
+        <a *ngIf="delivery.status === 'Confirmado'" [routerLink]="['/order-detail/', delivery._id]">
+            <button class="boton_azul_borde">
+                <i class="fa fa-eye"></i>
+            </button>
+        </a>
     </div>
 </div>

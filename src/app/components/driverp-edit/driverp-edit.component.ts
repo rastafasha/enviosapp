@@ -77,20 +77,15 @@ export class DriverpEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private usuarioService: UsuarioService,
     private tiposvhService: TipovehiculoService,
     private driverService: DriverpService,
     private fileUploadService: FileUploadService
   ) {
-    // this.usuario = usuarioService.usuario;
-
     this.url = environment.baseUrl;
-
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-
     this.identity;
     this.user_id = this.identity.uid;
     this.user_id = this.identity.uid;

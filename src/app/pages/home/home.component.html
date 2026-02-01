@@ -34,7 +34,7 @@
 
         
 
-        <app-start-delivery [identityId]="identityId" [identity]="identity"></app-start-delivery>
+        <app-start-delivery *ngIf="!isLoading" [identityId]="identityId" [identity]="identity"></app-start-delivery>
 
     </div>
 <app-menufooter></app-menufooter>

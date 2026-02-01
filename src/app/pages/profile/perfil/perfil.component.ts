@@ -53,6 +53,7 @@ export class PerfilComponent implements OnInit {
   public user!: Usuario;
   public identity!: Usuario;
   public user_id: any;
+  public userIdInicial: any;
 
   public pais!: Pais;
 
@@ -89,43 +90,48 @@ export class PerfilComponent implements OnInit {
      let USER = localStorage.getItem('user');
     if(USER){
       this.user = JSON.parse(USER);
-      this.user_id = this.user.uid
-      // console.log(this.user);
+      this.userIdInicial = this.user.uid
       this. getUser();
     }
    
   }
 
-  // loadIdentity(){
-  //   this.isLoading= true;
-  //   let USER = localStorage.getItem("user");
-  //   if(!USER){
-  //     this.router.navigateByUrl('/login')
-  //   }
-  //   if(USER){
-  //     let user = JSON.parse(USER);
-  //     this.usuarioService.get_user(user.uid).subscribe((resp:any)=>{
-  //       this.identity = resp.usuario;
-  //       this.isLoading= false;
-  //     })
-  //   }
-  // }
 
   getUser(){
     this.isLoading= true;
-    this.usuarioService.get_user(this.user_id).subscribe((resp:any)=>{
+    this.usuarioService.get_user(this.userIdInicial).subscribe((resp:any)=>{
       this.identity = resp.usuario;
+      this.user_id = this.identity.uid
       this.isLoading= false;
-      // console.log(this.identity)
       if(this.identity.role ==='CHOFER'){
         this.isDriver = true
       }
-      if(this.identity){
+      if(!this.identity){
+        this._router.navigate(['/']);
+      }
+
+      // First initialize the form
+        this.iniciarFormulario();
+        
+        // Then set the values
+        this.perfilForm.setValue({
+          uid: this.identity.uid,
+          email: this.identity.email,
+          first_name: this.identity.first_name,
+          last_name: this.identity.last_name,
+          numdoc: this.identity.numdoc,
+          telefono: this.identity.telefono,
+          pais: this.identity.pais,
+          ciudad: this.identity.ciudad,
+          google: this.identity.google,
+          role: this.identity.role,
+          password: '',
+          img: this.identity.img,
+        });
+        
         this.getPaises();
-        this.iniciarFormulario()
-      }else{
-      this._router.navigate(['/']);
-    }
+
+     
     })
   }
 
@@ -133,15 +139,16 @@ export class PerfilComponent implements OnInit {
     this.perfilForm = this.fb.group({
       uid: [ this.identity.uid,  Validators.required ],
       email: [ this.identity.email],
-      first_name: [ this.identity.first_name, Validators.required ],
-      last_name: [ this.identity.last_name, Validators.required ],
-      numdoc: [ this.identity.numdoc ],
-      telefono: [ this.identity.telefono ],
-      pais: [ this.identity.pais],
-      ciudad: [ this.identity.ciudad],
-      google: [ this.identity.google],
-      role: [ this.identity.role],
+      first_name: [ '', Validators.required ],
+      last_name: [ '', Validators.required ],
+      numdoc: ['' ],
+      telefono: [ ''],
+      pais: [ ''],
+      ciudad: [ ''],
+      google: [ ''],
+      role: [ ''],
       password: [ ''],
+      img: [ ''],
     });
     
   }
@@ -229,7 +236,7 @@ cambiarImagen(file: File) {
     }
   }
 
-  subirImagen() {
+  subirImagen() {debugger
     this.isLoading = true;
         this.fileUploadService
           .actualizarFoto(this.imagenSubir, 'usuarios', this.user_id)

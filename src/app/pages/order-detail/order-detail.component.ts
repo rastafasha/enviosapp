@@ -15,6 +15,9 @@ import { DeliveryService } from '../../services/delivery.service';
 import { Delivery } from '../../models/delivery.model';
 import { ItemcardComponent } from "../../shared/itemcard/itemcard.component";
 import { BackComponent } from "../../shared/back/back.component";
+import { DriverpService } from '../../services/driverp.service';
+import { Direccion } from '../../models/direccion.model';
+import { DireccionService } from '../../services/direccion.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -29,27 +32,34 @@ import { BackComponent } from "../../shared/back/back.component";
   styleUrl: './order-detail.component.css'
 })
 export class OrderDetailComponent {
+  @Input() detalles!: Detalle[];
+  display:boolean = false;
   isLoading = false;
   identity!: Usuario;
   delivery!: any;
   venta!: Venta;
   driver!: Driver;
   driverId!: any;
+  driverDelivery!: Driver;
   userDriver!:Usuario;
-  @Input() detalles!: Detalle[];
-  display:boolean = false;
+  userDelivery!:Usuario;
+  direccionDesde!:Direccion;
+  direccionHasta!:Direccion;
+
    public whatsapp !:string;
 
   private usuarioService = inject(UsuarioService);
   private activatedRoute = inject(ActivatedRoute);
   private deliveryServices = inject(DeliveryService);
+  private driverServices = inject(DriverpService);
+  private direccionService = inject(DireccionService);
 
   ngOnInit() {
     this.loadIdentity();
     this.activatedRoute.params.subscribe(params => {
       let orderId = params['id'];
       // console.log(orderId);
-      this.getAsignacionById(orderId);
+      this.getDeliveryById(orderId);
     });
   }
 
@@ -64,18 +74,39 @@ export class OrderDetailComponent {
     }
   }
 
-  getAsignacionById(id: string) {
+  getDeliveryById(id: string) {
     this.isLoading = true;
     this.deliveryServices.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
       this.isLoading = false;
       this.getUsuario();
+      this.getDriverDelivery(); 
+      this.getDireccionNombreDesde(); 
+      this.getDireccionNombreHasta(); 
     });
   }
   getUsuario(){
-    this.usuarioService.get_user(this.delivery.user ).subscribe((resp:any)=>{
+    this.usuarioService.get_user(this.delivery.driver ).subscribe((resp:any)=>{
       this.userDriver = resp.usuario;
     });
+  }
+  getDriverDelivery(){
+    this.driverServices.getByUserId(this.delivery.driver ).subscribe((resp:any)=>{
+      this.driverDelivery = resp;
+    });
+  }
+
+  getDireccionNombreDesde(){
+    this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionEntrega).subscribe((resp:any)=>{
+      this.direccionDesde = resp;
+      console.log(resp)
+    })
+  }
+  getDireccionNombreHasta(){
+    this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionRecogida).subscribe((resp:any)=>{
+      this.direccionHasta = resp;
+      console.log(resp)
+    })
   }
   
   //actualizamos es status de la asignacion a 'EN PROCESO' cuando el chofer aplica para entregar el pedido
