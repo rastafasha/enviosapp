@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { AvisoComponent } from "../aviso/aviso.component";
 import { NgIf } from '@angular/common';
@@ -15,9 +15,13 @@ import { NgIf } from '@angular/common';
 export class HeaderComponent {
 
    private usuarioService = inject(UsuarioService);
+   private router = inject(Router);
   
   ngOnInit(){
-
+    let USER = localStorage.getItem("user");
+      if(!USER){
+        this.router.navigateByUrl('/login')
+      }
     
   }
 
