@@ -30,21 +30,21 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
 
   @ViewChild('mapContainer') mapContainer!: ElementRef;
 
-  identity!:any;
+  identity!: any;
   public direccionForm!: FormGroup;
-  public direccion_id:any;
-  public nombres_completos:any;
-  public direccion:any;
-  public referencia:any;
+  public direccion_id: any;
+  public nombres_completos: any;
+  public direccion: any;
+  public referencia: any;
   public pais!: Pais;
-  public ciudad:any;
-  public zip:any;
-  public direccion_selected:any;
-  pageTitle!:string;
-  public url!:any;
-  public paises!:any;
-  public direccion_data : any = {};
-  public data_paises : any = [];
+  public ciudad: any;
+  public zip: any;
+  public direccion_selected: any;
+  pageTitle!: string;
+  public url!: any;
+  public paises!: any;
+  public direccion_data: any = {};
+  public data_paises: any = [];
 
   isLoading = false;
 
@@ -62,29 +62,29 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
 
   constructor(
     private usuarioService: UsuarioService,
-    private _direccionService: DireccionService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private paisService: PaisService,
     private fb: FormBuilder,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadIdentity();
-    if(this.identity){
+    if (this.identity) {
       this.direccion_data = {};
       this.url = environment.baseUrl;
     }
     this.getPaises();
-    this.activatedRoute.params.subscribe( ({id}) => this.getDireccion(id));
-    
+    this.activatedRoute.params.subscribe(({ id }) => this.getDireccion(id));
+
     // Suscripción a geolocalización para centrar mapa inicialmente
     this.locationSubscription = this.geolocation$.subscribe({
       next: (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        console.log('Initial geolocation success - Lat:', lat, 'Lng:', lng);
         // Solo usar GPS si no hay coordenadas ya seleccionadas
         if (!this.selectedCoords && this.map) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
           this.map.setView([lat, lng], 15);
         }
         this.mapLoading = false;
@@ -114,11 +114,17 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
     });
   }
 
+  PageSize() {
+    this.ngOnInit();
+
+  }
+
   ngAfterViewInit() {
-    // Pequeño delay para asegurar que el DOM está listo
+    // Delay aumentado para asegurar DOM listo y logging
     setTimeout(() => {
+      console.log('Attempting to init map. Container ready?', !!this.mapContainer?.nativeElement);
       this.initMap();
-    }, 100);
+    }, 300);
   }
 
   ngOnDestroy() {
@@ -135,9 +141,12 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
    * Inicializa el mapa de Leaflet
    */
   private initMap(): void {
+    console.log('Map container element:', this.mapContainer?.nativeElement);
     // Verificar que el contenedor del mapa existe
     if (!this.mapContainer?.nativeElement) {
       console.error('Contenedor del mapa no encontrado');
+      this.mapError = 'Contenedor del mapa no disponible. Recarga la página.';
+      this.mapLoading = false;
       return;
     }
 
@@ -174,26 +183,51 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
   /**
    * Coloca o mueve el marcador en las coordenadas especificadas
    */
-  private placeMarker(lat: number, lng: number): void {
-    if (!this.map) return;
+  placeMarker(lat: number, lng: number): void {
+    console.log('placeMarker called with lat:', lat, 'lng:', lng);
 
+    // Always set coords FIRST
     this.selectedCoords = { lat, lng };
+    console.log('selectedCoords set:', this.selectedCoords);
 
+    // Patch form fields
+    this.direccionForm.patchValue({ latitud: lat, longitud: lng });
+    console.log('Form lat/lng:', this.direccionForm.value.latitud, this.direccionForm.value.longitud);
+
+    if (!this.map) {
+      console.error('Map not ready - coords saved anyway');
+      this.fetchAddress(lat, lng);
+      return;
+    }
+
+    // Marker
     if (this.marker) {
-      // Mover marcador existente
       this.marker.setLatLng([lat, lng]);
     } else {
-      // Crear nuevo marcador
       this.marker = L.marker([lat, lng])
         .addTo(this.map)
-        .bindPopup('<b>Ubicación seleccionada</b><br>Haz clic en otro lugar para cambiar')
+        .bindPopup('<b>Ubicación GPS</b>')
         .openPopup();
     }
 
-    // Actualizar el campo referencia con las coordenadas
-    this.direccionForm.patchValue({
-      referencia: `📍 Coordenadas: ${lat.toFixed(6)}, ${lng.toFixed(6)}`
-    });
+    this.map.setView([lat, lng], 15);
+
+    // Address
+    this.fetchAddress(lat, lng);
+  }
+
+  fetchAddress(lat: number, lng: number): void {
+    console.log('Geocoding', lat, lng);
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+      .then(res => res.json())
+      .then(data => {
+        const address = data.display_name || `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+        this.direccionForm.patchValue({ direccion: `📍 ${address}` });
+        console.log('Address:', address);
+      })
+      .catch(() => {
+        this.direccionForm.patchValue({ direccion: `📍 GPS: ${lat.toFixed(6)}, ${lng.toFixed(6)}` });
+      });
   }
 
   /**
@@ -201,63 +235,62 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
    */
   useCurrentLocation(): void {
     this.mapLoading = true;
+    console.log('Starting GPS location');
     this.geolocation$.subscribe({
       next: (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+        console.log('GPS Success:', lat, lng);
         this.placeMarker(lat, lng);
-        this.map?.setView([lat, lng], 15);
         this.mapLoading = false;
       },
       error: (error) => {
-        console.error('Error de geolocalización:', error);
+        console.error('GPS Error:', error);
         this.mapLoading = false;
-        Swal.fire('Error', 'No se pudo obtener tu ubicación actual', 'error');
+        Swal.fire('GPS Error', 'Habilita ubicación. Usa HTTPS.', 'warning');
       }
     });
   }
 
-  loadIdentity(){
+  loadIdentity() {
     this.isLoading = true;
     let USER = localStorage.getItem("user");
-    if(USER){
+    if (USER) {
       let user = JSON.parse(USER);
-      this.usuarioService.get_user(user.uid).subscribe((resp:any)=>{
+      this.usuarioService.get_user(user.uid).subscribe((resp: any) => {
         this.identity = resp.usuario;
         this.iniciarFormulario();
         this.isLoading = false;
+      }, error => {
+        console.error('loadIdentity error:', error);
+        this.isLoading = false;
       })
+    } else {
+      this.isLoading = false;
     }
   }
 
-  iniciarFormulario(){
+  iniciarFormulario() {
     this.direccionForm = this.fb.group({
-      nombres_completos: ['',Validators.required],
-      direccion: ['',Validators.required],
-      referencia: ['',Validators.required],
+      nombres_completos: ['', Validators.required],
+      direccion: ['', Validators.required],
+      referencia: ['', Validators.required],
       pais: [''],
       ciudad: [''],
       latitud: [''],
       longitud: [''],
       zip: [''],
-      user: [this.identity?.uid],
+      user: [''],
     })
   }
 
-  getDirecction(){
-    this._direccionService.get_direccion(this.direccion_id).subscribe((resp:any)=>{
-      console.log(resp);
-      this.direccion_selected = resp;
-    })
-  }
-
-  getDireccion(id:any){
-    if(id !== null && id !== undefined){
-      this.pageTitle = 'Editing';
-      this._direccionService.get_direccion(id).subscribe(
+  getDireccion(id: any) {
+    if (id !== null && id !== undefined) {
+      this.pageTitle = 'Editando';
+      this.direccionService.get_direccion(id).subscribe(
         res => {
           this.direccionForm.patchValue({
-            id: this.direccion_id,
+            id: id,
             nombres_completos: res.nombres_completos,
             direccion: res.direccion,
             referencia: res.referencia,
@@ -267,61 +300,56 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
             user: this.identity.uid,
           });
           this.direccion = res;
-          console.log('Dirección cargada:', this.direccion);
-          
-          // Si hay coordenadas, actualizar el mapa después de que se inicialice
           if (res.latitud && res.longitud) {
-            const lat = Number(res.latitud);
-            const lng = Number(res.longitud);
             setTimeout(() => {
-              if (this.map) {
-                this.placeMarker(lat, lng);
-                this.map.setView([lat, lng], 15);
-              }
+              this.placeMarker(Number(res.latitud), Number(res.longitud));
             }, 500);
           }
-        }
+        }, error => console.error('getDireccion error:', error)
       );
     } else {
-      this.pageTitle = 'Creating';
+      this.pageTitle = 'Creando';
     }
   }
 
-  onSubmit(){
-    const {nombres_completos, direccion, referencia, pais,
-      ciudad, zip, user } = this.direccionForm.value;
+  onSubmit() {
+    console.log('Submit debug:', {
+      selectedCoords: this.selectedCoords,
+      formLat: this.direccionForm.value.latitud,
+      formLng: this.direccionForm.value.longitud
+    });
 
-    // Incluir coordenadas si están disponibles
     const data: any = {
       ...this.direccionForm.value,
-      latitud: this.selectedCoords?.lat || this.direccion?.latitud,
-      longitud: this.selectedCoords?.lng || this.direccion?.longitud
+      user: this.identity.uid,
+      latitud: this.selectedCoords?.lat || this.direccionForm.value.latitud || 0,
+      longitud: this.selectedCoords?.lng || this.direccionForm.value.longitud || 0
     };
 
-    if(this.direccion){
-      // Actualizar
+    console.log('Final data:', data);
+
+    if (this.direccion && this.direccion._id) {
       data._id = this.direccion._id;
-      this._direccionService.update(data).subscribe(
-        resp =>{
-          Swal.fire('Actualizado', `${nombres_completos} actualizado correctamente`, 'success');
-          this.router.navigateByUrl(`/myprofile`);
-        });
+      this.direccionService.update(data).subscribe(
+        resp => {
+          Swal.fire('¡Actualizado!', 'Dirección guardada correctamente', 'success');
+          this.router.navigateByUrl('/myprofile');
+        }, error => Swal.fire('Error', error.message, 'error')
+      );
     } else {
-      // Crear
-      this._direccionService.registro(data)
-        .subscribe((resp: any) => {
-          Swal.fire('Creado', `${nombres_completos} creado correctamente`, 'success');
-          this.router.navigateByUrl(`/myprofile`);
-        });
+      this.direccionService.registro(data).subscribe(
+        resp => {
+          Swal.fire('¡Creado!', 'Dirección guardada correctamente', 'success');
+          this.router.navigateByUrl('/myprofile');
+        }, error => Swal.fire('Error', error.message, 'error')
+      );
     }
   }
 
   getPaises() {
     this.paisService.getPaises().subscribe(
-      (resp:any) => {
-        this.paises = resp;
-      }
+      resp => this.paises = resp,
+      error => console.error('getPaises error:', error)
     );
   }
 }
-
