@@ -1,30 +1,32 @@
-import { Component, OnInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef, inject } from '@angular/core';
-import { Location, NgFor, NgIf } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule, NgFor, NgIf, ViewportScroller } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { io, Socket } from 'socket.io-client';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ViewportScroller } from '@angular/common';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-import { environment } from '../../../environments/environment';
-import { Usuario } from '../../models/usuario.model';
-import { Mensaje, Ticket } from '../../models/ticket.model';
-import { UsuarioService } from '../../services/usuario.service';
+import { AfterViewChecked, Component, DestroyRef, ElementRef, 
+  inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../../services/ticket.service';
-import { DestroyRef } from '@angular/core';
+import { UsuarioService } from '../../services/usuario.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Socket, io } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
+import { Mensaje, Ticket } from '../../models/ticket.model';
+import { Usuario } from '../../models/usuario.model';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { BackComponent } from '../../shared/back/back.component';
 
 @Component({
-  selector: 'app-ticket-chat',
-  templateUrl: './ticket-chat.component.html',
+  selector: 'app-chat',
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     NgIf,
     NgFor,
-    FormsModule,
-    ReactiveFormsModule
+    BackComponent
   ],
-  styleUrls: ['./ticket-chat.component.css']
+  templateUrl: './chat.component.html',
+  styleUrl: './chat.component.css'
 })
-export class TicketChatComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy{
 
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
 
@@ -42,29 +44,30 @@ export class TicketChatComponent implements OnInit, AfterViewChecked, OnDestroy 
   public socket!: Socket;
   public close_ticket = false;
   public estado_ticket!: string;
-  public destroyRef!: DestroyRef;
-  public viewportScroller!: ViewportScroller;
+
   user: any
   identityId!: string;
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private location: Location,
-    private _router: Router,
-    private activatedRoute: ActivatedRoute,
-    private http: HttpClient,
-    private _ticketService: TicketService
-  ) {
-    this.destroyRef = inject(DestroyRef);
-    this.viewportScroller = inject(ViewportScroller);
-  }
+  private activatedRoute = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+   private viewportScroller = inject(ViewportScroller);
 
-  ngOnInit(): void {
+    private usuarioService= inject(UsuarioService) ;
+    private _router= inject(Router) ;
+    private http= inject(HttpClient) ;
+    private _ticketService= inject(TicketService) ;
+
+  ngOnInit(){
+
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER : '');
     this.identityId = this.user.uid;
 
     this.viewportScroller.scrollToPosition([0, 0]);
+    this.activatedRoute.params.subscribe(params => {
+      let orderId = params['id'];
+      
+    });
 
     if (this.identity) {
       this.url = environment.baseUrl;
@@ -119,9 +122,7 @@ export class TicketChatComponent implements OnInit, AfterViewChecked, OnDestroy 
       );
       this.listar_msms();
 
-    } else {
-      this._router.navigate(['/']);
-    }
+    } 
   }
 
   ngAfterViewChecked(): void {
@@ -179,7 +180,6 @@ export class TicketChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     } catch (err) { }
   }
 
-  goBack() {
-    this.location.back();
-  }
+  
+
 }

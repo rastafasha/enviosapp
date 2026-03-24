@@ -37,12 +37,16 @@
             <img src="../assets/img/user.png" alt="">
         </div>
         <div class="div2">
-            <p>Usuario: {{userDelivery.first_name}}</p>
+            <p>Usuario: {{userDelivery.first_name}} {{userDelivery.last_name}}</p>
             <p>email: {{userDelivery.email}}</p>
             <!-- <p>telefono: {{userDriver.telefono}}</p> -->
         </div>
         <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
-            <button class="boton_azul_borde" [routerLink]="['chat/', delivery._id ]">
+            <!-- <button class="boton_azul_borde" [routerLink]="['/chat']">
+                <i class="fa fa-whatsapp"></i>
+                Enviar mensaje
+            </button> -->
+            <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
                 <i class="fa fa-whatsapp"></i>
                 Enviar mensaje
             </button>
@@ -53,10 +57,10 @@
     <div class="num_tracking">
         <i class="fa fa-map-pin"></i>
         <h3>Coordenadas</h3>
-        <p>Desde: {{direccionDesde.direccion}}</p>
-        <p>Hasta: {{direccionHasta.direccion}}</p>
-        <p>fecha: {{delivery.fechaEnvio}}</p>
-        <p>hora: {{delivery.horaEnvio}}</p>
+        <p>Desde: {{direccionDesde?.direccion}}</p>
+        <p>Hasta: {{direccionHasta?.direccion}}</p>
+        <p>fecha: {{delivery?.fechaEnvio}}</p>
+        <p>hora: {{delivery?.horaEnvio}}</p>
     </div>
 
     <!-- Info Chofer -->

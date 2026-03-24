@@ -5,14 +5,10 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
 import { CommonModule, CurrencyPipe, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
-import { AsignardeliveryService } from '../../services/asignardelivery.service';
-import { Asignacion } from '../../models/asignaciondelivery.model';
 import { Detalle, Venta } from '../../models/ventas.model';
-import { ItemListComponent } from "../../components/item-list/item-list.component";
 import { Driver } from '../../models/driverp.model';
 import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 import { DeliveryService } from '../../services/delivery.service';
-import { Delivery } from '../../models/delivery.model';
 import { ItemcardComponent } from "../../shared/itemcard/itemcard.component";
 import { BackComponent } from "../../shared/back/back.component";
 import { DriverpService } from '../../services/driverp.service';
@@ -22,7 +18,7 @@ import { DireccionService } from '../../services/direccion.service';
 @Component({
   selector: 'app-order-detail',
   imports: [
-    MenufooterComponent, RouterModule,
+    MenufooterComponent, RouterLink,
     LoadingComponent, NgIf, SlicePipe,
     CommonModule, ImagenPipe,
     ItemcardComponent,
@@ -102,12 +98,12 @@ identityId!:string
   
 
   getDireccionNombreDesde(){
-    this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionEntrega).subscribe((resp:any)=>{
+    this.direccionService.get_direccionNombre(this.usuariodestino,this.delivery.direccionEntrega).subscribe((resp:any)=>{
       this.direccionDesde = resp;
     })
   }
   getDireccionNombreHasta(){
-    this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionRecogida).subscribe((resp:any)=>{
+    this.direccionService.get_direccionNombre(this.usuariodestino,this.delivery.direccionRecogida).subscribe((resp:any)=>{
       this.direccionHasta = resp;
     })
   }
