@@ -22,9 +22,9 @@ export class MisEntregasComponent {
   @Input() identityId!: string;
   
   option_selectedd: number = 1;
+  solicitud_selectedd: any = 1;
   identity!: any;
   user!: any;
-  solicitud_selectedd: any = 1;
 
   isLoading = false;
   statusD = 'Confirmado';

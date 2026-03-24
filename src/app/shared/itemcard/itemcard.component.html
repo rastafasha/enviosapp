@@ -1,26 +1,26 @@
-<div class="itemdelivery" >
-        <div class="div1" *ngIf="display">
-            <!-- <img [src]="(delivery.img ?? '') | imagenPipe: 'deliverys'" [alt]="delivery.titulo"> -->
-            <p *ngIf="delivery.status">{{delivery.status}}</p>
-        </div>
-        <div class="div2" *ngIf="display">
-            <p *ngIf="delivery.title">{{delivery.title}}</p>
-            <p>Desde: {{delivery.direccionRecogida}}</p>
-            <p>Hasta: {{delivery.direccionEntrega}}  </p>
-            <p *ngIf="delivery.fechaEnvio">{{delivery.fechaEnvio |date }}</p>
-            <p *ngIf="delivery.horaEnvio">{{delivery.horaEnvio }}</p>
-            <p *ngIf="delivery.tipovehiculo">{{delivery.tipovehiculo}}</p>
-            <p *ngIf="delivery.precio">{{delivery.precio|currency}}</p>
-        </div>
-        <div class="div3">
-            <p *ngIf="delivery.alto">Alto: {{delivery.alto}}</p>
-            <p *ngIf="delivery.ancho">Ancho: {{delivery.ancho}}</p>
-            <p *ngIf="delivery.largo">Largo: {{delivery.largo}}</p>
-            <p *ngIf="delivery.peso">Peso: {{delivery.peso}}</p>
-        </div>
-        
+<div class="itemdelivery">
+    <div class="div1" *ngIf="display">
+        <!-- <img [src]="(delivery.img ?? '') | imagenPipe: 'deliverys'" [alt]="delivery.titulo"> -->
+        <p *ngIf="delivery?.status">{{delivery?.status}}</p>
     </div>
-    <div class="itemdeliveryDesc" *ngIf="delivery.descripcion">
-            <h3>Observaciones / Instrucciones: </h3>
-            <p>{{delivery.descripcion}}</p>
-        </div>
+    <div class="div2" *ngIf="display">
+        <p *ngIf="delivery?.title">{{delivery.title}}</p>
+        <p>Desde: {{delivery?.direccionRecogida}}</p>
+        <p>Hasta: {{delivery?.direccionEntrega}} </p>
+        <p *ngIf="delivery?.fechaEnvio">{{delivery.fechaEnvio |date }}</p>
+        <p *ngIf="delivery?.horaEnvio">{{delivery.horaEnvio }}</p>
+        <p *ngIf="delivery?.tipovehiculo">{{delivery.tipovehiculo}}</p>
+        <p *ngIf="delivery?.precio">{{delivery.precio|currency}}</p>
+    </div>
+    <div class="div3">
+        <p *ngIf="delivery?.alto">Alto: {{delivery.alto}}</p>
+        <p *ngIf="delivery?.ancho">Ancho: {{delivery.ancho}}</p>
+        <p *ngIf="delivery?.largo">Largo: {{delivery.largo}}</p>
+        <p *ngIf="delivery?.peso">Peso: {{delivery.peso}}</p>
+    </div>
+
+</div>
+<div class="itemdeliveryDesc" *ngIf="delivery?.descripcion">
+    <h3>Observaciones / Instrucciones: </h3>
+    <p>{{delivery?.descripcion}}</p>
+</div>

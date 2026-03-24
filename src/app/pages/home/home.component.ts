@@ -19,44 +19,40 @@ import { OrderListComponent } from '../../components/order-list/order-list.compo
     LoadingComponent,
     NgIf,
     StartDeliveryComponent
-],
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
-  identity!:Usuario;
-  userId!:string;
-  identityId!:any;
-    isLoading= false;
-    asignacion!: Asignacion;
-  
-    private usuarioService = inject(UsuarioService);
-    private asignacionDServices = inject(AsignardeliveryService);
-    private router = inject(Router);
-    
-    ngOnInit(){
-      this.loadIdentity();
+  identity!: Usuario;
+  userId!: string;
+  identityId!: any;
+  user!: any;
+  isLoading = false;
+  asignacion!: Asignacion;
 
-    }
-  
-    loadIdentity(){
-      this.isLoading= true;
-      let USER = localStorage.getItem("user");
-      if(!USER){
-        this.router.navigateByUrl('/login')
-      }
-      if(USER){
-        let user = JSON.parse(USER);
-        this.usuarioService.get_user(user.uid).subscribe((resp:any)=>{
-          this.identity = resp.usuario;
-          this.identityId = this.identity.uid;
-          this.isLoading= false;
-          console.log(this.identityId)
-        })
-      }
-    }
+  private usuarioService = inject(UsuarioService);
+  private asignacionDServices = inject(AsignardeliveryService);
+  private router = inject(Router);
 
-    
+  ngOnInit() {
+
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
+    this.identityId = this.user.uid;
+    this.loadIdentity();
+  }
+
+  loadIdentity() {
+    this.isLoading = true;
+    this.usuarioService.get_user(this.identityId).subscribe((resp: any) => {
+        this.identity = resp.usuario;
+        this.identityId = this.identity.uid;
+        this.isLoading = false;
+      })
+  }
+
+
 
 }

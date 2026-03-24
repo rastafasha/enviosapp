@@ -42,6 +42,7 @@ export class Paso4Component {
 
 
   ngOnInit() {
+    this.iniciarFormulario();
     
     this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
     const id = this.deliveryId
@@ -50,7 +51,6 @@ export class Paso4Component {
     this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
       this.getTiposVehiculo();
-      this.iniciarFormulario();
     })
   }
 

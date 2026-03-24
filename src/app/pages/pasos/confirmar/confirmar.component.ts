@@ -42,12 +42,13 @@ export class ConfirmarComponent {
     ngOnInit() {
      
       this.activatedRoute.params.subscribe(({ id }) => this.getDelivery(id));
-      const id = this.deliveryId
+      const id = this.deliveryId;
+      this.iniciarFormulario() 
     }
     getDelivery(id: string) {
       this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
         this.delivery = resp;
-         this.iniciarFormulario();
+         
       })
     }
   
@@ -90,7 +91,6 @@ export class ConfirmarComponent {
       if (!this.deliveryCarForm.get('tipovehiculo')?.value) {
         this.tipo = tipo;
         this.deliveryCarForm.get('tipovehiculo')?.setValue(tipo.nombre);
-        console.log('Guardada como tipovehiculo');
       }
   
     }

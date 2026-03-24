@@ -16,6 +16,7 @@ import { Paso3Component } from './pages/pasos/paso3/paso3.component';
 import { Paso4Component } from './pages/pasos/paso4/paso4.component';
 import { ConfirmarComponent } from './pages/pasos/confirmar/confirmar.component';
 import { StartDeliveryComponent } from './components/start-delivery/start-delivery.component';
+import { TicketChatComponent } from './pages/ticket-chat/ticket-chat.component';
 
 
 
@@ -54,7 +55,11 @@ export const routes: Routes = [
     {path: 'delivery/paso3/:id', component: Paso3Component },
     {path: 'delivery/paso4/:id', component: Paso4Component },
     {path: 'delivery/confirmar/:id', component: ConfirmarComponent },
+
+    {path: 'chat/:id', component: TicketChatComponent },
     
 
+{path: 'ticket-chat/:id', component: TicketChatComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
+

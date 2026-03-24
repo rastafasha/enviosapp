@@ -19,7 +19,7 @@
             <h5>{{delivery.precio | currency}}</h5>
         </div>
         <div class="div3 botonera">
-            <button class="boton_azul_borde" *ngIf="identity.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
+            <button class="boton_azul_borde" *ngIf="user.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
                 (click)="activarDelivery()">Aplicar</button>
             <!-- <a routerLink="/delivery-status" *ngIf="identity.role ==='USER'">
                 <button class="boton_azul_borde">Status</button>
@@ -31,21 +31,20 @@
     </div>
     <!-- detales iniciales -->
     <!-- Info Destino -->
-    <h4 *ngIf="identity.role ==='CHOFER'">Info Destino</h4>
-    <div class="product_list" *ngIf="identity.role ==='CHOFER'">
+    <h4 *ngIf="user.role ==='CHOFER'">Info Destino</h4>
+    <div class="product_list" *ngIf="user.role ==='CHOFER'">
         <div class="div1">
             <img src="../assets/img/user.png" alt="">
         </div>
         <div class="div2">
-            <p>Usuario: {{userDriver.first_name}}</p>
-            <p>email: {{userDriver.email}}</p>
+            <p>Usuario: {{userDelivery.first_name}}</p>
+            <p>email: {{userDelivery.email}}</p>
             <!-- <p>telefono: {{userDriver.telefono}}</p> -->
         </div>
         <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
-            <!-- <p> Llamar </p> -->
-            <button class="boton_azul_borde" (click)="sendWhatsAppOrder()">
+            <button class="boton_azul_borde" [routerLink]="['chat/', delivery._id ]">
                 <i class="fa fa-whatsapp"></i>
-                Enviar WhatsApp
+                Enviar mensaje
             </button>
         </div>
     </div>
@@ -61,8 +60,8 @@
     </div>
 
     <!-- Info Chofer -->
-    <h4 *ngIf="identity.role ==='USER'">Info Chofer</h4>
-    <div class="product_list" *ngIf="identity.role ==='USER'">
+    <h4 *ngIf="user.role ==='USER'">Info Chofer</h4>
+    <div class="product_list" *ngIf="user.role ==='USER'">
         <div class="div1">
             <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
             <img [src]="(driverDelivery.img || '') | imagenPipe :'drivers'" alt="">
@@ -97,9 +96,9 @@
         <div class="div3">
             <!-- <p> Llamar </p> -->
 
-            <a href="tel:{{userDriver.telefono}}" target="_blank">
+            <!-- <a href="tel:{{userDriver.telefono}}" target="_blank">
                 <button class="boton_azul_borde">LLamar</button>
-            </a>
+            </a> -->
         </div>
     </div>
     <!-- Numero de Trackig -->
@@ -131,15 +130,15 @@
     <!-- Status Entrega-->
 
     <button class="boton_azul_borde" style="margin-bottom: 80px;"
-        *ngIf="identity.role ==='USER' && delivery.status==='Entregado'">
+        *ngIf="user.role ==='USER' && delivery.status==='Entregado'">
         Calificar
     </button>
     <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;"
-        *ngIf="identity.role ==='USER' && delivery.status==='Entregado'">
+        *ngIf="user.role ==='USER' && delivery.status==='Entregado'">
         Marcar como Recibido
     </button>
     <button class="boton_azul_borde" (click)="marcarEntregado()" style="margin-bottom: 80px;"
-        *ngIf="identity.role ==='CHOFER' && delivery.status !=='Entregado' && delivery.status !=='Confirmado' ">
+        *ngIf="user.role ==='CHOFER' && delivery.status !=='Entregado' && delivery.status !=='Confirmado' ">
         Marcar como Entregado
     </button>
 

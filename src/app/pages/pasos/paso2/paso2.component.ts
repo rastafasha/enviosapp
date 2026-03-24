@@ -20,7 +20,7 @@ import { LoadingComponent } from "../../../shared/loading/loading.component";
     BackComponent,
     ItemcardComponent,
     LoadingComponent
-],
+  ],
   templateUrl: './paso2.component.html',
   styleUrl: './paso2.component.css'
 })
@@ -32,8 +32,8 @@ export class Paso2Component {
   public imagenSubir!: File;
   public imgTemp: any = null;
   isLoading = false;
-  deliveryId:any;
-  id:any;
+  deliveryId: any;
+  id: any;
 
   private deliveryService = inject(DeliveryService);
   private activatedRoute = inject(ActivatedRoute);
@@ -51,15 +51,14 @@ export class Paso2Component {
   getDelivery(id: string) {
     this.deliveryService.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
-      console.log(this.delivery)
       this.deliverySizeForm.patchValue({
-            // id: this._id,
-            title: this.delivery.title,
-            largo: this.delivery.largo,
-            ancho: this.delivery.ancho,
-            alto: this.delivery.alto,
-            peso: this.delivery.peso,
-          });
+        // id: this._id,
+        title: this.delivery.title,
+        largo: this.delivery.largo,
+        ancho: this.delivery.ancho,
+        alto: this.delivery.alto,
+        peso: this.delivery.peso,
+      });
     })
   }
 

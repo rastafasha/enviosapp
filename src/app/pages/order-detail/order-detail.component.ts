@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { MenufooterComponent } from "../../shared/menufooter/menufooter.component";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute, RouterLink, RouterModule } from "@angular/router";
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { CommonModule, CurrencyPipe, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { Usuario } from '../../models/usuario.model';
@@ -22,7 +22,7 @@ import { DireccionService } from '../../services/direccion.service';
 @Component({
   selector: 'app-order-detail',
   imports: [
-    MenufooterComponent, RouterLink,
+    MenufooterComponent, RouterModule,
     LoadingComponent, NgIf, SlicePipe,
     CommonModule, ImagenPipe,
     ItemcardComponent,
@@ -43,11 +43,13 @@ export class OrderDetailComponent {
   driverDelivery!: Driver;
   userDriver!:Usuario;
   userDelivery!:Usuario;
+  usuariodestino!:string;
   direccionDesde!:Direccion;
   direccionHasta!:Direccion;
 
    public whatsapp !:string;
-
+user:any;
+identityId!:string
   private usuarioService = inject(UsuarioService);
   private activatedRoute = inject(ActivatedRoute);
   private deliveryServices = inject(DeliveryService);
@@ -55,57 +57,58 @@ export class OrderDetailComponent {
   private direccionService = inject(DireccionService);
 
   ngOnInit() {
-    this.loadIdentity();
-    this.activatedRoute.params.subscribe(params => {
+
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : ''); 
+  
+    if (this.user.role === 'CHOFER') {
+      this.activatedRoute.params.subscribe(params => {
       let orderId = params['id'];
-      // console.log(orderId);
       this.getDeliveryById(orderId);
+      this.driverId  = this.user.uid;
+      
     });
+    }if (this.user.role === 'USER') {
+      this.identityId = this.user.uid;
+    }
+    
+
   }
 
-  loadIdentity() {
-    let USER = localStorage.getItem("user");
-    if (USER) {
-      let user = JSON.parse(USER);
-      this.usuarioService.get_user(user.uid).subscribe((resp: any) => {
-        this.identity = resp.usuario;
-        this.driverId = this.identity.uid;
-      })
-    }
-  }
 
   getDeliveryById(id: string) {
     this.isLoading = true;
     this.deliveryServices.getDeliveryId(id).subscribe((resp: any) => {
       this.delivery = resp;
+      this.usuariodestino = resp.user;
       this.isLoading = false;
-      this.getUsuario();
-      this.getDriverDelivery(); 
+      this.getDriver();
+      this.getUsuarioDestino();
+      // this.getDriverDelivery(); 
       this.getDireccionNombreDesde(); 
       this.getDireccionNombreHasta(); 
     });
   }
-  getUsuario(){
+  getDriver(){
     this.usuarioService.get_user(this.delivery.driver ).subscribe((resp:any)=>{
       this.userDriver = resp.usuario;
     });
   }
-  getDriverDelivery(){
-    this.driverServices.getByUserId(this.delivery.driver ).subscribe((resp:any)=>{
-      this.driverDelivery = resp;
+  getUsuarioDestino(){
+    this.usuarioService.get_user(this.usuariodestino ).subscribe((resp:any)=>{
+      this.userDelivery = resp.usuario;
     });
   }
+  
 
   getDireccionNombreDesde(){
     this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionEntrega).subscribe((resp:any)=>{
       this.direccionDesde = resp;
-      console.log(resp)
     })
   }
   getDireccionNombreHasta(){
     this.direccionService.get_direccionNombre(this.delivery.user,this.delivery.direccionRecogida).subscribe((resp:any)=>{
       this.direccionHasta = resp;
-      console.log(resp)
     })
   }
   
