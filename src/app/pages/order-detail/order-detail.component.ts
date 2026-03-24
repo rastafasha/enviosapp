@@ -38,6 +38,7 @@ export class OrderDetailComponent {
   driverId!: any;
   driverDelivery!: Driver;
   userDriver!:Usuario;
+  userDriverVehiculo!:Driver;
   userDelivery!:Usuario;
   usuariodestino!:string;
   direccionDesde!:Direccion;
@@ -61,11 +62,18 @@ identityId!:string
       this.activatedRoute.params.subscribe(params => {
       let orderId = params['id'];
       this.getDeliveryById(orderId);
-      this.driverId  = this.user.uid;
+      
       
     });
     }if (this.user.role === 'USER') {
       this.identityId = this.user.uid;
+      this.activatedRoute.params.subscribe(params => {
+      let orderId = params['id'];
+      this.getDeliveryById(orderId);
+      // this.driverId  = this.user.uid;
+      
+    });
+      
     }
     
 
@@ -80,7 +88,7 @@ identityId!:string
       this.isLoading = false;
       this.getDriver();
       this.getUsuarioDestino();
-      // this.getDriverDelivery(); 
+      
       this.getDireccionNombreDesde(); 
       this.getDireccionNombreHasta(); 
     });
@@ -88,12 +96,22 @@ identityId!:string
   getDriver(){
     this.usuarioService.get_user(this.delivery.driver ).subscribe((resp:any)=>{
       this.userDriver = resp.usuario;
+      this.driverId  = this.userDriver.uid;
+      // console.log('driver 1',this.userDriver);
+      this.getDriverData(); 
     });
   }
   getUsuarioDestino(){
     this.usuarioService.get_user(this.usuariodestino ).subscribe((resp:any)=>{
       this.userDelivery = resp.usuario;
     });
+  }
+
+  getDriverData(){
+    this.driverServices.getByUserId(this.driverId).subscribe((resp:any)=>{
+      this.userDriverVehiculo= resp;
+      // console.log('driver 2',this.userDriverVehiculo)
+    })
   }
   
 

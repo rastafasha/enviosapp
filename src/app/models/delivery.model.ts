@@ -2,11 +2,13 @@ import { Usuario } from "./usuario.model";
 import { environment } from "../../environments/environment";
 import { TipoVehiculo } from "./tipovehiculo.model";
 import { Direccion } from "./direccion.model";
+import { Driver } from "./driverp.model";
 
 const base_url = environment.mediaUrlRemoto;
 export class Delivery {
      constructor(
         public user : Usuario,
+        public driver : Driver,
         public status: string,
         public title: string,
         public img: string,

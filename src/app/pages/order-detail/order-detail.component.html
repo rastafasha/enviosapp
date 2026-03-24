@@ -6,7 +6,7 @@
     </div>
 
     <!-- <app-aviso  [aviso]="'Tienes nuevas entregas por atender'"></app-aviso> -->
-    <!-- detales iniciales -->
+    <!-- detales iniciales y contacto -->
     <div class="product_list">
         <div class="div1">
             <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
@@ -21,9 +21,6 @@
         <div class="div3 botonera">
             <button class="boton_azul_borde" *ngIf="user.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
                 (click)="activarDelivery()">Aplicar</button>
-            <!-- <a routerLink="/delivery-status" *ngIf="identity.role ==='USER'">
-                <button class="boton_azul_borde">Status</button>
-            </a> -->
             <a [routerLink]="['/mapa-page/',delivery._id]" *ngIf="delivery.status !== 'Confirmado' && delivery.status !=='ESPERANDO'">
                 <button class="boton_azul_borde">Mapa</button>
             </a>
@@ -68,41 +65,40 @@
     <div class="product_list" *ngIf="user.role ==='USER'">
         <div class="div1">
             <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
-            <img [src]="(driverDelivery.img || '') | imagenPipe :'drivers'" alt="">
+            <img [src]="(userDriverVehiculo.img || '') | imagenPipe :'drivers'" alt="">
         </div>
         <div class="div2">
             <h5>{{userDriver.first_name}} {{userDriver.last_name}}</h5>
-            <p>{{driverDelivery.tipo_vehiculo}}</p>
-            <p>{{driverDelivery.modelo}} </p>
-            <p>{{driverDelivery.placa}}</p>
-            <p>{{driverDelivery.color}}</p>
+            <p>{{userDriverVehiculo.tipo_vehiculo}}</p>
+            <p>{{userDriverVehiculo.modelo}} </p>
+            <p>{{userDriverVehiculo.placa}}</p>
+            <p>{{userDriverVehiculo.color}}</p>
             <div class="">
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Carro'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Carro'">
                     <i class="fa fa-car" aria-hidden="true"></i>
                 </span>
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Moto'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Moto'">
                     <i class="fas fa-motorcycle"></i>
                 </span>
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Camion'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Camion'">
                     <i class="fas fa-truck"></i>
                 </span>
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Camioneta'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Camioneta'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Pickup'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Pickup'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="driverDelivery.tipo_vehiculo === 'Van'">
+                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Van'">
                     <i class="fas fa-truck-loading"></i>
                 </span>
             </div>
         </div>
-        <div class="div3">
-            <!-- <p> Llamar </p> -->
-
-            <!-- <a href="tel:{{userDriver.telefono}}" target="_blank">
-                <button class="boton_azul_borde">LLamar</button>
-            </a> -->
+        <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
+            <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
+                <i class="fa fa-whatsapp"></i>
+                Enviar mensaje
+            </button>
         </div>
     </div>
     <!-- Numero de Trackig -->
@@ -121,9 +117,6 @@
         <h1>Detalles</h1>
         <summary>
             <details>
-                <!-- <div *ngFor="let detalle of detalles">
-                    <app-item-list [detalle]="detalle"></app-item-list>
-                </div> -->
                 <app-itemcard [delivery]="delivery" [display]="display"></app-itemcard>
             </details>
         </summary>

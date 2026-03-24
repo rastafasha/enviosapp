@@ -11,7 +11,7 @@ export class Ticket {
 export class Mensaje {
   public de?:string;
   public para?:string;
-  public msn?: number;
+  public msm?: number;
   public ticket?:string;
   public _id?:string;
   public createdAt?:Date;

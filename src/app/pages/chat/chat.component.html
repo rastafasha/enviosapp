@@ -1,10 +1,11 @@
 <section class="page pedido">
-     <app-back></app-back>
+    <app-back></app-back>
     <div class="titlePage">
-        <h3>Ticket Index </h3>
+        <h3>Chat</h3>
     </div>
+    <app-loading *ngIf="isLoading"></app-loading>
     <!--cuadromodal-->
-    <div class="container-fluid cuadro-modal">
+    <div class="container cuadro-modal" *ngIf="!isLoading">
         <div class="lineamedio"></div>
         <div class="row">
             <div class="areagris"></div>
@@ -24,38 +25,37 @@
                                     <div class="card-body" style="height: 500px;max-height: 500px;
                                 overflow-y: auto;padding-top: 0px;" #scrollMe>
                                         <div class="row">
-                                            <ng-container *ngFor="let item of mensajes; let indice = index">
-                                                <!-- *ngIf="item.de == '627ec91529881af6cb899f79'" -->
-                                                <div class="col-lg-12 p-4" style="background: #ededed;">
+
+                                            <ng-container *ngFor="let item of mensajes">
+
+                                                <!-- MENSAJE DE OTROS (Chofer/Cliente/Moderador) -->
+                                                <div class="col-lg-12 p-4" *ngIf="user.uid !== item.de"
+                                                    style="background: #ededed;">
                                                     <div class="media border-bottom">
-                                                        <!-- <img class="rounded-circle" width="50" [src]="url+'user/data/'+poster_admin"> -->
                                                         <div class="media-body pl-3">
-                                                            <h6 class="font-size-md mb-2">Yo: {{identity.first_name}}
-                                                                {{identity.last_name}}</h6>
-                                                            <p class="font-size-md mb-1">{{item.msn}}</p><span
-                                                                class="font-size-ms text-muted"><i
-                                                                    class="czi-time align-middle mr-2"></i>{{item.createdAt}}</span>
-                                                            <!-- <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span> -->
+                                                            <h6 class="font-size-md mb-2">Receptor:</h6>
+                                                            <p class="font-size-md mb-1">{{item.msm}}</p>
+                                                            <span class="font-size-ms text-muted">{{item.createdAt |
+                                                                date:'shortTime'}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-12 p-4 border-bottom" *ngIf="identity.uid == item.de"
+                                                <!-- MENSAJE MÍO (El que está logueado) -->
+                                                <div class="col-lg-12 p-4 border-bottom" *ngIf="user.uid === item.de"
                                                     style="background: #f8f8f8;">
-                                                    <div class="media">
-
-                                                        <div class="media-body pl-3">
-                                                            <h6 class="font-size-md mb-2">Moderador:</h6>
-                                                            <p class="font-size-md mb-1">{{item.msn}}</p><span
-                                                                class="font-size-ms text-muted"><i
-                                                                    class="czi-time align-middle mr-2"></i>{{item.createdAt
-                                                                }}</span>
-                                                            <!-- <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span> -->
+                                                    <div class="media text-right">
+                                                        <div class="media-body pr-3">
+                                                            <h6 class="font-size-md mb-2">Yo: {{user.first_name}}</h6>
+                                                            <p class="font-size-md mb-1">{{item.msm}}</p>
+                                                            <span class="font-size-ms text-muted">{{item.createdAt |
+                                                                date:'shortTime'}}</span>
                                                         </div>
                                                         <img class="rounded-circle" width="50"
-                                                            [src]="url+'user/data/'+identity.uid">
+                                                            [src]="url+'user/data/'+user.uid">
                                                     </div>
                                                 </div>
+
                                             </ng-container>
                                         </div>
                                     </div>
@@ -73,8 +73,8 @@
                                         <div class="custom-control custom-checkbox d-block">
                                             <input class="custom-control-input" type="checkbox" id="close-ticket"
                                                 name="close_ticket" [(ngModel)]="close_ticket">
-                                            <label class="custom-control-label" for="close-ticket">Enviar y cerrar el
-                                                ticket</label>
+                                            <!-- <label class="custom-control-label" for="close-ticket">Enviar y cerrar el
+                                                ticket</label> -->
                                         </div>
                                         <button class="btn btn-primary my-2" type="submit">Enviar</button>
                                     </div>
