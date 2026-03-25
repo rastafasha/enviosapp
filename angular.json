@@ -20,7 +20,7 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-"assets": [
+            "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
@@ -28,6 +28,7 @@
             ],
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
             "scripts": []

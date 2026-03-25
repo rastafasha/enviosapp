@@ -7,8 +7,8 @@ import { Driver } from "./driverp.model";
 const base_url = environment.mediaUrlRemoto;
 export class Delivery {
      constructor(
-        public user : Usuario,
-        public driver : Driver,
+        public user : string,
+        public driver : string,
         public status: string,
         public title: string,
         public img: string,

@@ -4,13 +4,13 @@
 
 export const environment = {
   production: true,
-  // baseUrl: 'http://localhost:3000/api',
-  // mediaUrl: 'http://localhost:3000/api/uploads/',
-  // soketServer : 'http://localhost:3000',
+  baseUrl: 'http://localhost:3000/api',
+  mediaUrl: 'http://localhost:3000/api/uploads/',
+  soketServer : 'http://localhost:3000',
   //remoto vercel
-  baseUrl: 'https://back-delivery-nodejs.onrender.com/api',
-  mediaUrl: 'https://back-delivery-nodejs.onrender.com/api/uploads/',
-  soketServer : 'https://back-delivery-nodejs.onrender.com',
+  // baseUrl: 'https://back-delivery-nodejs.onrender.com/api',
+  // mediaUrl: 'https://back-delivery-nodejs.onrender.com/api/uploads/',
+  // soketServer : 'https://back-delivery-nodejs.onrender.com',
 
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741218430/enviosapp',
   

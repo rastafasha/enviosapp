@@ -23,13 +23,13 @@ import { DireccionService } from '../../services/direccion.service';
     CommonModule, ImagenPipe,
     ItemcardComponent,
     BackComponent
-],
+  ],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.css'
 })
 export class OrderDetailComponent {
   @Input() detalles!: Detalle[];
-  display:boolean = false;
+  display: boolean = false;
   isLoading = false;
   identity!: Usuario;
   delivery!: any;
@@ -37,16 +37,16 @@ export class OrderDetailComponent {
   driver!: Driver;
   driverId!: any;
   driverDelivery!: Driver;
-  userDriver!:Usuario;
-  userDriverVehiculo!:Driver;
-  userDelivery!:Usuario;
-  usuariodestino!:string;
-  direccionDesde!:Direccion;
-  direccionHasta!:Direccion;
+  userDriver!: Usuario;
+  userDriverVehiculo!: Driver;
+  userDelivery!: Usuario;
+  usuariodestino!: string;
+  direccionDesde!: Direccion;
+  direccionHasta!: Direccion;
 
-   public whatsapp !:string;
-user:any;
-identityId!:string
+  public whatsapp !: string;
+  user: any;
+  identityId!: string
   private usuarioService = inject(UsuarioService);
   private activatedRoute = inject(ActivatedRoute);
   private deliveryServices = inject(DeliveryService);
@@ -56,26 +56,30 @@ identityId!:string
   ngOnInit() {
 
     let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER : ''); 
-  
+    this.user = JSON.parse(USER ? USER : '');
+
     if (this.user.role === 'CHOFER') {
       this.activatedRoute.params.subscribe(params => {
-      let orderId = params['id'];
-      this.getDeliveryById(orderId);
-      
-      
-    });
-    }if (this.user.role === 'USER') {
+        let orderId = params['id'];
+        this.getDeliveryById(orderId);
+
+        this.driverId = this.user.uid;
+        this.getDriver();
+
+
+      });
+    } if (this.user.role === 'USER') {
       this.identityId = this.user.uid;
+
       this.activatedRoute.params.subscribe(params => {
-      let orderId = params['id'];
-      this.getDeliveryById(orderId);
-      // this.driverId  = this.user.uid;
-      
-    });
-      
+        let orderId = params['id'];
+        this.getDeliveryById(orderId);
+        // this.driverId  = this.user.uid;
+
+      });
+
     }
-    
+
 
   }
 
@@ -86,71 +90,70 @@ identityId!:string
       this.delivery = resp;
       this.usuariodestino = resp.user;
       this.isLoading = false;
-      this.getDriver();
-      this.getUsuarioDestino();
       
-      this.getDireccionNombreDesde(); 
-      this.getDireccionNombreHasta(); 
+      this.getUsuarioDestino();
+
+      this.getDireccionNombreDesde();
+      this.getDireccionNombreHasta();
     });
   }
-  getDriver(){
-    this.usuarioService.get_user(this.delivery.driver ).subscribe((resp:any)=>{
+  getDriver() {
+    this.usuarioService.get_user(this.driverId).subscribe((resp: any) => {
       this.userDriver = resp.usuario;
-      this.driverId  = this.userDriver.uid;
-      // console.log('driver 1',this.userDriver);
-      this.getDriverData(); 
+      console.log(this.userDriver)
+      this.getDriverData();
     });
   }
-  getUsuarioDestino(){
-    this.usuarioService.get_user(this.usuariodestino ).subscribe((resp:any)=>{
+  getUsuarioDestino() {
+    this.usuarioService.get_user(this.usuariodestino).subscribe((resp: any) => {
       this.userDelivery = resp.usuario;
     });
   }
 
-  getDriverData(){
-    this.driverServices.getByUserId(this.driverId).subscribe((resp:any)=>{
-      this.userDriverVehiculo= resp;
-      // console.log('driver 2',this.userDriverVehiculo)
+  getDriverData() {
+    this.driverServices.getByUserId(this.driverId).subscribe((resp: any) => {
+      this.userDriverVehiculo = resp;
+      console.log('driver 2', this.userDriverVehiculo)
     })
   }
-  
 
-  getDireccionNombreDesde(){
-    this.direccionService.get_direccionNombre(this.usuariodestino,this.delivery.direccionEntrega).subscribe((resp:any)=>{
+
+  getDireccionNombreDesde() {
+    this.direccionService.get_direccionNombre(this.usuariodestino, this.delivery.direccionEntrega).subscribe((resp: any) => {
       this.direccionDesde = resp;
     })
   }
-  getDireccionNombreHasta(){
-    this.direccionService.get_direccionNombre(this.usuariodestino,this.delivery.direccionRecogida).subscribe((resp:any)=>{
+  getDireccionNombreHasta() {
+    this.direccionService.get_direccionNombre(this.usuariodestino, this.delivery.direccionRecogida).subscribe((resp: any) => {
       this.direccionHasta = resp;
     })
   }
-  
+
   //actualizamos es status de la asignacion a 'EN PROCESO' cuando el chofer aplica para entregar el pedido
-  activarDelivery(){
- 
-    this.deliveryServices.activar(this.delivery._id, this.driverId).subscribe((resp:any)=>{
+  activarDelivery() {
+
+    this.deliveryServices.activar(this.delivery._id, this.driverId).subscribe((resp: any) => {
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();
-    }); 
+    });
   }
 
-  marcarEntregado(){
- 
-    this.deliveryServices.entregado(this.delivery._id, this.driverId ).subscribe((resp:any)=>{
+  marcarEntregado() {
+
+    this.deliveryServices.entregado(this.delivery._id, this.driverId).subscribe((resp: any) => {
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();
-    }); 
+    });
   }
-  marcarRecibido(){
- 
-    this.deliveryServices.recibido(this.delivery._id,).subscribe((resp:any)=>{
+  marcarRecibido() {
+
+    this.deliveryServices.recibido(this.delivery._id,).subscribe((resp: any) => {
       // console.log(resp);
       this.delivery = resp.delivery;
       this.ngOnInit();
-    }); 
+    });
   }
 
   total() {
@@ -209,7 +212,7 @@ identityId!:string
     // console.log(message)
     // this.guardarPedido();
   }
-  
+
 
 
 

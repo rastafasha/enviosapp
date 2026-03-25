@@ -19,6 +19,8 @@ import { DeliveryService } from '../../services/delivery.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Delivery } from '../../models/delivery.model';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-chat',
   imports: [
@@ -58,6 +60,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   identityId!: string;
   driverId!: string;
 
+ 
+
+  private audioNotify = new Audio('./assets/audio/universfield-new-notification-057-494255.mp3');
+
   private activatedRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private viewportScroller = inject(ViewportScroller);
@@ -67,6 +73,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   private http = inject(HttpClient);
   private _ticketService = inject(TicketService);
   private deliveryServices = inject(DeliveryService);
+  private toastr = inject(ToastrService);
+
+  constructor() {
+    // Esto "desbloquea" el audio en navegadores modernos tras el primer clic
+    window.addEventListener('click', () => {
+      this.audioNotify.load();
+    }, { once: true });
+  }
 
   ngOnInit() {
     // 1. Cargar usuario de sesión
@@ -88,14 +102,22 @@ export class ChatComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (delivery: Delivery) => {
-        this.delivery = delivery; // Tu objeto de la orden
-        // Identificamos quién es el receptor (si yo soy USER, para es el CHOFER y viceversa)
-        // Si soy USER (cliente), el 'para' es el chofer. 
-        // Si soy CHOFER, el 'para' es el usuario (cliente).
-        this.usuario = (this.user.role === 'USER') 
-          ? delivery.driver  // <--- Asegúrate que este sea el campo del ID del chofer
-          : delivery.user;    // <--- Y este el del cliente
+        this.delivery = delivery;
 
+        if (this.user.role === 'USER') {
+          // Si el driver es la palabra "undefined" o está vacío
+          if (!delivery.driver || delivery.driver === 'undefined') {
+            this.usuario = null;
+            this.toastr.warning('Esperando que un repartidor acepte tu pedido...', 'Chat pausado');
+          } else {
+            this.usuario = delivery.driver;
+          }
+        } else {
+          // Si soy chofer, el destino es el campo 'user'
+          this.usuario = delivery.user;
+        }
+
+        console.log("Destinatario final:", this.usuario);
         this.inicializarChat();
         this.isLoading = false;
       },
@@ -106,45 +128,74 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   inicializarChat() {
-    // Solo conectamos si no existe ya una conexión
     if (!this.socket) {
       this.socket = io(environment.soketServer);
 
-      // Escuchamos al socket
-      this.socket.on('new-mensaje', (data: any) => {
-        // Cuando el otro envía un mensaje, recargamos la lista
-        // Al recargar la lista, el scroll se ejecutará automáticamente (paso 3)
-        this.listar_msms();
+      // 1. Escuchar conexión exitosa
+      this.socket.on('connect', () => {
+        console.log('✅ Conectado al servidor de sockets');
       });
-      // Cuando el socket avise que algo cambió en el formulario/estado de la orden
-    this.socket.on('new-formmsm', (data: any) => {
-      if (data.data) {
-        this.recargarDatosDelivery();
-      }
-    });
-    }
 
-    
+      // 2. Escuchar NUEVOS MENSAJES (Aquí ocurre la magia)
+      this.socket.on('new-mensaje', (data: any) => {
+        console.log("📩 ¡LLEGÓ UN MENSAJE POR SOCKET!", data); // ESTE LOG ES CLAVE
+
+        // ACTUALIZACIÓN AUTOMÁTICA (Quita la necesidad de refrescar)
+        this.listar_msms();
+
+        // NOTIFICACIONES (Solo para el receptor)
+        if (data && data.de !== this.user.uid) {
+          // Sonido
+          this.playNotification();
+
+          // Toast (Angular 19)
+          this.toastr.info(data.msm || 'Nuevo mensaje', 'Chat Delivery', {
+            timeOut: 4000,
+            closeButton: true,
+            progressBar: true
+          });
+        }
+      });
+
+      // 3. Escuchar cambios de estado (si cierras el ticket)
+      this.socket.on('new-formmsm', (data: any) => {
+        if (data.data) this.recargarDatosDelivery();
+      });
+    }
 
     this.listar_msms();
     this.cargarPerfil();
   }
 
+  playNotification() {
+    this.audioNotify.pause(); // Reiniciar si ya estaba sonando
+    this.audioNotify.currentTime = 0;
+    this.audioNotify.play().catch(err => console.log('Esperando interacción del usuario para sonar...'));
+  }
+
   // Para cuando el socket avisa que cambió el estado de la orden (ej: se cerró)
   recargarDatosDelivery() {
-  this.deliveryServices.getDeliveryId(this.id)
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((delivery: Delivery) => {
-      this.delivery = delivery;
-      // Actualizamos el destinatario por si acaso hubo cambios
-      this.usuario = (this.user.role === 'USER') ? delivery.driver : delivery.user;
-      console.log("Datos de la orden actualizados por socket");
-    });
-}
+    this.deliveryServices.getDeliveryId(this.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((delivery: Delivery) => {
+        this.delivery = delivery;
+        // Actualizamos el destinatario por si acaso hubo cambios
+        this.usuario = (this.user.role === 'USER') ? delivery.driver : delivery.user;
+        console.log("Datos de la orden actualizados por socket");
+      });
+  }
 
   sendMessage(msmForm: NgForm) {
     if (msmForm.invalid) return;
+
+    // Si el destinatario no se cargó, no dejamos enviar
+    if (!this.usuario) {
+      this.toastr.error('No se pudo identificar al destinatario. Recarga la página.');
+      return;
+    }
 
     const data = {
       de: this.user.uid,
@@ -156,10 +207,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this._ticketService.send(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (response: any) => {
+        this.msn = ''; // Limpiar input
         msmForm.controls['msm'].reset(); // Limpiamos input
 
         // Avisamos al servidor que enviamos algo
-        this.socket.emit('save-mensaje', { new: true });
+        this.socket.emit('save-mensaje', {
+          new: true,
+          de: this.user.uid,
+          deliveryId: this.id,
+          msm: data.msm
+        });
 
         // OJO: Como tú mismo disparaste el evento, el socket te responderá 
         // con 'new-mensaje' y eso ejecutará listar_msms() y el scroll.
@@ -167,7 +224,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     );
   }
 
- 
+
 
   listar_msms() {
     this._ticketService.get_ticketMensajes(this.id)
@@ -181,6 +238,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }, 100); // 100ms es suficiente para que Angular renderice el HTML
       });
   }
+
   cargarPerfil() {
     // Usamos el identityId que ya definimos en el ngOnInit
     this.usuarioService.get_user(this.identityId)

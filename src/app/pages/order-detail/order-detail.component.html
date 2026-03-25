@@ -34,8 +34,8 @@
             <img src="../assets/img/user.png" alt="">
         </div>
         <div class="div2">
-            <p>Usuario: {{userDelivery.first_name}} {{userDelivery.last_name}}</p>
-            <p>email: {{userDelivery.email}}</p>
+            <p>Usuario: {{userDelivery?.first_name}} {{userDelivery?.last_name}}</p>
+            <p>email: {{userDelivery?.email}}</p>
             <!-- <p>telefono: {{userDriver.telefono}}</p> -->
         </div>
         <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
@@ -64,32 +64,32 @@
     <h4 *ngIf="user.role ==='USER'">Info Chofer</h4>
     <div class="product_list" *ngIf="user.role ==='USER'">
         <div class="div1">
-            <img [src]="(userDriver.img || '') | imagenPipe :'usuarios'" alt="">
-            <img [src]="(userDriverVehiculo.img || '') | imagenPipe :'drivers'" alt="">
+            <img [src]="(userDriver?.img || '') | imagenPipe :'usuarios'" alt="">
+            <img [src]="(userDriverVehiculo?.img || '') | imagenPipe :'drivers'" alt="">
         </div>
         <div class="div2">
-            <h5>{{userDriver.first_name}} {{userDriver.last_name}}</h5>
-            <p>{{userDriverVehiculo.tipo_vehiculo}}</p>
-            <p>{{userDriverVehiculo.modelo}} </p>
-            <p>{{userDriverVehiculo.placa}}</p>
-            <p>{{userDriverVehiculo.color}}</p>
+            <h5>{{userDriver?.first_name}} {{userDriver?.last_name}}</h5>
+            <p>{{userDriverVehiculo?.tipo_vehiculo}}</p>
+            <p>{{userDriverVehiculo?.modelo}} </p>
+            <p>{{userDriverVehiculo?.placa}}</p>
+            <p>{{userDriverVehiculo?.color}}</p>
             <div class="">
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Carro'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Carro'">
                     <i class="fa fa-car" aria-hidden="true"></i>
                 </span>
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Moto'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Moto'">
                     <i class="fas fa-motorcycle"></i>
                 </span>
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Camion'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Camion'">
                     <i class="fas fa-truck"></i>
                 </span>
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Camioneta'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Camioneta'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Pickup'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Pickup'">
                     <i class="fas fa-truck-pickup"></i>
                 </span>
-                <span *ngIf="userDriverVehiculo.tipo_vehiculo === 'Van'">
+                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Van'">
                     <i class="fas fa-truck-loading"></i>
                 </span>
             </div>
