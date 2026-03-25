@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { OrderItemComponent } from "../order-item/order-item.component";
 import { AsignardeliveryService } from '../../services/asignardelivery.service';
 import { Asignacion } from '../../models/asignaciondelivery.model';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+
 import { LoadingComponent } from "../../shared/loading/loading.component";
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
@@ -12,9 +12,9 @@ import { Delivery } from '../../models/delivery.model';
 @Component({
   selector: 'app-order-list',
   imports: [
-    OrderItemComponent, CommonModule, NgFor, LoadingComponent,
-    NgIf
-  ],
+    OrderItemComponent,
+    LoadingComponent
+],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css'
 })

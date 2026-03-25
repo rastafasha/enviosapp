@@ -5,7 +5,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { DriverpService } from '../../services/driverp.service';
 import { Driver } from '../../models/driverp.model';
 import { LoadingComponent } from "../../shared/loading/loading.component";
-import { CommonModule, NgIf } from '@angular/common';
+
 import { AvisoComponent } from "../../shared/aviso/aviso.component";
 import { RouterModule } from '@angular/router';
 import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
@@ -16,12 +16,11 @@ import { BackComponent } from "../../shared/back/back.component";
   selector: 'app-profile',
   imports: [
     MenufooterComponent,
-    LoadingComponent, NgIf,
-    CommonModule,
+    LoadingComponent,
     RouterModule,
     ImagenPipe,
     AvisoComponent,
-    DireccionesComponent,
+    DireccionesComponent
 ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'

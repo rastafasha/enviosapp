@@ -3,16 +3,15 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-register',
-  imports:[
+  imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
-    NgIf,
-  ],
+    RouterModule
+],
   templateUrl: './register.component.html',
   styleUrls: [ './register.component.scss' ]
 })

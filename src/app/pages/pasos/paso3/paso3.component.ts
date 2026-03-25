@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Delivery } from '../../../models/delivery.model';
 import { DeliveryService } from '../../../services/delivery.service';
 import { FileUploadService } from '../../../services/file-upload.service';
-import { CommonModule } from '@angular/common';
+
 import { BackComponent } from '../../../shared/back/back.component';
 import { ItemcardComponent } from "../../../shared/itemcard/itemcard.component";
 import { LoadingComponent } from "../../../shared/loading/loading.component";
@@ -12,7 +12,6 @@ import { LoadingComponent } from "../../../shared/loading/loading.component";
 @Component({
   selector: 'app-paso3',
   imports: [
-    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,

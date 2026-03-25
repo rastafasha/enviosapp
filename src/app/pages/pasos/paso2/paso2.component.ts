@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DeliveryService } from '../../../services/delivery.service';
 import { Delivery } from '../../../models/delivery.model';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { FileUploadService } from '../../../services/file-upload.service';
 import Swal from 'sweetalert2';
 import { BackComponent } from "../../../shared/back/back.component";
@@ -13,14 +13,13 @@ import { LoadingComponent } from "../../../shared/loading/loading.component";
 @Component({
   selector: 'app-paso2',
   imports: [
-    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
     BackComponent,
     ItemcardComponent,
     LoadingComponent
-  ],
+],
   templateUrl: './paso2.component.html',
   styleUrl: './paso2.component.css'
 })

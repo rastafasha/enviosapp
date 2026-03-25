@@ -1,4 +1,4 @@
-import { CommonModule, NgFor, NgIf, ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewChecked, Component, DestroyRef, ElementRef,
@@ -27,11 +27,9 @@ import { ToastrService } from 'ngx-toastr';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgIf,
-    NgFor,
     BackComponent,
     LoadingComponent
-  ],
+],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })

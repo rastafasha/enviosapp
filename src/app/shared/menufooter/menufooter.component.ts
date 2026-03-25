@@ -2,13 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-menufooter',
   imports: [
-    RouterModule,
-    NgIf
+    RouterModule
 ],
   templateUrl: './menufooter.component.html',
   styleUrl: './menufooter.component.css'

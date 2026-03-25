@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-back',
     templateUrl: './back.component.html',

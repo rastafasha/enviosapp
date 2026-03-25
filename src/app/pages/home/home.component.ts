@@ -4,7 +4,7 @@ import { MenufooterComponent } from '../../shared/menufooter/menufooter.componen
 import { Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
-import { NgIf } from '@angular/common';
+
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { AsignardeliveryService } from '../../services/asignardelivery.service';
 import { Asignacion } from '../../models/asignaciondelivery.model';
@@ -17,9 +17,8 @@ import { OrderListComponent } from '../../components/order-list/order-list.compo
     MenufooterComponent,
     RouterModule,
     LoadingComponent,
-    NgIf,
     StartDeliveryComponent
-  ],
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

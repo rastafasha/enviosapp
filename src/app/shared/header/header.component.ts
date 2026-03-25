@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { AvisoComponent } from "../aviso/aviso.component";
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-header',

@@ -7,7 +7,7 @@ import { Usuario } from '../../models/usuario.model';
 import { DriverpService } from '../../services/driverp.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { CommonModule } from '@angular/common';
+
 import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../shared/loading/loading.component';
@@ -24,13 +24,12 @@ interface HtmlInputEvent extends Event {
 @Component({
   selector: 'app-driverp-edit',
   imports: [
-    CommonModule,
     LoadingComponent,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    ImagenPipe,
-  ],
+    ImagenPipe
+],
   templateUrl: './driverp-edit.component.html',
   styleUrls: ['./driverp-edit.component.css']
 })

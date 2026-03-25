@@ -3,7 +3,7 @@ import { DireccionService } from '../../services/direccion.service';
 import { Direccion } from '../../models/direccion.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Delivery } from '../../models/delivery.model';
@@ -15,14 +15,13 @@ import { BackComponent } from "../../shared/back/back.component";
 @Component({
   selector: 'app-start-delivery',
   imports: [
-    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
     ItemcardComponent,
     LoadingComponent,
     BackComponent
-  ],
+],
   templateUrl: './start-delivery.component.html',
   styleUrl: './start-delivery.component.scss'
 })

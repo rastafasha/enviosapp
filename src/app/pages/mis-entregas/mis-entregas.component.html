@@ -1,91 +1,115 @@
 <!-- <app-header></app-header> -->
 <div class="container" style="margin-bottom: 30px;">
-    <div class="saludo">
-            <h2>Mis Entregas</h2>
-        </div>
-        <div class="clear"></div>
+  <div class="saludo">
+    <h2>Mis Entregas</h2>
+  </div>
+  <div class="clear"></div>
 
-        <div class="tab-content-set">
-        <ul class="nav">
-            <li *ngIf="user.role ==='CHOFER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
-                    (click)="optionSelected(1)">
-                    <h3> {{'Pendientes'}}</h3>
-                </a>
-            </li>
-            <li *ngIf="user.role ==='CHOFER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
-                    (click)="optionSelected(2)">
-                    <h3>{{'Entregadas'}}</h3>
-                </a>
-            </li>
-            <li *ngIf="user.role ==='CHOFER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
-                    (click)="optionSelected(3)">
-                    <h3>{{'Confirmadas'}}</h3>
-                </a>
-            </li>
+  <div class="tab-content-set">
+    <ul class="nav">
+      @if (user.role ==='CHOFER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 1}"
+            (click)="optionSelected(1)">
+            <h3> {{'Pendientes'}}</h3>
+          </a>
+        </li>
+      }
+      @if (user.role ==='CHOFER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 2}"
+            (click)="optionSelected(2)">
+            <h3>{{'Entregadas'}}</h3>
+          </a>
+        </li>
+      }
+      @if (user.role ==='CHOFER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 3}"
+            (click)="optionSelected(3)">
+            <h3>{{'Confirmadas'}}</h3>
+          </a>
+        </li>
+      }
 
-            <li *ngIf="user.role ==='USER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 4}"
-                    (click)="optionSelected(4)">
-                    <h3> {{'Editando'}}</h3>
-                </a>
-            </li>
-            <li *ngIf="user.role ==='USER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 5}"
-                    (click)="optionSelected(5)">
-                    <h3> {{'Pendientes'}}</h3>
-                </a>
-            </li>
-            <li *ngIf="user.role ==='USER'">
-                <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 6}"
-                    (click)="optionSelected(6)">
-                    <h3>{{'Recibidas'}}</h3>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
+      @if (user.role ==='USER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 4}"
+            (click)="optionSelected(4)">
+            <h3> {{'Editando'}}</h3>
+          </a>
+        </li>
+      }
+      @if (user.role ==='USER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 5}"
+            (click)="optionSelected(5)">
+            <h3> {{'Pendientes'}}</h3>
+          </a>
+        </li>
+      }
+      @if (user.role ==='USER') {
+        <li>
+          <a href="#" onclick="return false;" [ngClass]="{'active': option_selectedd == 6}"
+            (click)="optionSelected(6)">
+            <h3>{{'Recibidas'}}</h3>
+          </a>
+        </li>
+      }
 
-   <!-- CHOFER -->
-    <div *ngIf="option_selectedd == 1">
-        <div class="list_products">
-            <app-order-list [status]="'En Camino'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+    </ul>
+  </div>
+
+  <!-- CHOFER -->
+  @if (option_selectedd == 1) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'En Camino'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-    <div *ngIf="option_selectedd == 2">
-        <div class="list_products">
-            <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+  }
+  @if (option_selectedd == 2) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-    <div *ngIf="option_selectedd == 3">
-        <div class="list_products">
-            <app-order-list [status]="'Confirmado'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+  }
+  @if (option_selectedd == 3) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'Confirmado'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-    <!-- USER -->
-     <div *ngIf="option_selectedd == 4">
-        <div class="list_products">
-            <app-order-list [status]="'EDITANDO'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+  }
+  <!-- USER -->
+  @if (option_selectedd == 4) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'EDITANDO'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-     <div *ngIf="option_selectedd == 5">
-        <div class="list_products">
-            <app-order-list [status]="'ESPERANDO'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
-         <div class="list_products">
-            <app-order-list [status]="'En Camino'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
-         <div class="list_products">
-            <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+  }
+  @if (option_selectedd == 5) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'ESPERANDO'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
+      <div class="list_products">
+        <app-order-list [status]="'En Camino'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
+      <div class="list_products">
+        <app-order-list [status]="'Entregado'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-    <div *ngIf="option_selectedd == 6">
-        <div class="list_products">
-            <app-order-list [status]="'Confirmado'" [identity]="identity" [identityId]="identityId"></app-order-list>
-        </div>
+  }
+  @if (option_selectedd == 6) {
+    <div>
+      <div class="list_products">
+        <app-order-list [status]="'Confirmado'" [identity]="identity" [identityId]="identityId"></app-order-list>
+      </div>
     </div>
-        
+  }
+
 </div>
 <app-menufooter></app-menufooter>

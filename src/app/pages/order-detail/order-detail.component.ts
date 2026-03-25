@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { MenufooterComponent } from "../../shared/menufooter/menufooter.component";
 import { ActivatedRoute, RouterLink, RouterModule } from "@angular/router";
 import { LoadingComponent } from '../../shared/loading/loading.component';
-import { CommonModule, CurrencyPipe, NgFor, NgIf, SlicePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, SlicePipe } from '@angular/common';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Detalle, Venta } from '../../models/ventas.model';
@@ -18,12 +18,15 @@ import { DireccionService } from '../../services/direccion.service';
 @Component({
   selector: 'app-order-detail',
   imports: [
-    MenufooterComponent, RouterLink,
-    LoadingComponent, NgIf, SlicePipe,
-    CommonModule, ImagenPipe,
+    MenufooterComponent,
+    RouterLink,
+    LoadingComponent,
+    SlicePipe,
+    CommonModule,
+    ImagenPipe,
     ItemcardComponent,
     BackComponent
-  ],
+],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.css'
 })

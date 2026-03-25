@@ -1,40 +1,41 @@
 <app-header></app-header>
-<app-loading *ngIf="isLoading"></app-loading>
-<div class="container" *ngIf="!isLoading" style="margin-bottom: 60px;">
+@if (isLoading) {
+  <app-loading></app-loading>
+}
+@if (!isLoading) {
+  <div class="container" style="margin-bottom: 60px;">
     <div class="saludo">
-        <h2>Hola, {{identity.first_name}}!</h2>
+      <h2>Hola, {{identity.first_name}}!</h2>
     </div>
-
-        <!-- <div class="pedidos_recientes">
-            <h2>Nuestros Servicios</h2>
-        </div>
-        <div class="pedidos_recientes">
-            <h2>Envios</h2>
-        </div>
-        <div class="pedidos_recientes">
-            <h2>Delivery</h2>
-        </div>
-        <div class="pedidos_recientes">
-            <h2>Publicidad</h2>
-        </div>
-        <div class="pedidos_recientes">
-            <h2>Promociones</h2>
-        </div> -->
-        <!-- <div class="options_tabs">
-            <div class="option">
-                Por Pagar
-            </div>
-            <div class="option">
-                Por Recibir
-            </div>
-            <div class="option">
-                Por Review
-            </div>
-        </div> -->
-
-        
-
-        <app-start-delivery *ngIf="!isLoading" [identityId]="identityId" [identity]="identity"></app-start-delivery>
-
-    </div>
+    <!-- <div class="pedidos_recientes">
+    <h2>Nuestros Servicios</h2>
+  </div>
+  <div class="pedidos_recientes">
+    <h2>Envios</h2>
+  </div>
+  <div class="pedidos_recientes">
+    <h2>Delivery</h2>
+  </div>
+  <div class="pedidos_recientes">
+    <h2>Publicidad</h2>
+  </div>
+  <div class="pedidos_recientes">
+    <h2>Promociones</h2>
+  </div> -->
+  <!-- <div class="options_tabs">
+  <div class="option">
+    Por Pagar
+  </div>
+  <div class="option">
+    Por Recibir
+  </div>
+  <div class="option">
+    Por Review
+  </div>
+</div> -->
+@if (!isLoading) {
+  <app-start-delivery [identityId]="identityId" [identity]="identity"></app-start-delivery>
+}
+</div>
+}
 <app-menufooter></app-menufooter>

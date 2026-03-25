@@ -1,43 +1,51 @@
 <div class="container">
-    <div class="saludo">
-        <app-back></app-back>
-        <h2>Ruta de Entrega</h2>
-    </div>
+  <div class="saludo">
+    <app-back></app-back>
+    <h2>Ruta de Entrega</h2>
+  </div>
 </div>
 <div class="mostrarmapa">
-    <!-- Contenedor del mapa Leaflet -->
-    <div #mapContainer class="map-container"></div>
+  <!-- Contenedor del mapa Leaflet -->
+  <div #mapContainer class="map-container"></div>
 
-    <!-- Información de coordenadas -->
-    <div class="coords-info" >
-        <div class="coord-item" *ngIf="driverPosition">
-            <span class="label">📍 Repartidor:</span>
-            <span class="value">{{ (driverPosition.lat || 0).toFixed(6) }}, {{ (driverPosition.lng || 0).toFixed(6) }}</span>
-        </div>
-        <div class="coord-item" *ngIf="deliveryPosition">
-            <span class="label">🏠 Entrega:</span>
-            <span class="value">{{ (deliveryPosition.lat || 0).toFixed(6) }}, {{ (deliveryPosition.lng || 0).toFixed(6) }}</span>
-        </div>
-        
-        <!-- Botón para compartir coordenadas -->
-        <!-- <div class="share-section">
-            <button class="share-btn btn" (click)="shareCoordinates()">
-                <span class="share-icon">📤</span>
-                <span class="share-text">Compartir Coordenadas</span>
-            </button>
-        </div> -->
-    </div>
+  <!-- Información de coordenadas -->
+  <div class="coords-info" >
+    @if (driverPosition) {
+      <div class="coord-item">
+        <span class="label">📍 Repartidor:</span>
+        <span class="value">{{ (driverPosition.lat || 0).toFixed(6) }}, {{ (driverPosition.lng || 0).toFixed(6) }}</span>
+      </div>
+    }
+    @if (deliveryPosition) {
+      <div class="coord-item">
+        <span class="label">🏠 Entrega:</span>
+        <span class="value">{{ (deliveryPosition.lat || 0).toFixed(6) }}, {{ (deliveryPosition.lng || 0).toFixed(6) }}</span>
+      </div>
+    }
 
-    <!-- Loading -->
-    <div class="loading-overlay" *ngIf="loading">
-        <div class="spinner"></div>
-        <p>Obteniendo ubicación...</p>
-    </div>
+    <!-- Botón para compartir coordenadas -->
+    <!-- <div class="share-section">
+    <button class="share-btn btn" (click)="shareCoordinates()">
+      <span class="share-icon">📤</span>
+      <span class="share-text">Compartir Coordenadas</span>
+    </button>
+  </div> -->
+</div>
 
-    <!-- Error -->
-    <div class="error-message" *ngIf="errorMessage">
-        <p>⚠️ {{ errorMessage }}</p>
-        <p>Usando ubicación de demostración</p>
-    </div>
+<!-- Loading -->
+@if (loading) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Obteniendo ubicación...</p>
+  </div>
+}
+
+<!-- Error -->
+@if (errorMessage) {
+  <div class="error-message">
+    <p>⚠️ {{ errorMessage }}</p>
+    <p>Usando ubicación de demostración</p>
+  </div>
+}
 </div>
 <app-menufooter></app-menufooter>

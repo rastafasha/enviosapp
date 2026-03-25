@@ -5,7 +5,7 @@ import { Delivery } from '../../../models/delivery.model';
 import { TipoVehiculo } from '../../../models/tipovehiculo.model';
 import { DeliveryService } from '../../../services/delivery.service';
 import { TipovehiculoService } from '../../../services/tipovehiculo.service';
-import { CommonModule } from '@angular/common';
+
 import { BackComponent } from '../../../shared/back/back.component';
 import { ItemcardComponent } from '../../../shared/itemcard/itemcard.component';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
@@ -13,14 +13,13 @@ import { LoadingComponent } from '../../../shared/loading/loading.component';
 @Component({
   selector: 'app-confirmar',
   imports: [
-    CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
     BackComponent,
     ItemcardComponent,
     LoadingComponent
-  ],
+],
   templateUrl: './confirmar.component.html',
   styleUrl: './confirmar.component.css'
 })

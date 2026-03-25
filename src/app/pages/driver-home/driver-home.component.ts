@@ -7,7 +7,7 @@ import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { AvisoComponent } from "../../shared/aviso/aviso.component";
 import { LoadingComponent } from "../../shared/loading/loading.component";
-import { NgIf } from '@angular/common';
+
 import { Driver } from '../../models/driverp.model';
 import { DriverpService } from '../../services/driverp.service';
 
@@ -19,8 +19,7 @@ import { DriverpService } from '../../services/driverp.service';
     RouterModule,
     OrderListComponent,
     AvisoComponent,
-    LoadingComponent,
-    NgIf
+    LoadingComponent
 ],
   templateUrl: './driver-home.component.html',
   styleUrl: './driver-home.component.css'

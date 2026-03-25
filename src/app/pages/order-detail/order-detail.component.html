@@ -1,143 +1,176 @@
-<app-loading *ngIf="isLoading"></app-loading>
-<div class="container" *ngIf="!isLoading" style="padding-bottom: 40px;">
+@if (isLoading) {
+  <app-loading></app-loading>
+}
+@if (!isLoading) {
+  <div class="container" style="padding-bottom: 40px;">
     <div class="saludo">
-        <app-back></app-back>
-        <h2>Detalle</h2>
+      <app-back></app-back>
+      <h2>Detalle</h2>
     </div>
-
     <!-- <app-aviso  [aviso]="'Tienes nuevas entregas por atender'"></app-aviso> -->
     <!-- detales iniciales y contacto -->
     <div class="product_list">
-        <div class="div1">
-            <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
-        </div>
-        <div class="div2">
-            <p># {{delivery._id | slice:0:10}}</p>
-            <p>{{delivery.titulo}}</p>
-            <h5>{{delivery.status}}</h5>
-            <h5>{{delivery.tipovehiculo }}</h5>
-            <h5>{{delivery.precio | currency}}</h5>
-        </div>
-        <div class="div3 botonera">
-            <button class="boton_azul_borde" *ngIf="user.role ==='CHOFER' && delivery.status ==='ESPERANDO'"
-                (click)="activarDelivery()">Aplicar</button>
-            <a [routerLink]="['/mapa-page/',delivery._id]" *ngIf="delivery.status !== 'Confirmado' && delivery.status !=='ESPERANDO'">
-                <button class="boton_azul_borde">Mapa</button>
-            </a>
-        </div>
+      <div class="div1">
+        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" alt="">
+      </div>
+      <div class="div2">
+        <p># {{delivery._id | slice:0:10}}</p>
+        <p>{{delivery.titulo}}</p>
+        <h5>{{delivery.status}}</h5>
+        <h5>{{delivery.tipovehiculo }}</h5>
+        <h5>{{delivery.precio | currency}}</h5>
+      </div>
+      <div class="div3 botonera">
+        @if (user.role ==='CHOFER' && delivery.status ==='ESPERANDO') {
+          <button class="boton_azul_borde"
+          (click)="activarDelivery()">Aplicar</button>
+        }
+        @if (delivery.status !== 'Confirmado' && delivery.status !=='ESPERANDO') {
+          <a [routerLink]="['/mapa-page/',delivery._id]">
+            <button class="boton_azul_borde">Mapa</button>
+          </a>
+        }
+      </div>
     </div>
     <!-- detales iniciales -->
     <!-- Info Destino -->
-    <h4 *ngIf="user.role ==='CHOFER'">Info Destino</h4>
-    <div class="product_list" *ngIf="user.role ==='CHOFER'">
+    @if (user.role ==='CHOFER') {
+      <h4>Info Destino</h4>
+    }
+    @if (user.role ==='CHOFER') {
+      <div class="product_list">
         <div class="div1">
-            <img src="../assets/img/user.png" alt="">
+          <img src="../assets/img/user.png" alt="">
         </div>
         <div class="div2">
-            <p>Usuario: {{userDelivery?.first_name}} {{userDelivery?.last_name}}</p>
-            <p>email: {{userDelivery?.email}}</p>
-            <!-- <p>telefono: {{userDriver.telefono}}</p> -->
+          <p>Usuario: {{userDelivery?.first_name}} {{userDelivery?.last_name}}</p>
+          <p>email: {{userDelivery?.email}}</p>
+          <!-- <p>telefono: {{userDriver.telefono}}</p> -->
         </div>
-        <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
+        @if (delivery.status !== 'Confirmado') {
+          <div class="div3">
             <!-- <button class="boton_azul_borde" [routerLink]="['/chat']">
-                <i class="fa fa-whatsapp"></i>
-                Enviar mensaje
-            </button> -->
-            <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
-                <i class="fa fa-whatsapp"></i>
-                Enviar mensaje
-            </button>
+            <i class="fa fa-whatsapp"></i>
+            Enviar mensaje
+          </button> -->
+          <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
+            <i class="fa fa-whatsapp"></i>
+            Enviar mensaje
+          </button>
         </div>
+      }
     </div>
-
-    <!-- Coordenadas -->
-    <div class="num_tracking">
-        <i class="fa fa-map-pin"></i>
-        <h3>Coordenadas</h3>
-        <p>Desde: {{direccionDesde?.direccion}}</p>
-        <p>Hasta: {{direccionHasta?.direccion}}</p>
-        <p>fecha: {{delivery?.fechaEnvio}}</p>
-        <p>hora: {{delivery?.horaEnvio}}</p>
-    </div>
-
-    <!-- Info Chofer -->
-    <h4 *ngIf="user.role ==='USER'">Info Chofer</h4>
-    <div class="product_list" *ngIf="user.role ==='USER'">
-        <div class="div1">
-            <img [src]="(userDriver?.img || '') | imagenPipe :'usuarios'" alt="">
-            <img [src]="(userDriverVehiculo?.img || '') | imagenPipe :'drivers'" alt="">
+  }
+  <!-- Coordenadas -->
+  <div class="num_tracking">
+    <i class="fa fa-map-pin"></i>
+    <h3>Coordenadas</h3>
+    <p>Desde: {{direccionDesde?.direccion}}</p>
+    <p>Hasta: {{direccionHasta?.direccion}}</p>
+    <p>fecha: {{delivery?.fechaEnvio}}</p>
+    <p>hora: {{delivery?.horaEnvio}}</p>
+  </div>
+  <!-- Info Chofer -->
+  @if (user.role ==='USER') {
+    <h4>Info Chofer</h4>
+  }
+  @if (user.role ==='USER') {
+    <div class="product_list">
+      <div class="div1">
+        <img [src]="(userDriver?.img || '') | imagenPipe :'usuarios'" alt="">
+        <img [src]="(userDriverVehiculo?.img || '') | imagenPipe :'drivers'" alt="">
+      </div>
+      <div class="div2">
+        <h5>{{userDriver?.first_name}} {{userDriver?.last_name}}</h5>
+        <p>{{userDriverVehiculo?.tipo_vehiculo}}</p>
+        <p>{{userDriverVehiculo?.modelo}} </p>
+        <p>{{userDriverVehiculo?.placa}}</p>
+        <p>{{userDriverVehiculo?.color}}</p>
+        <div class="">
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Carro') {
+            <span>
+              <i class="fa fa-car" aria-hidden="true"></i>
+            </span>
+          }
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Moto') {
+            <span>
+              <i class="fas fa-motorcycle"></i>
+            </span>
+          }
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Camion') {
+            <span>
+              <i class="fas fa-truck"></i>
+            </span>
+          }
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Camioneta') {
+            <span>
+              <i class="fas fa-truck-pickup"></i>
+            </span>
+          }
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Pickup') {
+            <span>
+              <i class="fas fa-truck-pickup"></i>
+            </span>
+          }
+          @if (userDriverVehiculo?.tipo_vehiculo === 'Van') {
+            <span>
+              <i class="fas fa-truck-loading"></i>
+            </span>
+          }
         </div>
-        <div class="div2">
-            <h5>{{userDriver?.first_name}} {{userDriver?.last_name}}</h5>
-            <p>{{userDriverVehiculo?.tipo_vehiculo}}</p>
-            <p>{{userDriverVehiculo?.modelo}} </p>
-            <p>{{userDriverVehiculo?.placa}}</p>
-            <p>{{userDriverVehiculo?.color}}</p>
-            <div class="">
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Carro'">
-                    <i class="fa fa-car" aria-hidden="true"></i>
-                </span>
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Moto'">
-                    <i class="fas fa-motorcycle"></i>
-                </span>
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Camion'">
-                    <i class="fas fa-truck"></i>
-                </span>
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Camioneta'">
-                    <i class="fas fa-truck-pickup"></i>
-                </span>
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Pickup'">
-                    <i class="fas fa-truck-pickup"></i>
-                </span>
-                <span *ngIf="userDriverVehiculo?.tipo_vehiculo === 'Van'">
-                    <i class="fas fa-truck-loading"></i>
-                </span>
-            </div>
+      </div>
+      @if (delivery.status !== 'Confirmado') {
+        <div class="div3">
+          <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
+            <i class="fa fa-whatsapp"></i>
+            Enviar mensaje
+          </button>
         </div>
-        <div class="div3" *ngIf="delivery.status !== 'Confirmado'">
-            <button class="boton_azul_borde" [routerLink]="['/chat/', delivery._id]">
-                <i class="fa fa-whatsapp"></i>
-                Enviar mensaje
-            </button>
-        </div>
+      }
     </div>
-    <!-- Numero de Trackig -->
-    <!-- <div class="num_tracking">
-        <i class="fa fa-list"></i>
-        <h3>Numero de Trackig</h3>
-        <p>{{venta.tracking_number}}</p>
-    </div> -->
-    <!-- Observaciones -->
-    <div class="itemdeliveryDesc" *ngIf="delivery.descripcion">
-        <h3>Observaciones / Instrucciones: </h3>
-        <p>{{delivery.descripcion}}</p>
-    </div>
-    <!-- Lista entrega-->
-    <div class="status">
-        <h1>Detalles</h1>
-        <summary>
-            <details>
-                <app-itemcard [delivery]="delivery" [display]="display"></app-itemcard>
-            </details>
-        </summary>
-
-
-    </div>
-    <br>
-    <!-- Status Entrega-->
-
-    <button class="boton_azul_borde" style="margin-bottom: 80px;"
-        *ngIf="user.role ==='USER' && delivery.status==='Entregado'">
-        Calificar
-    </button>
-    <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;"
-        *ngIf="user.role ==='USER' && delivery.status==='Entregado'">
-        Marcar como Recibido
-    </button>
-    <button class="boton_azul_borde" (click)="marcarEntregado()" style="margin-bottom: 80px;"
-        *ngIf="user.role ==='CHOFER' && delivery.status !=='Entregado' && delivery.status !=='Confirmado' ">
-        Marcar como Entregado
-    </button>
-
+  }
+  <!-- Numero de Trackig -->
+  <!-- <div class="num_tracking">
+  <i class="fa fa-list"></i>
+  <h3>Numero de Trackig</h3>
+  <p>{{venta.tracking_number}}</p>
+</div> -->
+<!-- Observaciones -->
+@if (delivery.descripcion) {
+  <div class="itemdeliveryDesc">
+    <h3>Observaciones / Instrucciones: </h3>
+    <p>{{delivery.descripcion}}</p>
+  </div>
+}
+<!-- Lista entrega-->
+<div class="status">
+  <h1>Detalles</h1>
+  <summary>
+    <details>
+      <app-itemcard [delivery]="delivery" [display]="display"></app-itemcard>
+    </details>
+  </summary>
 </div>
+<br>
+  <!-- Status Entrega-->
+  @if (user.role ==='USER' && delivery.status==='Entregado') {
+    <button class="boton_azul_borde" style="margin-bottom: 80px;"
+      >
+      Calificar
+    </button>
+  }
+  @if (user.role ==='USER' && delivery.status==='Entregado') {
+    <button class="boton_azul_borde" (click)="marcarRecibido()" style="margin-bottom: 80px;"
+      >
+      Marcar como Recibido
+    </button>
+  }
+  @if (user.role ==='CHOFER' && delivery.status !=='Entregado' && delivery.status !=='Confirmado' ) {
+    <button class="boton_azul_borde" (click)="marcarEntregado()" style="margin-bottom: 80px;"
+      >
+      Marcar como Entregado
+    </button>
+  }
+</div>
+}
 <app-menufooter></app-menufooter>

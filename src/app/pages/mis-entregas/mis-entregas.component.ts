@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { MenufooterComponent } from "../../shared/menufooter/menufooter.component";
 import { OrderItemComponent } from "../../components/order-item/order-item.component";
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { OrderListComponent } from "../../components/order-list/order-list.component";
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';

@@ -4,7 +4,7 @@ import { WaGeolocationService } from '@ng-web-apis/geolocation';
 import { Subscription } from 'rxjs';
 import { MenufooterComponent } from '../../shared/menufooter/menufooter.component';
 import * as L from 'leaflet';
-import { NgIf } from '@angular/common';
+
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { DeliveryService } from '../../services/delivery.service';
@@ -15,7 +15,7 @@ import { DireccionService } from '../../services/direccion.service';
   selector: 'app-mapa',
   imports: [
     MenufooterComponent,
-    RouterModule, NgIf,
+    RouterModule,
     BackComponent
 ],
   providers: [WaGeolocationService],

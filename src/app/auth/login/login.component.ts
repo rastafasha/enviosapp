@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
-import { CommonModule } from '@angular/common';
+
 import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
 
 // declare const gapi: any;
@@ -12,13 +12,11 @@ import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa
   standalone: true,
 
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    PwaNotifInstallerComponent,
-    // ImagenPipe
-  ],
+    PwaNotifInstallerComponent
+],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

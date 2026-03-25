@@ -1,21 +1,25 @@
 <div class="container">
-    <app-back></app-back>
-    <app-loading *ngIf="isLoading"></app-loading>
-    <h2>Confirme su Delivery</h2>
-    <p>Asegurese que la información este correcta.</p>
-    <app-itemcard *ngIf="!isLoading" [delivery]="delivery"></app-itemcard>
+  <app-back></app-back>
+  @if (isLoading) {
+    <app-loading></app-loading>
+  }
+  <h2>Confirme su Delivery</h2>
+  <p>Asegurese que la información este correcta.</p>
+  @if (!isLoading) {
+    <app-itemcard [delivery]="delivery"></app-itemcard>
+  }
 
-    <form class=" p-t-20 col-xs-12" [formGroup]="deliveryCarForm">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label>Alguna Observación / Instrucción adicional: </label>
-                <textarea class="form-control" placeholder="Describa brevemente" 
-                    formControlName="descripcion"></textarea>
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
-            Confirmar
-        </button>
+  <form class=" p-t-20 col-xs-12" [formGroup]="deliveryCarForm">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label>Alguna Observación / Instrucción adicional: </label>
+        <textarea class="form-control" placeholder="Describa brevemente"
+        formControlName="descripcion"></textarea>
+      </div>
+    </div>
+    <br>
+      <button type="submit" class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
+        Confirmar
+      </button>
     </form>
-</div>
+  </div>

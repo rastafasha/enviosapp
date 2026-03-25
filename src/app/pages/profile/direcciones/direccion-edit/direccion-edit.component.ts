@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef, inject, OnDestroy } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -16,12 +16,11 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-direccion-edit',
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     LoadingComponent,
     RouterModule
-  ],
+],
   providers: [WaGeolocationService],
   templateUrl: './direccion-edit.component.html',
   styleUrls: ['./direccion-edit.component.css']
