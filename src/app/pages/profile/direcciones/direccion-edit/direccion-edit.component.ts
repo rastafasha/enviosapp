@@ -13,6 +13,7 @@ import { WaGeolocationService } from '@ng-web-apis/geolocation';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { BackComponent } from "../../../../shared/back/back.component";
 
 @Component({
   selector: 'app-direccion-edit',
@@ -20,7 +21,8 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     LoadingComponent,
-    RouterModule
+    RouterModule,
+    BackComponent
 ],
   providers: [WaGeolocationService],
   templateUrl: './direccion-edit.component.html',
@@ -284,7 +286,7 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
 
   getDireccion(id: any) {
     if (id !== null && id !== undefined) {
-      this.pageTitle = 'Editando';
+      this.pageTitle = 'Editando Dirección';
       this.direccionService.get_direccion(id).subscribe(
         res => {
           this.direccionForm.patchValue({
@@ -303,7 +305,7 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
         }, error => console.error('getDireccion error:', error)
       );
     } else {
-      this.pageTitle = 'Creando';
+      this.pageTitle = 'Creando Dirección';
     }
   }
 

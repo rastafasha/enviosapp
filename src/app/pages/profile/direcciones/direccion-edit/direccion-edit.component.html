@@ -5,13 +5,10 @@
 <!-- Page Content-->
 @if (!isLoading) {
   <div class="container">
-    <div class="back-title">
-      <a [routerLink]="['/my-account/direcciones']">
-        <button class="boton_azul_borde">Volver</button>
-      </a>
-      <a href="javascript:;" (click)="PageSize()" class="btn btn-primary doctor-refresh ms-2 "><i
-      class="fa fa-refresh"></i></a>
-    </div>
+    <app-back [pageTitle]="pageTitle"></app-back>
+    <button (click)="PageSize()" class="btn btn-outline-primary ms-2 ">
+      <i class="fa fa-refresh"></i>
+    </button>
     <div class="num_tracking">
       <!-- Content  -->
       <section class="col-lg-12">
