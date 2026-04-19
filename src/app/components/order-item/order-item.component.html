@@ -14,6 +14,11 @@
                 <i class="fa fa-eye"></i>
             </button>
         </a>
+        <a (click)="deleteItem(asignacion._id)">
+            <button class="boton_azul_borde">
+                <i class="fa fa-trash"></i>
+            </button>
+        </a>
     </div>
 </div>
 <div class="product_list" *ngIf="delivery">

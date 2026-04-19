@@ -13,10 +13,7 @@
     <div class="grillaopciones" >
       @for (tipo of tipos; track tipo) {
         <div >
-          <div class="opcion" [class.selected]="tipo.nombre === deliveryCarForm.get('tipovehiculo')?.value"
-            (click)="selectCar(tipo)" [style.background-image]="'url(' + tipo.img + ')' | imagenPipe: 'tipos'">
-            <h4>{{tipo.nombre}}</h4>
-            <p>{{tipo.precio|currency}}</p>
+          <div class="opcion" [class.selected]="tipo.nombre === deliveryCarForm.get('tipovehiculo')?.value"  (click)="selectCar(tipo)" [style.background-image]="'url(' + tipo.img + ')' | imagenPipe: 'tipos'"> <h4>{{tipo.nombre}}</h4> <p>{{tipo.precio|currency}}</p>
           </div>
         </div>
       }

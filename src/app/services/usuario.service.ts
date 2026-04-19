@@ -175,36 +175,6 @@ export class UsuarioService {
     );
   }
 
-  cargarUsuarios(desde: number = 0) {
-    const url = `${base_url}/usuarios?desde=${desde}`;
-    return this.http.get<CargarUsuario>(url, this.headers).pipe(
-      map((resp) => {
-        const usuarios = resp.usuarios.map(
-          (user) =>
-            new Usuario(
-              user.first_name,
-              user.last_name,
-              user.pais,
-              user.ciudad,
-              user.telefono,
-              user.numdoc,
-              user.email,
-              '',
-              user.img,
-              user.google,
-              user.role,
-              user.uid
-            )
-        );
-
-        return {
-          total: resp.total,
-          usuarios,
-        };
-      })
-    );
-  }
-
   borrarUsuario(usuario: Usuario) {
     const url = `${base_url}/usuarios/${usuario.uid}`;
     return this.http.delete(url, this.headers);

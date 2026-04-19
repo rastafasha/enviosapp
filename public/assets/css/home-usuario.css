@@ -147,3 +147,23 @@
     border-radius: 8px;
     transition: transform 0.2s;
 }
+
+.car_list {
+    display: grid;
+    grid-template-columns: 20% 80% ;
+
+    /* grid-template-rows: repeat(5, 1fr); */
+        grid-column-gap: 20px;
+    grid-row-gap: 0px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.car_list img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}

@@ -11,11 +11,13 @@ import { RouterModule } from '@angular/router';
 import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 import { DireccionesComponent } from "./direcciones/direcciones.component";
 import { BackComponent } from "../../shared/back/back.component";
+import { HeaderComponent } from '../../shared/header/header.component';
 
 @Component({
   selector: 'app-profile',
   imports: [
     MenufooterComponent,
+    HeaderComponent,
     LoadingComponent,
     RouterModule,
     ImagenPipe,

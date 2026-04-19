@@ -1,99 +1,98 @@
+<app-header></app-header>
 @if (isLoading) {
-  <app-loading></app-loading>
+<app-loading></app-loading>
 }
 <!-- <app-back [pageTitle]="pageTitle"></app-back> -->
 @if (!isLoading) {
-  <div class="container">
-    <div class="saludo" >
-      <h2>Hola!, {{identity.first_name}}</h2>
+<div class="container">
+  <div class="saludo">
+    <h2>Hola!, {{identity.first_name}}</h2>
+  </div>
+  <div class="product_list">
+    <div class="div1">
+      <img [src]="(identity.img ?? '') | imagenPipe: 'usuarios'" [alt]="identity.first_name">
     </div>
-    <div class="product_list" >
-      <div class="div1">
-        <img [src]="(identity.img ?? '') | imagenPipe: 'usuarios'" [alt]="identity.first_name">
-      </div>
-      <div class="div2">
-        <h3>{{identity.first_name}} {{identity.last_name}} </h3>
-        <p>{{identity.numdoc}}</p>
-        <p>{{identity.role}}</p>
-        <h4>Activo</h4>
-      </div>
-      <div class="div3">
-        <a [routerLink]="['/myprofile/', identity.uid]">
-          <button class="boton_azul_borde">Editar</button>
-        </a>
-      </div>
+    <div class="div2">
+      <p><b>Nombre:</b> {{identity.first_name}} {{identity.last_name}}</p>
+      <p><b>Documento:</b> {{identity.numdoc}}</p>
+      <p><b>Rol:</b> {{identity.role}}</p>
     </div>
-    @if (!identity?.telefono && !identity?.numdoc) {
-      <div style="margin-bottom: 20px;">
-        <app-aviso [aviso]="'Completa tu registro, preferiblemente un numero de Whatsapp '"></app-aviso>
-      </div>
-    }
-    @if (identity && identity.role ==='USER') {
-      <app-direcciones [identity]="identity"></app-direcciones>
-    }
-    @if (!driver && identity.role ==='CHOFER') {
-      <app-aviso [aviso]="'Agrega Información de tu vehiculo'"></app-aviso>
-    }
-    @if (driver) {
-      <div class="product_list">
-        <div class="div1">
-          <img [src]="(driver.img ?? '') | imagenPipe: 'drivers'" [alt]="driver.modelo">
-        </div>
-        <div class="div2">
-          <p>{{driver.tipo_vehiculo}}</p>
-          <h3>{{driver.modelo}}</h3>
-          <h3>{{driver.marca}}</h3>
-          <h4>{{driver.color}}</h4>
-          <p>{{driver.year}}</p>
-          @if (driver.tipo_vehiculo === 'Carro') {
-            <span>
-              <i class="fa fa-car" aria-hidden="true"></i>
-            </span>
-          }
-          @if (driver.tipo_vehiculo === 'Moto') {
-            <span>
-              <i class="fas fa-motorcycle"></i>
-            </span>
-          }
-          @if (driver.tipo_vehiculo === 'Camion') {
-            <span>
-              <i class="fas fa-truck"></i>
-            </span>
-          }
-          @if (driver.tipo_vehiculo === 'Camioneta') {
-            <span>
-              <i class="fas fa-truck-pickup"></i>
-            </span>
-          }
-          @if (driver.tipo_vehiculo === 'Pickup') {
-            <span>
-              <i class="fas fa-truck-pickup"></i>
-            </span>
-          }
-          @if (driver.tipo_vehiculo === 'Van') {
-            <span>
-              <i class="fas fa-truck-loading"></i>
-            </span>
-          }
-        </div>
-      </div>
-    }
-    @if (driver) {
-      <div class="num_tracking">
-        <i class="fa fa-list"></i>
-        <h3>Numero de licencia</h3>
-        <p>{{driver.licencianum}}</p>
-      </div>
-    }
-    @if (driver) {
-      <app-aviso [aviso]="'Tienes nuevas entregas por atender'"></app-aviso>
-    }
-    <!-- <div class="barra_progreso ">
-    <div class="circulo_inicio"></div>
-    <div class="circulo_progreso"></div>
-    <div class="circulo_llegada"></div>
-    <div class="barra_progreso__barra"></div>
-  </div> -->
+    <div class="div3">
+      <a [routerLink]="['/myprofile/', identity.uid]">
+        <button class="boton_azul_borde">Editar</button>
+      </a>
+    </div>
+  </div>
+  @if (!identity?.telefono && !identity?.numdoc) {
+  <div style="margin-bottom: 20px;">
+    <app-aviso [aviso]="'Completa tu registro, preferiblemente un numero de Whatsapp '"></app-aviso>
+  </div>
+  }
+  @if (identity && identity.role ==='USER') {
+  <app-direcciones [identity]="identity"></app-direcciones>
+  }
+  @if (!driver && identity.role ==='CHOFER') {
+  <app-aviso [aviso]="'Agrega Información de tu vehiculo'"></app-aviso>
+  }
+  @if (driver && !isLoading) {
+  <div class="car_list">
+    <div class="div1">
+      <img [src]="(driver.img ?? '') | imagenPipe: 'drivers'" [alt]="driver.modelo">
+    </div>
+    <div class="div2">
+      <p><b>Tipo Vehiculo:</b> {{driver.tipo_vehiculo}}</p>
+      <p><b>Modelo:</b> {{driver.modelo}}</p>
+      <p><b>Marca:</b> {{driver.marca}}</p>
+      <p><b>Color:</b> {{driver.color}}</p>
+      <p><b>Año:</b> {{driver.year}}</p>
+      <p><b>Placa:</b> {{driver.placa}}</p>
+
+    </div>
+  </div>
+  }
+  @if (driver && !isLoading) {
+  <div class="car_list">
+    <div class="div1">
+      @if (driver.tipo_vehiculo === 'Carro') {
+      <span>
+        <i class="fa fa-car fa-3x" aria-hidden="true"></i>
+      </span>
+      }
+      @if (driver.tipo_vehiculo === 'Moto') {
+      <span>
+        <i class="fas fa-motorcycle fa-3x"></i>
+      </span>
+      }
+      @if (driver.tipo_vehiculo === 'Camion') {
+      <span>
+        <i class="fas fa-truck fa-3x"></i>
+      </span>
+      }
+      @if (driver.tipo_vehiculo === 'Camioneta') {
+      <span>
+        <i class="fas fa-truck-pickup fa-3x"></i>
+      </span>
+      }
+      @if (driver.tipo_vehiculo === 'Pickup') {
+      <span>
+        <i class="fas fa-truck-pickup fa-3x"></i>
+      </span>
+      }
+      @if (driver.tipo_vehiculo === 'Van') {
+      <span>
+        <i class="fas fa-truck-loading fa-3x"></i>
+      </span>
+      }
+    </div>
+    <div class="div2">
+      <h5>Numero de licencia</h5>
+      <p>{{driver.licencianum}}</p>
+    </div>
+  </div>
+  }
+  @if (driver) {
+  <app-aviso [aviso]="'Tienes nuevas entregas por atender'"></app-aviso>
+  }
 </div>
 }
 <app-menufooter></app-menufooter>

@@ -1,12 +1,9 @@
 export class Direccion{
     constructor(
         public _id: string,
-        public nombres_completos: string,
+        public nombre_ubicacion: string,
         public direccion: string,
         public referencia : string,
-        public pais: string,
-        public ciudad : string,
-        public zip : string,
         public user: string,
         public latitud?: number,
         public longitud?: number,

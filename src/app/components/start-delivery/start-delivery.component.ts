@@ -100,12 +100,12 @@ export class StartDeliveryComponent {
     // Si direccionRecogida está vacía/null, guardar como pickup address
     if (!this.deliveryForm.get('direccionRecogida')?.value) {
       this.direccionRecogida = direccion;
-      this.deliveryForm.get('direccionRecogida')?.setValue(direccion.nombres_completos);
+      this.deliveryForm.get('direccionRecogida')?.setValue(direccion.nombre_ubicacion);
     }
     // Si direccionEntrega está vacía/null, guardar como delivery address
     else if (!this.deliveryForm.get('direccionEntrega')?.value) {
       this.direccionEntrega = direccion;
-      this.deliveryForm.get('direccionEntrega')?.setValue(direccion.nombres_completos);
+      this.deliveryForm.get('direccionEntrega')?.setValue(direccion.nombre_ubicacion);
     }
   }
   addRouta(direccion: any) {
@@ -119,7 +119,7 @@ export class StartDeliveryComponent {
 
 
   onSubmit() {
-    const { nombres_completos, direccion, referencia, pais,
+    const { nombre_ubicacion, direccion, referencia, pais,
       ciudad, zip, user } = this.deliveryForm.value;
 
     // Incluir coordenadas si están disponibles
@@ -144,7 +144,7 @@ export class StartDeliveryComponent {
       // Crear
       this.deliveryService.registro(data)
         .subscribe((resp: any) => {
-          // Swal.fire('Creado', `${nombres_completos} creado correctamente`, 'success');
+          // Swal.fire('Creado', `${nombre_ubicacion} creado correctamente`, 'success');
 
           // Extraer el ID de diferentes posibles estructuras de respuesta
           let deliveryId: string | undefined;

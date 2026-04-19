@@ -61,9 +61,9 @@ export class OrderListComponent {
       if (this.status) {
         this.loadDeliverysByStatus();
       }
-      if (this.status && this.tipovehiculo) {
-        this.loadDeliverysByStatusTipo();
-      }
+      // if (this.status && this.tipovehiculo) {
+      //   this.loadDeliverysByStatusTipo();
+      // }
     
     // setTimeout(() => {
     // }, 500);

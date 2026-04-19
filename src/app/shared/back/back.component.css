@@ -1,5 +1,11 @@
-.butonBack .fa{
+.buttonBack .fa{
     font-size: 28px;
     width: 25px;
     height: 25px;
+}
+
+.buttonBack{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }

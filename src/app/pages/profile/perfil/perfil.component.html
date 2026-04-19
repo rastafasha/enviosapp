@@ -9,10 +9,9 @@
       <div class="saludo">
         <h2>Hola {{identity.first_name}}!</h2>
       </div>
-      <a routerLink="/myprofile">
-        <button class="boton_azul_borde">Volver</button>
-      </a>
     </div>
+    <div class="clear"></div>
+    <app-back [pageTitle]="pageTitle"></app-back>
     <div class="tab-content-set">
       <ul class="nav">
         <li>
@@ -33,15 +32,14 @@
     </div>
     @if (option_selectedd == 1) {
       <div>
-        <div class="product_list">
+        <div class="car_list">
           <div class="div1">
             <img [src]="(identity.img ?? '') | imagenPipe: 'usuarios'" [alt]="identity.first_name">
           </div>
           <div class="div2">
-            <h3>{{identity.first_name}} {{identity.last_name}} </h3>
-            <p>{{identity.numdoc}}</p>
-            <p>{{identity.role}}</p>
-            <h4>Activo</h4>
+            <p><b>Nombre:</b> {{identity.first_name}} {{identity.last_name}} </p>
+            <p><b>Documento:</b> {{identity.numdoc}}</p>
+            <p><b>Rol:</b> {{identity.role}}</p>
           </div>
         </div>
         <div class="num_tracking">

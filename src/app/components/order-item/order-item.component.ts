@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Asignacion } from '../../models/asignaciondelivery.model';
 import { Delivery } from '../../models/delivery.model';
 import { Usuario } from '../../models/usuario.model';
+import { DeliveryService } from '../../services/delivery.service';
 
 @Component({
   selector: 'app-order-item',
@@ -20,6 +21,12 @@ export class OrderItemComponent {
   @Input() delivery!:Delivery;
   @Input() identity!:any;
 
+  private deliveryService = inject(DeliveryService);
 
+  deleteItem(id:any){
+    this.deliveryService.eliminar(id).subscribe((resp:any)=>{
+      console.log(resp)
+    })
+  }
   
 }

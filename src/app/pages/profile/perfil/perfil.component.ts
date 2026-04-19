@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { AvisoComponent } from "../../../shared/aviso/aviso.component";
 import { DriverpEditComponent } from "../../../components/driverp-edit/driverp-edit.component";
+import { BackComponent } from "../../../shared/back/back.component";
 
 declare var jQuery:any;
 declare var $:any;
@@ -32,13 +33,14 @@ interface HtmlInputEvent extends Event{
     ReactiveFormsModule,
     FormsModule,
     ImagenPipe,
-    DriverpEditComponent
+    DriverpEditComponent,
+    BackComponent
 ],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
-
+  pageTitle = 'Mi Perfil';
   public url;
   public paises:any;
   public file !:File;
@@ -91,7 +93,7 @@ export class PerfilComponent implements OnInit {
     if(USER){
       this.user = JSON.parse(USER);
       this.userIdInicial = this.user.uid
-      this. getUser();
+      this.getUser();
     }
    
   }
@@ -110,9 +112,9 @@ export class PerfilComponent implements OnInit {
         this._router.navigate(['/']);
       }
 
+      this.getPaises();
       // First initialize the form
-        this.iniciarFormulario();
-        
+        this.validarVormulario();
         // Then set the values
         this.perfilForm.setValue({
           uid: this.identity.uid,
@@ -129,13 +131,10 @@ export class PerfilComponent implements OnInit {
           img: this.identity.img,
         });
         
-        this.getPaises();
-
-     
     })
   }
 
-  iniciarFormulario(){
+  validarVormulario(){
     this.perfilForm = this.fb.group({
       uid: [ this.identity.uid,  Validators.required ],
       email: [ this.identity.email],
@@ -145,8 +144,8 @@ export class PerfilComponent implements OnInit {
       telefono: [ ''],
       pais: [ ''],
       ciudad: [ ''],
-      google: [ ''],
-      role: [ ''],
+      google: [ false],
+      // role: [ ''],
       password: [ ''],
       img: [ ''],
     });
@@ -216,17 +215,12 @@ export class PerfilComponent implements OnInit {
               Swal.fire('Creado', `Creado correctamente`, 'success');
               this.isLoading = false;
               this.getUser()
-              // this.router.navigateByUrl(`/dashboard/producto`);
             });
         }
   }
 
 cambiarImagen(file: File) {
     this.imagenSubir = file;
-
-    // if (!file) {
-    //   return this.imgTemp = null;
-    // }
 
     const reader = new FileReader();
     const url64 = reader.readAsDataURL(file);
@@ -236,7 +230,7 @@ cambiarImagen(file: File) {
     }
   }
 
-  subirImagen() {debugger
+  subirImagen() {
     this.isLoading = true;
         this.fileUploadService
           .actualizarFoto(this.imagenSubir, 'usuarios', this.user_id)

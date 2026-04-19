@@ -46,6 +46,7 @@ export class OrderDetailComponent {
   usuariodestino!: string;
   direccionDesde!: Direccion;
   direccionHasta!: Direccion;
+  pageTitle = 'Detalle del Pedido';
 
   public whatsapp !: string;
   user: any;

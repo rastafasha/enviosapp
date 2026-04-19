@@ -87,8 +87,8 @@ export class DeliveryService {
       return this._http.put(url, delivery, this.headers);
     }
   
-    eliminar(id:string){
-      const url = `${base_url}/delivery/remove/${id}`;
+    eliminar(_id:string){
+      const url = `${base_url}/delivery/remove/${_id}`;
       return this._http.delete(url, this.headers);
     }
 

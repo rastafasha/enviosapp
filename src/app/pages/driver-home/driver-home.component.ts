@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenufooterComponent } from '../../shared/menufooter/menufooter.component';
-import { OrderListComponent } from "../../components/order-list/order-list.component";
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { AvisoComponent } from "../../shared/aviso/aviso.component";
@@ -10,6 +9,7 @@ import { LoadingComponent } from "../../shared/loading/loading.component";
 
 import { Driver } from '../../models/driverp.model';
 import { DriverpService } from '../../services/driverp.service';
+import { Orderlisthome } from '../../components/orderlisthome/orderlisthome';
 
 @Component({
   selector: 'app-driver-home',
@@ -17,7 +17,7 @@ import { DriverpService } from '../../services/driverp.service';
     HeaderComponent,
     MenufooterComponent,
     RouterModule,
-    OrderListComponent,
+    Orderlisthome,
     AvisoComponent,
     LoadingComponent
 ],
@@ -68,9 +68,9 @@ export class DriverHomeComponent {
    loadIdentityD() {
     this.isLoading = true;
    this.driverService.getByUserId(this.identityId).subscribe((resp: any) => {
+     console.log(resp)
         this.driver = resp
         this.driverId = resp._id;
-        // console.log(this.identity)
         this.isLoading = false;
       this.tipovehiculo = this.driver.tipo_vehiculo
         

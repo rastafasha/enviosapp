@@ -271,14 +271,11 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
 
   iniciarFormulario() {
     this.direccionForm = this.fb.group({
-      nombres_completos: ['', Validators.required],
+      nombre_ubicacion: ['', Validators.required],
       direccion: ['', Validators.required],
       referencia: ['', Validators.required],
-      pais: [''],
-      ciudad: [''],
       latitud: [''],
       longitud: [''],
-      zip: [''],
       user: [''],
     })
   }
@@ -290,12 +287,9 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
         res => {
           this.direccionForm.patchValue({
             id: id,
-            nombres_completos: res.nombres_completos,
+            nombre_ubicacion: res.nombre_ubicacion,
             direccion: res.direccion,
             referencia: res.referencia,
-            pais: res.pais,
-            ciudad: res.ciudad,
-            zip: res.zip,
             user: this.identity.uid,
           });
           this.direccion = res;

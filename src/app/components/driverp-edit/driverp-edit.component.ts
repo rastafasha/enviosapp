@@ -130,7 +130,7 @@ export class DriverpEditComponent implements OnInit {
     this.driverForm = this.fb.group({
       marca: ['', Validators.required],
       tipo_vehiculo: ['', Validators.required],
-      placa: ['', Validators.required],
+      placa: ['', Validators.required,],
       color: ['', Validators.required],
       year: ['', Validators.required],
       modelo: ['', Validators.required],

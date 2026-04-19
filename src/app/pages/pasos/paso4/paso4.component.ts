@@ -10,6 +10,7 @@ import { TipoVehiculo } from '../../../models/tipovehiculo.model';
 import { ItemcardComponent } from "../../../shared/itemcard/itemcard.component";
 import { LoadingComponent } from "../../../shared/loading/loading.component";
 import { ImagenPipe } from '../../../pipes/imagen-pipe.pipe';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-paso4',
@@ -39,6 +40,7 @@ export class Paso4Component {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private toast = inject(ToastrService);
 
 
   ngOnInit() {
@@ -76,7 +78,8 @@ export class Paso4Component {
     if (!this.deliveryCarForm.get('tipovehiculo')?.value) {
       this.tipo = tipo;
       this.deliveryCarForm.get('tipovehiculo')?.setValue(tipo.nombre);
-      console.log('Guardada como tipovehiculo');
+      // console.log('Guardada como tipovehiculo');
+      this.toast.success(`Seleccionaste: ${tipo.nombre}`, 'Tipo de vehículo seleccionado');
     }
 
   }

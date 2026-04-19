@@ -28,5 +28,11 @@
     }
     & .opcion:hover{
         border: 1px solid var(--azul);
+        border-radius: 12px;
+        cursor: pointer;
+    }
+    & .opcion:active{
+        border: 1px solid var(--azul);
+        border-radius: 12px;
     }
 }
