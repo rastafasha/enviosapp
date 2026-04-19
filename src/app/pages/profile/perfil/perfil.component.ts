@@ -16,6 +16,7 @@ import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { AvisoComponent } from "../../../shared/aviso/aviso.component";
 import { DriverpEditComponent } from "../../../components/driverp-edit/driverp-edit.component";
 import { BackComponent } from "../../../shared/back/back.component";
+import { ToastrService } from 'ngx-toastr';
 
 declare var jQuery:any;
 declare var $:any;
@@ -78,7 +79,8 @@ export class PerfilComponent implements OnInit {
     private _router : Router,
     private _route :ActivatedRoute,
     private http: HttpClient,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    public  toastr: ToastrService
   ) {
     // this.usuario = usuarioService.usuario;
     
@@ -200,7 +202,7 @@ export class PerfilComponent implements OnInit {
           };
           this.usuarioService.actualizarP(data).subscribe(
             resp => {
-              Swal.fire('Actualizado', `Actualizado correctamente`, 'success');
+              this.toastr.success('Perfil actualizado correctamente', 'Actualizado');
               this.isLoading = false;
               this.getUser()
             }
@@ -212,7 +214,7 @@ export class PerfilComponent implements OnInit {
           };
           this.usuarioService.crearUsuario(data)
             .subscribe((resp: any) => {
-              Swal.fire('Creado', `Creado correctamente`, 'success');
+              this.toastr.success('Perfil creado correctamente', 'Creado');
               this.isLoading = false;
               this.getUser()
             });
@@ -236,11 +238,11 @@ cambiarImagen(file: File) {
           .actualizarFoto(this.imagenSubir, 'usuarios', this.user_id)
           .then(img => {
             this.identity.img = img;
-            Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+            this.toastr.success('Imagen actualizada correctamente', 'Guardado');
             this.isLoading = false;
             this.getUser()
           }).catch(err => {
-            Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+            this.toastr.error('No se pudo subir la imagen', 'Error');
             this.isLoading = false;
             this.getUser()
           })

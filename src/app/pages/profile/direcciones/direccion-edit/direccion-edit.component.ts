@@ -12,6 +12,7 @@ import { Pais } from '../../../../models/pais.model';
 import { WaGeolocationService } from '@ng-web-apis/geolocation';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-direccion-edit',
@@ -58,6 +59,7 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
   // Servicios
   private geolocation$ = inject(WaGeolocationService);
   private direccionService = inject(DireccionService);
+  private toastr = inject(ToastrService);
 
   constructor(
     private usuarioService: UsuarioService,
@@ -325,14 +327,14 @@ export class DireccionEditComponent implements OnInit, AfterViewInit, OnDestroy 
       data._id = this.direccion._id;
       this.direccionService.update(data).subscribe(
         resp => {
-          Swal.fire('¡Actualizado!', 'Dirección guardada correctamente', 'success');
+          this.toastr.success('Dirección actualizada correctamente', '¡Actualizado!');
           this.router.navigateByUrl('/myprofile');
         }, error => Swal.fire('Error', error.message, 'error')
       );
     } else {
       this.direccionService.registro(data).subscribe(
         resp => {
-          Swal.fire('¡Creado!', 'Dirección guardada correctamente', 'success');
+          this.toastr.success('Dirección creada correctamente', '¡Creado!');
           this.router.navigateByUrl('/myprofile');
         }, error => Swal.fire('Error', error.message, 'error')
       );

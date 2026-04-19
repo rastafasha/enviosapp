@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TipoVehiculo } from '../../models/tipovehiculo.model';
 import { TipovehiculoService } from '../../services/tipovehiculo.service';
+import { ToastrService } from 'ngx-toastr';
 declare var jQuery: any;
 declare var $: any;
 
@@ -78,7 +79,8 @@ export class DriverpEditComponent implements OnInit {
     private fb: FormBuilder,
     private tiposvhService: TipovehiculoService,
     private driverService: DriverpService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    public toastr: ToastrService
   ) {
     this.url = environment.baseUrl;
   }
@@ -161,9 +163,9 @@ export class DriverpEditComponent implements OnInit {
       };
       this.driverService.actualizar(data).subscribe(
         resp => {
-          Swal.fire('Actualizado', `Actualizado correctamente`, 'success');
+          this.toastr.success('Perfil actualizado correctamente', 'Actualizado');
           this.isLoading = false;
-          this.getDriver()
+          this.getDriver();
         }
       );
     } else {
@@ -173,7 +175,7 @@ export class DriverpEditComponent implements OnInit {
       };
       this.driverService.create(data)
         .subscribe((resp: any) => {
-          Swal.fire('Creado', `Creado correctamente`, 'success');
+          this.toastr.success('Perfil creado correctamente', 'Creado');
           this.isLoading = false;
           this.getDriver()
           // this.router.navigateByUrl(`/dashboard/producto`);
@@ -202,11 +204,11 @@ export class DriverpEditComponent implements OnInit {
       .actualizarFoto(this.imagenSubir, 'drivers', this.driver_id)
       .then(img => {
         this.driver.img = img;
-        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+        this.toastr.success('Imagen actualizada correctamente', 'Guardado');
         this.isLoading = false;
         this.getDriver()
       }).catch(err => {
-        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+        this.toastr.error('No se pudo subir la imagen', 'Error');
         this.isLoading = false;
         this.getDriver()
       })
