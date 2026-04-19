@@ -15,6 +15,16 @@
         <label>Alguna Observación / Instrucción adicional: </label>
         <textarea class="form-control" placeholder="Describa brevemente"
         formControlName="descripcion"></textarea>
+        @if(deliveryCarForm.controls['descripcion'].touched){
+        <div class="text-danger">
+          @if(deliveryCarForm.controls['descripcion'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliveryCarForm.controls['descripcion'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
+        </div>
+        }
       </div>
     </div>
     <br>

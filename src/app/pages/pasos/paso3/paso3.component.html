@@ -13,12 +13,32 @@
       <div class="form-group ">
         <label>fecha</label>
         <input class="form-control" type="date" required placeholder="fechaEnvio" formControlName="fechaEnvio">
+        @if(deliveryForm.controls['fechaEnvio'].touched){
+        <div class="text-danger">
+          @if(deliveryForm.controls['fechaEnvio'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliveryForm.controls['fechaEnvio'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
+        </div>
+        }
       </div>
     </div>
     <div class="col-sm-6">
       <div class="form-group ">
         <label>hora</label>
         <input class="form-control" type="time" required placeholder="horaEnvio" formControlName="horaEnvio">
+         @if(deliveryForm.controls['horaEnvio'].touched){
+        <div class="text-danger">
+          @if(deliveryForm.controls['horaEnvio'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliveryForm.controls['horaEnvio'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
+        </div>
+        }
       </div>
     </div>
 

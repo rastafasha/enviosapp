@@ -1,50 +1,100 @@
 <div class="container">
   <app-back></app-back>
   @if (isLoading) {
-    <app-loading></app-loading>
+  <app-loading></app-loading>
   }
   @if (!isLoading) {
-    <app-itemcard [delivery]="delivery"></app-itemcard>
+  <app-itemcard [delivery]="delivery"></app-itemcard>
   }
   <h2>Qué te gustaría enviar?</h2>
 
 
-  <form class=" p-t-20 col-xs-12" [formGroup]="deliverySizeForm" >
+  <form class=" p-t-20 col-xs-12" [formGroup]="deliverySizeForm">
     <div class="col-sm-6">
       <div class="form-group ">
         <label>Titulo: Qué quieres enviar?</label>
         <input class="form-control" type="text" required placeholder="title" name="title" formControlName="title">
+        @if(deliverySizeForm.controls['title'].touched){
+        <div class="text-danger">
+          @if(deliverySizeForm.controls['title'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliverySizeForm.controls['title'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
+        </div>
+        }
       </div>
     </div>
     <br>
-      <h4>Especificaciones del envio</h4>
-      <div class="col-sm-6 mb-2">
-        <div class="form-group ">
-          <label>Largo:(cm, mts)</label>
-          <input class="form-control" type="text" required placeholder="largo" formControlName="largo">
+    <h4>Especificaciones del envio</h4>
+    <div class="col-sm-6 mb-2">
+      <div class="form-group ">
+        <label>Largo:(cm, mts)</label>
+        <input class="form-control" type="text" required placeholder="largo" formControlName="largo">
+         @if(deliverySizeForm.controls['largo'].touched){
+        <div class="text-danger">
+          @if(deliverySizeForm.controls['largo'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliverySizeForm.controls['largo'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
         </div>
+        }
       </div>
-      <div class="col-sm-6 mb-2">
-        <div class="form-group ">
-          <label>Ancho: (cm, mts)</label>
-          <input class="form-control" type="text" required placeholder="ancho" formControlName="ancho">
+    </div>
+    <div class="col-sm-6 mb-2">
+      <div class="form-group ">
+        <label>Ancho: (cm, mts)</label>
+        <input class="form-control" type="text" required placeholder="ancho" formControlName="ancho">
+         @if(deliverySizeForm.controls['ancho'].touched){
+        <div class="text-danger">
+          @if(deliverySizeForm.controls['ancho'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliverySizeForm.controls['ancho'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
         </div>
+        }
       </div>
-      <div class="col-sm-6 mb-2">
-        <div class="form-group ">
-          <label>Alto: (cm, mts)</label>
-          <input class="form-control" type="text" required placeholder="alto" formControlName="alto">
+    </div>
+    <div class="col-sm-6 mb-2">
+      <div class="form-group ">
+        <label>Alto: (cm, mts)</label>
+        <input class="form-control" type="text" required placeholder="alto" formControlName="alto">
+         @if(deliverySizeForm.controls['alto'].touched){
+        <div class="text-danger">
+          @if(deliverySizeForm.controls['alto'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliverySizeForm.controls['alto'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
         </div>
+        }
       </div>
-      <div class="col-sm-6 mb-2">
-        <div class="form-group ">
-          <label>Peso: (gramos, kilos)</label>
-          <input class="form-control" type="text" required placeholder="peso" formControlName="peso">
+    </div>
+    <div class="col-sm-6 mb-2">
+      <div class="form-group ">
+        <label>Peso: (gramos, kilos)</label>
+        <input class="form-control" type="text" required placeholder="peso" formControlName="peso">
+        @if(deliverySizeForm.controls['peso'].touched){
+        <div class="text-danger">
+          @if(deliverySizeForm.controls['peso'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliverySizeForm.controls['peso'].errors?.['minlength']){
+          <span>{{'3 Charecters Minimal'}}</span>
+          }
         </div>
+        }
       </div>
+    </div>
 
-      <!-- Foto -->
-      <!-- <div  style="height: auto; margin-bottom: 20px;">
+    <!-- Foto -->
+    <!-- <div  style="height: auto; margin-bottom: 20px;">
       <div class="col-xs-12 col-sm-">
         <div class="form-group">
           <div class="cz-file-drop-area">
@@ -65,8 +115,8 @@
       </div>
     </div> -->
     <br>
-      <button type="button"  class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
-        Siguiente
-      </button>
-    </form>
-  </div>
+    <button type="button" class="boton_azul_borde mb-5 w-100" (click)="onSubmit()">
+      Siguiente
+    </button>
+  </form>
+</div>

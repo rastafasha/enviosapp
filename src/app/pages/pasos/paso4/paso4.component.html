@@ -17,7 +17,16 @@
           </div>
         </div>
       }
-
+      @if(deliveryCarForm.controls['tipovehiculo'].touched){
+        <div class="text-danger">
+          @if(deliveryCarForm.controls['tipovehiculo'].errors?.['required']){
+          <span>{{'Field Required'}}</span>
+          }
+          @if(deliveryCarForm.controls['tipovehiculo'].errors?.['minlength']){
+          <span>{{'Seleccione un tipo de Vehiculo'}}</span>
+          }
+        </div>
+        }
     </div>
 
     <br>

@@ -9,6 +9,7 @@ import { TipovehiculoService } from '../../../services/tipovehiculo.service';
 import { BackComponent } from '../../../shared/back/back.component';
 import { ItemcardComponent } from '../../../shared/itemcard/itemcard.component';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-confirmar',
@@ -36,6 +37,7 @@ export class ConfirmarComponent {
     private activatedRoute = inject(ActivatedRoute);
     private router = inject(Router);
     private fb = inject(FormBuilder);
+    private toast = inject(ToastrService);
   
   
     ngOnInit() {
@@ -73,6 +75,7 @@ export class ConfirmarComponent {
         this.deliveryService.update(data).subscribe(
           (resp: any) => {
             if (resp && resp.delivery && resp.delivery._id) {
+              this.toast.success('Delivery guardado exitosamente!');
               this.router.navigate([`/mis-entregas`]);
             } else {
               console.error('Error: Respuesta de actualización no contiene _id', resp);
