@@ -10,6 +10,7 @@ import { AsignardeliveryService } from '../../services/asignardelivery.service';
 import { Asignacion } from '../../models/asignaciondelivery.model';
 import { StartDeliveryComponent } from "../../components/start-delivery/start-delivery.component";
 import { OrderListComponent } from '../../components/order-list/order-list.component';
+import { PwaNotifInstallerComponent } from "../../shared/pwa-notif-installer/pwa-notif-installer.component";
 @Component({
   selector: 'app-home',
   imports: [
@@ -17,7 +18,8 @@ import { OrderListComponent } from '../../components/order-list/order-list.compo
     MenufooterComponent,
     RouterModule,
     LoadingComponent,
-    StartDeliveryComponent
+    StartDeliveryComponent,
+    PwaNotifInstallerComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -30,6 +32,7 @@ export class HomeComponent {
   user!: any;
   isLoading = false;
   asignacion!: Asignacion;
+  isOnline = navigator.onLine;
 
   private usuarioService = inject(UsuarioService);
   private asignacionDServices = inject(AsignardeliveryService);
@@ -51,6 +54,29 @@ export class HomeComponent {
         this.isLoading = false;
       })
   }
+
+  // Función que dispara el refresco
+  async myRefreshEvent(event: any) {
+    // Solo intentamos vibrar si es un móvil (evita el error en Chrome Desktop)
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile && navigator.vibrate) {
+      try { navigator.vibrate(40); } catch (e) { /* Silencio */ }
+    }
+
+    // Lógica de carga
+    try {
+      await this.loadIdentity();
+    } finally {
+      // Si event.complete() no funciona, forzamos con un pequeño retraso
+      setTimeout(() => {
+        if (event && typeof event.complete === 'function') {
+          event.complete();
+        }
+      }, 100);
+    }
+  }
+
 
 
 

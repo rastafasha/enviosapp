@@ -10,6 +10,8 @@ import { LoadingComponent } from "../../shared/loading/loading.component";
 import { Driver } from '../../models/driverp.model';
 import { DriverpService } from '../../services/driverp.service';
 import { Orderlisthome } from '../../components/orderlisthome/orderlisthome';
+import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
+import { ConectividadService } from '../../services/conectividad.service';
 
 @Component({
   selector: 'app-driver-home',
@@ -19,7 +21,8 @@ import { Orderlisthome } from '../../components/orderlisthome/orderlisthome';
     RouterModule,
     Orderlisthome,
     AvisoComponent,
-    LoadingComponent
+    LoadingComponent,
+    PwaNotifInstallerComponent
 ],
   templateUrl: './driver-home.component.html',
   styleUrl: './driver-home.component.css'
@@ -31,10 +34,13 @@ export class DriverHomeComponent {
   identityId!:string;
   tipovehiculo!:string;
   isLoading= false;
-
+  isOnline = navigator.onLine;
+  swPush: boolean = false;
+  
   private usuarioService = inject(UsuarioService);
   private router = inject(Router);
   private driverService = inject(DriverpService);
+  public connectivity = inject(ConectividadService);
   
   ngOnInit(){
     setTimeout(() => {
@@ -76,4 +82,27 @@ export class DriverHomeComponent {
         
       })
   }
+
+  // Función que dispara el refresco
+  async myRefreshEvent(event: any) {
+    // Solo intentamos vibrar si es un móvil (evita el error en Chrome Desktop)
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile && navigator.vibrate) {
+      try { navigator.vibrate(40); } catch (e) { /* Silencio */ }
+    }
+
+    // Lógica de carga
+    try {
+      await this.loadIdentity();
+    } finally {
+      // Si event.complete() no funciona, forzamos con un pequeño retraso
+      setTimeout(() => {
+        if (event && typeof event.complete === 'function') {
+          event.complete();
+        }
+      }, 100);
+    }
+  }
+
 }
