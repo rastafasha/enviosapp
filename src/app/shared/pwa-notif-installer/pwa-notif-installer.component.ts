@@ -7,7 +7,6 @@ import { filter, map } from 'rxjs';
 @Component({
   selector: 'app-pwa-notif-installer',
   standalone: true,
-  imports: [],
   templateUrl: './pwa-notif-installer.component.html',
   styleUrls: ['./pwa-notif-installer.component.scss']
 })

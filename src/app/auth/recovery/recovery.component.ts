@@ -3,13 +3,15 @@ import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../shared/header/header.component';
+import { BackComponent } from "../../shared/back/back.component";
 
 
 @Component({
   selector: 'app-recovery',
   imports: [
     RouterModule,
-    FormsModule
+    FormsModule,
+    BackComponent
 ],
   templateUrl: './recovery.component.html',
   styleUrls: ['./recovery.component.css']
@@ -20,7 +22,9 @@ export class RecoveryComponent implements OnInit {
   public msm_error = '';
   public codigo = '';
   public state = 1;
-  public new_password = ''
+  public new_password = '';
+  pageTitle = 'Recuperar Contraseña';
+  
 
   constructor(
     private _userService : UsuarioService,

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
+import { NgClass } from '@angular/common';
 
 
 @Component({
@@ -10,16 +11,17 @@ import { UsuarioService } from '../../services/usuario.service';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    NgClass
 ],
   templateUrl: './register.component.html',
   styleUrls: [ './register.component.scss' ]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   public formSumitted = false;
   registerForm:FormGroup;
-
+  public currentStep: number = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +44,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  nextStep() {
+    const first_name = this.registerForm.get('first_name');
+    const last_name = this.registerForm.get('last_name');
+
+    if (first_name?.invalid || last_name?.invalid) {
+      first_name?.markAsTouched();
+      last_name?.markAsTouched();
+      return;
+    }
+    this.currentStep = 2;
+  }
+
+  prevStep() {
+    this.currentStep = 1;
   }
 
 
